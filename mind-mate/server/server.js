@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
 
-//app.set('view engine', 'ejs');
 const cors = require('cors');
 app.use(cors());
 //const mysql = require('mysql2');
-//const dotenv = require('dotenv');
-//dotenv.config();
+const dotenv = require('dotenv');
+dotenv.config();
 //const db = require('./models/Main');
 const PORT = process.env.PORT || 4000;
 

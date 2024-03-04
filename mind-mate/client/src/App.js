@@ -1,34 +1,22 @@
 import React, { Component } from 'react';
-import './App.css';
-import axios from 'axios';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+//페이지 임포트
+import MainPage from './pages/MainPage';
+import TestDB from './pages/TestDB';
+import Error404 from './pages/errors/Error404';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      host: '',
-    };
-  }
-
-  componentDidMount() {
-    this._getHost();
-  }
-
-  _getHost = async () => {
-    const res = await axios.get('/api/host');
-    this.setState({ host: res.data.host });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <h3>
-          {' '}
-          Welcome to <u> {this.state.host} </u> Blog!{' '}
-        </h3>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<MainPage />}></Route>
+          <Route exact path="/testdb" element={<TestDB />}></Route>
+          <Route path="*" element={<Error404 />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
