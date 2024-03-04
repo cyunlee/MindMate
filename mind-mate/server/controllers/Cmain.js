@@ -1,18 +1,21 @@
 const axios = require('axios');
-const db = require('../models/Main');
+const { db, Sequelize } = require('../models/Main');
 const Main = require('../models/Main');
 
 exports.test_db = async (req, res) => {
-  const { id, number } = req.query;
+  let id = req.body[0];
+  let username = req.body[1];
 
-  console.log('chapter ', id, 'ep ', number);
+  console.log(req.body);
+
+  console.log('id ', id, 'username ', username);
 
   try {
-    console.log('EnemyDeck find all');
-    const result = await db.TestDB.findAll({
+    console.log('Test database connection');
+    const result = await db.User.findAll({
       where: {
         id: id,
-        number: number,
+        username: username,
       },
     });
 

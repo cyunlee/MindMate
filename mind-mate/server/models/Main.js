@@ -13,20 +13,25 @@ const sequelize = new Sequelize(
   }
 );
 
-const TestDB = sequelize.define(
-  'testDB',
+const User = sequelize.define(
+  'user',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    number: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    data: {
-      type: DataTypes.JSON,
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
@@ -35,7 +40,7 @@ const TestDB = sequelize.define(
   }
 );
 
-db.TestDB = TestDB;
+db.User = User;
 
 // Export db, sequelize, and Sequelize
 module.exports = { db, sequelize, Sequelize };
