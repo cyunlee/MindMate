@@ -1,18 +1,23 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const dotenv = require('dotenv');
+import { Sequelize, DataTypes } from 'sequelize';
+import dotenv from 'dotenv';
 dotenv.config();
-const db = {};
+import { development as config } from '../config/config';
 
-const config = require('../config/config')['development'];
+if (!config.database || !config.username || !config.password) {
+  throw new Error('Database configuration is incomplete');
+}
+
 const sequelize = new Sequelize(
   config.database,
   config.username,
   config.password,
   {
     ...config,
+    dialect: 'mysql', // specify your database dialect
   }
 );
 
+// Define the User model using sequelize.define
 const User = sequelize.define(
   'user',
   {
@@ -40,7 +45,8 @@ const User = sequelize.define(
   }
 );
 
-db.User = User;
+// Sync the model with the database (optional but may be necessary depending on your application)
+// This ensures that the table is created if it doesn't exist
+sequelize.sync();
 
-// Export db, sequelize, and Sequelize
-module.exports = { db, sequelize, Sequelize };
+export { sequelize, User };

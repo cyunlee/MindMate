@@ -1,28 +1,18 @@
-const express = require('express');
-const app = express();
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import api from './routes/routes.index';
+import bodyParser from 'body-parser';
 
-const cors = require('cors');
-app.use(cors());
-//const mysql = require('mysql2');
-const dotenv = require('dotenv');
 dotenv.config();
-//const db = require('./models/Main');
+
+const app = express();
+app.use(bodyParser.json());
 const PORT = process.env.PORT || 4000;
 
-const api = require('./routes/index');
+app.use(cors());
 app.use('/api', api);
 
 app.listen(PORT, () => {
   console.log(`Server On : http://localhost:${PORT}/`);
 });
-
-/*db.sequelize
-  .sync({ force: false })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  });*/
