@@ -12,17 +12,17 @@ const TestDB = () => {
 
   const [id, setID] = useState('');
 
-  const handleInputId = (e) => {
+  const handleInputId = (e: any) => {
     setID(e.target.value);
   };
 
   const [username, setUsername] = useState('');
 
-  const handleInputName = (e) => {
+  const handleInputName = (e: any) => {
     setUsername(e.target.value);
   };
 
-  const dbTest = async (event) => {
+  const dbTest = async (event: any) => {
     event.preventDefault();
     let data = [id, username];
     console.log('data ', data);
