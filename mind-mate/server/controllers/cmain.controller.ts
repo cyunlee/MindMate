@@ -1,18 +1,21 @@
-const axios = require('axios');
-const { db, Sequelize } = require('../models/Main');
-const Main = require('../models/Main');
+import { Request, Response, NextFunction } from 'express';
+import axios from 'axios';
+import { sequelize, User } from '../model/Main.ts';
+import bodyParser from 'body-parser';
 
-exports.test_db = async (req, res) => {
-  let id = req.body[0];
-  let username = req.body[1];
-
-  console.log(req.body);
-
-  console.log('id ', id, 'username ', username);
-
+export default async function test_db(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> {
   try {
+    console.log(req.body);
+    let id = req.body[0];
+    let username = req.body[1];
+    console.log('id ', id, 'username ', username);
+
     console.log('Test database connection');
-    const result = await db.User.findAll({
+    const result = await User.findAll({
       where: {
         id: id,
         username: username,
@@ -25,4 +28,4 @@ exports.test_db = async (req, res) => {
     console.error('Error fetching enemy deck data:', err);
     res.status(500).send('Internal Server Error');
   }
-};
+}
