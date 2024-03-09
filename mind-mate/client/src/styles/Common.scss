@@ -1,0 +1,18 @@
+$secondary-color: #4F4E4E;
+$focus-color: #FFBA00;
+$major-color: #58B98B;
+$border-color: #B6B6B6;
+
+$minor-size: 14px;
+$topbar-size: 20px;
+
+@mixin flex() {
+    display: flex;
+    align-items: center;
+}
+
+@mixin flex-space-between() {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

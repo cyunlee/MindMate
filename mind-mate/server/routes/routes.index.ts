@@ -1,6 +1,6 @@
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
-import test_db from '../controllers/Cmain.controller.ts';
+import test_db from '../controllers/cmain.controller.ts';
 
 const router = express.Router();
 

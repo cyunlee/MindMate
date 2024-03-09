@@ -1,0 +1,94 @@
+@import './Common.scss';
+
+.topbar{
+    width: 100%;
+    height: 110px;
+    background-color: #fff;
+    border-bottom: 1px solid $border-color;
+
+    .top{
+        width: 100%;
+        height: 45px;
+        position: relative;
+        @include flex;
+
+        .top-btn-container{
+            width: 226px;
+            height: 33px;
+            position: absolute;
+            right: 44px;
+            top: 16px;
+            @include flex-space-between;
+
+            .top-btn{
+                font-size: $minor-size;
+                color: $secondary-color;
+                cursor: pointer;
+            }
+    
+            .top-btn:hover{
+                color: $focus-color;
+            }
+    
+            .top-line{
+                width: 1px;
+                height: 20px;
+                background-color: $border-color;
+            }
+    
+            .auth-btn{
+                width: fit-content;
+                height: 28px;
+                border: 1px solid $major-color;
+                border-radius: 8px;
+                background-color: #fff;
+                font-size: $minor-size;
+                color: $major-color;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .bottom{
+        width: 100%;
+        height: 65px;
+        position: relative;
+        @include flex;
+
+        .logo{
+            width: 220px;
+            height: 43px;
+            position: absolute;
+            left: 80px;
+            top: 11px;
+            cursor: pointer;
+        }
+
+        .bottom-btn-container{
+            width: 384px;
+            height: 30px;
+            position: absolute;
+            right: 150px;
+            top: 16px;
+            @include flex-space-between;
+
+            .bottom-btn{
+                font-size: $topbar-size;
+                cursor: pointer;
+            }
+    
+            .bottom-btn:hover{
+                color: $focus-color;
+            }
+        }
+
+        .mypage-icon{
+            width: 27px;
+            height: 27px;
+            position: absolute;
+            right: 33px;
+            top: 16px;
+            cursor: pointer;
+        }
+    }
+}
