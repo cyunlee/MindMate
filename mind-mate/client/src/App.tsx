@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import TestDB from './pages/TestDB';
 import Error404 from './pages/errors/Error404';
 import SignupPage from './pages/SignupPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/signup" element={<SignupPage/>}></Route>
+          <Route path='/login' element={<LoginPage/>}></Route>
           <Route path="/testdb" element={<TestDB />}></Route>
           <Route path="*" element={<Error404 />}></Route>
         </Routes>
