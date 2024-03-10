@@ -1,0 +1,118 @@
+@import '../styles/Common.scss';
+
+$auth-title-size: 36px;
+$auth-text-size: 14px;
+$auth-content-size: 14px;
+
+.signup-container{
+    width: 100%;
+    height: 620px;
+    margin-top: 70px;
+    margin-bottom: 70px;
+    @include flex;
+    @include flex-vertical-space-between;
+
+    .auth-title{
+        font-size: $auth-title-size;
+    }
+    .signup-box{
+        width: 440px;
+        height: 360px;
+        @include flex;
+        @include flex-vertical-space-between;
+
+        .signup-contents{
+            width: 440px;
+            height: 214px;
+            @include flex-vertical-space-between;
+
+            .auth-container{
+                width: 360px;
+                height: 38px;
+                @include flex-horizontal-space-between;
+            }
+    
+            .auth-nickname-container{
+                width: 440px;
+                height: 38px;
+                @include flex-horizontal-space-between;
+    
+                .auth-random-container{
+                    width: 350px;
+                    height: 38px;
+                    @include flex-horizontal-space-between;
+                    .random-btn{
+                        width: 75px;
+                        height: 30px;
+                        background-color: #fff;
+                        color: $major-color;
+                        font-size: $auth-text-size;
+                        border: 1px solid $major-color;
+                        border-radius: 16px;
+                        cursor: pointer;
+                    }
+                }
+    
+            }
+    
+            .auth-text{
+                font-size: $auth-text-size;
+                font-weight: bold;
+                color: #000;
+            }
+            .auth-content{
+                width: 250px;
+                height: 34px;
+                border: 1px solid $border-color;
+                border-radius: 16px;
+                font-size: $auth-content-size;
+                color: $secondary-color;
+                padding-left: 14px;
+                
+            }
+        }
+
+        .signup-btn{
+            width: 214px;
+            height: 32px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            background-color: $major-color;
+            border-radius: 4px;
+            border: 1px solid $major-color;
+            cursor: pointer;
+        }
+    }
+    .auth-line{
+        width: 294px;
+        height: 1px;
+        background-color: $border-color;
+
+    }
+    .authapi-box{
+        width: 214px;
+        height: 80px;
+        @include flex-vertical-space-between;
+
+        .kakao-signup-btn{
+            width: 214px;
+            height: 32px;
+            border: 1px solid #FEE500;
+            background-image: url('../../public/kakaologin.png');
+            background-size: cover;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .naver-signup-btn{
+            width: 214px;
+            height: 32px;
+            border: 1px solid #03C75A;
+            background-image: url('../../public/naverlogin.png');
+            background-size: cover;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    }
+}

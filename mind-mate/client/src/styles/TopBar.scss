@@ -18,7 +18,7 @@
             position: absolute;
             right: 44px;
             top: 16px;
-            @include flex-space-between;
+            @include flex-horizontal-space-between;
 
             .top-btn{
                 font-size: $minor-size;
@@ -70,7 +70,7 @@
             position: absolute;
             right: 150px;
             top: 16px;
-            @include flex-space-between;
+            @include flex-horizontal-space-between;
 
             .bottom-btn{
                 font-size: $topbar-size;
