@@ -28,4 +28,4 @@ export const db = {
 };
 
 db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+db.sequelize = sequelize; 
