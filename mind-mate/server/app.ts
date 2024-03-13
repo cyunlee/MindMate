@@ -1,35 +1,43 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
-import { Request, Response } from 'express';
-const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
-const http = require('http');
-const sequelize = require('sequelize');
-const path = require('path');
-const app = express();
-export const server = http.createServer(app);
-const PORT = 4000;
-
+import { Server } from 'socket.io';
+import { createServer } from 'http';
+import express from 'express';
+import cors from 'cors';
+import session from 'express-session';
+import sequelize from 'sequelize';
+import path from 'path';
 import { Op } from 'sequelize';
 import { authRouter } from './routes/auth.routes';
 import { db } from './model';
 
+const app = express();
+const PORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(authRouter);
 app.use(cors());
 
+const server = createServer(app); // Create HTTP server
+
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('client connected');
+});
+
 db.sequelize
-    .sync({ force: false })
-    .then(() => {
-        server.listen(PORT, () => {
-            console.log(`Server is running on ${PORT}`);
-        });
-    })
-    .catch((err: Error) => {
-        console.log(err);
+  .sync({ force: false })
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server is running on ${PORT}`);
     });
+  })
+  .catch((err: Error) => {
+    console.log(err);
+  });
