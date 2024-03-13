@@ -2,7 +2,7 @@ export const UserModel = (sequelize: any, DataTypes: any) => {
     const User = sequelize.define(
         'User',
         {
-            userId: {
+            userid: {
                 primaryKey: true,
                 type: DataTypes.STRING(30),
             },

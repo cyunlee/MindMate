@@ -27,35 +27,35 @@ export async function signup(
 
     if (!isUnique || JSON.parse(isUnique) == false || existingUser) {
         return res.json({
-            msg: 'Please Execute ID Valid check',
+            msg: '아이디가 유효하지 않습니다',
             isError: true,
         });
     }
 
     if (!userid || userid.trim().length <= 3) {
         return res.json({
-            msg: 'ID should be at least 4 characters long.',
+            msg: '아이디는 4글자 이상이어야 합니다',
             isError: true,
         });
     }
 
     if (!password || password.trim().length <= 5) {
         return res.json({
-            msg: 'Password should be at least 4 characters long.',
+            msg: '비밀번호는 4글자 이상이어야 합니다',
             isError: true,
         });
     }
 
     if (!(password === confirmPassword)) {
         return res.json({
-            msg: `There's a difference between password and confirm password`,
+            msg: '비밀번호를 다시 한 번 확인해주세요',
             isError: true,
         });
     }
 
     if (!nickname || nickname.trim().length < 2) {
         return res.json({
-            msg: 'Name should be at least 2 characters long',
+            msg: '닉네임은 2글자 이상이어야 합니다',
             isError: true,
         });
     }

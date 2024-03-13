@@ -6,7 +6,7 @@ $auth-content-size: 14px;
 
 .signup-container{
     width: 100%;
-    height: 620px;
+    height: 640px;
     margin-top: 70px;
     margin-bottom: 70px;
     @include flex;
@@ -23,13 +23,36 @@ $auth-content-size: 14px;
 
         .signup-contents{
             width: 440px;
-            height: 214px;
+            height: 264px;
             @include flex-vertical-space-between;
 
             .auth-container{
                 width: 360px;
                 height: 38px;
                 @include flex-horizontal-space-between;
+            }
+
+            .auth-userid-container{
+                width: 440px;
+                height: 38px;
+                @include flex-horizontal-space-between;
+    
+                .auth-valid-container{
+                    width: 350px;
+                    height: 38px;
+                    @include flex-horizontal-space-between;
+                    .valid-btn{
+                        width: 75px;
+                        height: 30px;
+                        background-color: #fff;
+                        color: $major-color;
+                        font-size: $auth-text-size;
+                        border: 1px solid $major-color;
+                        border-radius: 16px;
+                        cursor: pointer;
+                    }
+                }
+    
             }
     
             .auth-nickname-container{
@@ -115,4 +138,14 @@ $auth-content-size: 14px;
             cursor: pointer;
         }
     }
+}
+
+// 에러메시지가 출력되었을 때 div가 이동하지 않도록 코드 작성
+
+.errorMsg{
+    position: absolute;
+    margin-left: 2px;
+    width: 270px;
+    font-size: 13px;
+    color: red;
 }
