@@ -47,6 +47,25 @@ function SignupPage() {
         else setIsValidAccount(false);
     }, [userid, password, confirmPassword, nickname]);
 
+    //에러메시지
+
+    //아이디 중복체크, 함수에 값을 파라미터로 전달
+    const chackDuplicate = async (userid: any) => {
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/idcheck',
+                params : {
+                    userid : userid
+                }
+            })
+            console.log(res.data);
+        }catch(error){
+            console.log('error : ', error);
+        }
+    }
+
+
     //회원가입
     const register = () => {
 
@@ -55,7 +74,6 @@ function SignupPage() {
         console.log(confirmPassword);
         console.log(nickname);
     }
-
 
     return ( 
         <>
@@ -70,7 +88,7 @@ function SignupPage() {
                             <div className='random-box'>
                                 <div className='auth-valid-container'>
                                     <input id='userid-input' className='auth-content' placeholder='아이디를 입력해주세요' name='userid' value={userid} onChange={onChangeHandler} required></input>
-                                    <button className='valid-btn'>중복검사</button>
+                                    <button className='valid-btn' onClick={()=>{chackDuplicate(userid)}}>중복검사</button>
                                 </div>
                                 {(userid.length > 0 && userid.length <= 5) && (<div className='errorMsg'>아이디는 6글자 이상이어야 합니다</div>)}
                             </div>

@@ -2,6 +2,37 @@ import { Request, Response, NextFunction } from 'express';
 import { db } from '../model';
 const User = db.User;
 
+export async function idcheck(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    const {
+        userid
+    } = req.query;
+
+    try{
+        let existingUser = await User.findOne({
+            where: {userid: req.query.userid}
+        })
+
+        if(existingUser){
+            return res.json({
+                msg: '이미 존재하는 아이디가 있습니다.',
+                isError: true
+            })
+        }else if(!existingUser){
+            return res.json({
+                msg: '아이디 중복 검사 통과',
+                isError: false
+            })
+        }
+
+    }catch (err){
+        next(err);
+    }
+}
+
 export async function signup(
     req: Request,
     res: Response,
@@ -11,30 +42,12 @@ export async function signup(
         userid,
         password,
         confirmPassword,
-        nickname,
-        isUnique,
+        nickname
     } = req.body;
 
-    let existingUser;
-
-    try {
-        existingUser = await User.findOne({
-            where: { userid: req.body.userid },
-        });
-    } catch (err) {
-        return next(err);
-    }
-
-    if (!isUnique || JSON.parse(isUnique) == false || existingUser) {
+    if (!userid || userid.trim().length <= 5) {
         return res.json({
-            msg: '아이디가 유효하지 않습니다',
-            isError: true,
-        });
-    }
-
-    if (!userid || userid.trim().length <= 3) {
-        return res.json({
-            msg: '아이디는 4글자 이상이어야 합니다',
+            msg: '아이디는 6글자 이상이어야 합니다',
             isError: true,
         });
     }
