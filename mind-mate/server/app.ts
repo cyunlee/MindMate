@@ -17,7 +17,8 @@ import {
   SocketData,
 } from './types/types';
 const app = express();
-const PORT = 4000;
+
+const SERVERPORT = 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -53,8 +54,8 @@ io.on('connection', (socket: Socket) => {
 db.sequelize
   .sync({ force: false })
   .then(() => {
-    server.listen(PORT, () => {
-      console.log(`Server is running on ${PORT}`);
+    server.listen(SERVERPORT, () => {
+      console.log(`Server is running on ${SERVERPORT}`);
     });
   })
   .catch((err: Error) => {
