@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
 import express from 'express';
 import cors from 'cors';
@@ -10,7 +10,12 @@ import path from 'path';
 import { Op } from 'sequelize';
 import { authRouter } from './routes/auth.routes';
 import { db } from './model';
-
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData,
+} from './types/types';
 const app = express();
 const PORT = 4000;
 
@@ -33,8 +38,22 @@ const io = new Server(server, {
   },
 });
 
-io.on('connection', (socket) => {
-  console.log('client connected');
+// Handle the connection event
+io.on('connection', (socket: Socket) => {
+  console.log('A client connected');
+
+  // Handle custom events from clients
+  socket.on('chat message', (msg: string) => {
+    console.log('Message received from client:', msg);
+
+    // Broadcast the message to all connected clients
+    io.emit('chat message', msg);
+  });
+
+  // Handle disconnect event
+  socket.on('disconnect', () => {
+    console.log('A client disconnected');
+  });
 });
 
 db.sequelize
