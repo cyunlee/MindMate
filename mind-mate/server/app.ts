@@ -22,7 +22,13 @@ const PORT = 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(authRouter);
-app.use(cors());
+app.use(
+  cors({
+      // credentials: true,
+      // origin: ['http://localhost:3000', 'http://localhost:4000'],
+      // methods: ['GET', 'POST', 'PATCH', 'DELETE'], 
+  })
+);
 
 const server = createServer(app); // Create HTTP server
 
