@@ -8,13 +8,11 @@ interface TestChatProps {
 }
 
 const TestChat: React.FC<TestChatProps> = ({ socket }) => {
-  let { roomId } = useParams();
+  let { userID, roomId } = useParams();
+  const navigate = useNavigate();
   console.log('roomId', roomId);
   const socketRef = useRef<Socket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
-  useEffect(() => {
-    console.log('useEffect messages ', messages);
-  }, [messages]);
   const [messageInput, setMessageInput] = useState('');
 
   useEffect(() => {

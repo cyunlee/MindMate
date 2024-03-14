@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const App = () => {
-  let userID = 1234;
-  //백에서 user가 참여하고 있는 room의 roomID목록을 받아오는 axios통신 실행
+  const navigate = useNavigate();
+  let { userID } = useParams();
+  //get login information
+  useEffect(() => {
+    if (userID) {
+      navigate('/login');
+    } else {
+      //get joined room information
+    }
+  }, [userID]);
   return (
     <div>
       <h1>Main</h1>
