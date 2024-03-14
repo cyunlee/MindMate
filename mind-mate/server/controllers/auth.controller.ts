@@ -19,11 +19,13 @@ export async function idcheck(
         if(existingUser){
             return res.json({
                 msg: '이미 존재하는 아이디가 있습니다.',
+                isDuplicated: false,
                 isError: true
             })
         }else if(!existingUser){
             return res.json({
                 msg: '아이디 중복 검사 통과',
+                isDuplicated: true,
                 isError: false
             })
         }

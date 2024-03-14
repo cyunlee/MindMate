@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
 import '../styles/SignupPage.scss';
@@ -59,9 +59,16 @@ function SignupPage() {
   }, [userid, password, confirmPassword, nickname]);
 
   //에러메시지
+  let idMsg = useRef<HTMLDivElement>(null);
+  let pwMsg = useRef<HTMLDivElement>(null);
+  let confirmPwMsg = useRef<HTMLDivElement>(null);
+  let nicknameMsg = useRef<HTMLDivElement>(null)
+  let duplicatePassMsg = useRef<HTMLDivElement>(null);
+
+  
 
   //아이디 중복체크, 함수에 값을 파라미터로 전달
-  const chackDuplicate = async (userid: any) => {
+  const checkDuplicate = async (userid: any) => {
     try {
       const res = await axios({
         method: 'get',
@@ -71,6 +78,12 @@ function SignupPage() {
         },
       });
       console.log(res.data);
+      if(idMsg.current!==null) {
+        idMsg.current.innerHTML = '아이디 입력 조건을 확인해주세요';
+        }
+      if(duplicatePassMsg.current!==null && userid.length>=6) {
+        duplicatePassMsg.current.innerHTML = res.data.msg;
+      }
     } catch (error) {
       console.log('error : ', error);
     }
@@ -109,15 +122,19 @@ function SignupPage() {
                   <button
                     className="valid-btn"
                     onClick={() => {
-                      chackDuplicate(userid);
+                      checkDuplicate(userid);
                     }}
                   >
                     중복검사
                   </button>
                 </div>
                 {userid.length > 0 && userid.length <= 5 && (
-                  <div className="errorMsg">
+                  <div className="errorMsg" ref={idMsg}>
                     아이디는 6글자 이상이어야 합니다
+                  </div>
+                )}
+                {userid.length >=6 && (
+                  <div className='passMsg' ref={duplicatePassMsg}>
                   </div>
                 )}
               </div>
@@ -139,7 +156,7 @@ function SignupPage() {
                   required
                 ></input>
                 {password.length > 0 && !pwValidCheck.test(password) && (
-                  <div className="errorMsg">
+                  <div className="errorMsg" ref={pwMsg}>
                     영문, 숫자, 특수기호 조합으로 8-20자리 이상 입력해주세요
                   </div>
                 )}
@@ -162,7 +179,7 @@ function SignupPage() {
                   required
                 ></input>
                 {confirmPassword.length > 0 && password !== confirmPassword && (
-                  <div className="errorMsg">비밀번호가 일치하지 않습니다</div>
+                  <div className="errorMsg" ref={confirmPwMsg}>비밀번호가 일치하지 않습니다</div>
                 )}
               </div>
             </div>
@@ -185,7 +202,7 @@ function SignupPage() {
                   <button className="random-btn">랜덤생성</button>
                 </div>
                 {nickname.length > 0 && nickname.length <= 1 && (
-                  <div className="errorMsg">
+                  <div className="errorMsg" ref={nicknameMsg}>
                     닉네임은 2글자 이상이어야 합니다
                   </div>
                 )}
