@@ -31,8 +31,8 @@ function SignupPage() {
 
   //최종적으로 계산된 상태 값을 바탕으로 isValidAccount 상태 업데이트 (무한 리렌더링 방지)
   useEffect(() => {
-    if (userid.length >= 6) setIsValidID(true);
-    else setIsValidID(false);
+    // if (userid.length >= 6) setIsValidID(true);
+    // else setIsValidID(false);
 
     if (pwValidCheck.test(password)) setIsValidPassword(true);
     else setIsValidPassword(false);
@@ -65,7 +65,8 @@ function SignupPage() {
   let nicknameMsg = useRef<HTMLDivElement>(null)
   let duplicatePassMsg = useRef<HTMLDivElement>(null);
 
-  
+  //let duplicateCount = 0;
+  const [ count, setCount] = useState(0)
 
   //아이디 중복체크, 함수에 값을 파라미터로 전달
   const checkDuplicate = async (userid: any) => {
@@ -77,12 +78,24 @@ function SignupPage() {
           userid: userid,
         },
       });
+
+      //duplicateCount++;
+      setCount(count + 1);
+
+      //아이디 조건이 맞지 않을 때 중복검사 진행한 후 메시지 
       console.log(res.data);
       if(idMsg.current!==null) {
         idMsg.current.innerHTML = '아이디 입력 조건을 확인해주세요';
-        }
+      }
+      //아이디 조건 충족 후 중복검사 진행한 후 메시지
       if(duplicatePassMsg.current!==null && userid.length>=6) {
         duplicatePassMsg.current.innerHTML = res.data.msg;
+      }
+      //아이디 조건 충족 후 중복검사 진행한 후 결과에 따라 유효성 셋팅
+      if(userid.length>=6 && res.data.isDuplicated===false) {
+        setIsValidID(true);
+      }else {
+        setIsValidID(false);
       }
     } catch (error) {
       console.log('error : ', error);
@@ -215,8 +228,11 @@ function SignupPage() {
             onClick={() => {
               if (isValidAccount === true) {
                 register();
-              } else {
-                alert('회원가입 불가');
+                alert('회원가입 성공');
+              }else if(count === 0){
+                alert('아이디 중복검사를 진행해주세요')
+              }else {
+                alert('입력한 정보를 다시 한 번 확인해주세요');
               }
             }}
           >
