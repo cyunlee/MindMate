@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import Error404 from './pages/errors/Error404';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
+import ChatPage from './pages/ChatPage';
 import TestChat from './pages/TestChat';
 
 interface AppProps {
@@ -21,6 +22,10 @@ const App: React.FC<AppProps> = ({ socket }) => {
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/testchat/:roomId"
+            element={<ChatPage />} // Pass the socket instance as a prop
+          />
+          <Route
+            path="/testchat/:userId/:roomId"
             element={<TestChat socket={socket} />} // Pass the socket instance as a prop
           />
           <Route path="*" element={<Error404 />} />
