@@ -19,7 +19,7 @@ import {
 } from './types/types';
 const app = express();
 
-const SERVERPORT = 5000;
+const SERVERPORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

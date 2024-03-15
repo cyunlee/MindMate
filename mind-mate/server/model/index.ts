@@ -18,11 +18,17 @@ const sequelize = new Sequelize(
 );
 
 import { UserModel } from './User';
+import { AdjectiveModel } from './Adjective';
+import { NounModel } from './Noun';
 
 const User = UserModel(sequelize, Sequelize);
+const Adjective = AdjectiveModel(sequelize, Sequelize);
+const Noun = NounModel(sequelize, Sequelize);
 
 export const db = {
     User,
+    Adjective,
+    Noun,
     sequelize,
     Sequelize,
 };

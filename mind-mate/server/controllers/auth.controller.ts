@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { db } from '../model';
 const User = db.User;
+const Adjective = db.Adjective;
+const Noun = db.Noun;
 
 export async function idcheck(
     req: Request,
@@ -30,6 +32,25 @@ export async function idcheck(
             })
         }
 
+    }catch (err){
+        next(err);
+    }
+}
+
+export async function random(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<Response | void> {
+    try{
+        //조건 없이 해도 될지는 모르겠지만...
+        let randomAdjective = await Adjective.findAll({});
+        let randomNoun = await Noun.findAll({});
+
+        return res.json({
+            adjective: randomAdjective,
+            noun: randomNoun
+        })
     }catch (err){
         next(err);
     }
