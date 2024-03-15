@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
+const http = require('http');
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
 import express from 'express';
@@ -25,12 +26,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', authRouter);
 app.use(cors());
 
-const server = createServer(app); // Create HTTP server
+const server = createServer(app);
 
-const io = new Server(server, {
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:3000',
   },
+  path: '/socket.io',
 });
 
 // Handle the connection event
@@ -48,6 +51,19 @@ io.on('connection', (socket: Socket) => {
   // Handle disconnect event
   socket.on('disconnect', () => {
     console.log('A client disconnected');
+  });
+});
+
+//서버에서
+// socket.on 메서드 - 클라이언트에서 메세지를 보낸다.
+// "chatting"은 채널 아이디, data = 클라이언트에서 받은 데이터
+io.on('chatting', (data) => {
+  // console.log(data);
+  const { name, msg } = data;
+  // io.emit - 서버에서 클라이언트로 메시지 전송
+  io.emit('chatting', {
+    name: name,
+    msg: msg,
   });
 });
 
