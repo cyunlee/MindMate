@@ -102,6 +102,18 @@ function SignupPage() {
     }
   };
 
+  const getRandom = async () => {
+    try {
+      const res = await axios({
+        method: 'get',
+        url: '/api/random',
+      })
+      console.log(res.data);
+    } catch (error) {
+      console.log('error : ', error);
+    }
+  }
+
   //회원가입
   const register = () => {
     console.log(userid);
@@ -212,7 +224,9 @@ function SignupPage() {
                     onChange={onChangeHandler}
                     required
                   ></input>
-                  <button className="random-btn">랜덤생성</button>
+                  <button className="random-btn" onClick={()=>{
+                    getRandom()
+                  }}>랜덤생성</button>
                 </div>
                 {nickname.length > 0 && nickname.length <= 1 && (
                   <div className="errorMsg" ref={nicknameMsg}>
