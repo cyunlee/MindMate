@@ -21,7 +21,7 @@ function TopBar() {
                 <div className='bottom'>
                     <img className='logo' alt='logo' src={logoUrl} onClick={()=>{navigate('/')}}/>
                     <div className='bottom-btn-container'>
-                        <div className='bottom-btn'>커뮤니티</div>
+                        <div className='bottom-btn' onClick={()=>{navigate('/community')}}>커뮤니티</div>
                         <div className='bottom-btn'>주변장소</div>
                         <div className='bottom-btn'>루틴관리</div>
                         <div className='bottom-btn'>상담하기</div>
