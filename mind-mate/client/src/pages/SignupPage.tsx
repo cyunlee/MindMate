@@ -31,21 +31,21 @@ function SignupPage() {
 
   //최종적으로 계산된 상태 값을 바탕으로 isValidAccount 상태 업데이트 (무한 리렌더링 방지)
   useEffect(() => {
-    // if (userid.length >= 6) setIsValidID(true);
-    // else setIsValidID(false);
+     if (userid.trim().length >= 6) setIsValidID(true);
+    else setIsValidID(false);
 
-    if (pwValidCheck.test(password)) setIsValidPassword(true);
+    if (pwValidCheck.test(password.trim())) setIsValidPassword(true);
     else setIsValidPassword(false);
 
     if (
-      password.length > 0 &&
-      confirmPassword.length > 0 &&
-      password === confirmPassword
+      password.trim().length > 0 &&
+      confirmPassword.trim().length > 0 &&
+      password.trim() === confirmPassword.trim()
     )
       setIsValidConfirmPassword(true);
     else setIsValidConfirmPassword(false);
 
-    if (nickname.length >= 2) setIsValidNickname(true);
+    if (nickname.trim().length >= 2) setIsValidNickname(true);
     else setIsValidNickname(false);
 
     if (
@@ -109,8 +109,19 @@ function SignupPage() {
         url: '/api/random',
       })
       let adjectiveArr = res.data.adjective;
-      console.log('adjective', res.data.adjective);
-      console.log('noun', res.data.noun);
+      let nounArr = res.data.noun;
+
+      let idx1 = Math.floor((Math.random() * 20 - 1) + 1);
+      let idx2 = Math.floor((Math.random() * 20 - 1) + 1);
+
+      let randomAdj = adjectiveArr[idx1].adjective;
+      let randomNoun = nounArr[idx2].noun;
+      
+      console.log(randomAdj);
+      console.log(randomNoun);
+
+      setNickname(randomAdj + randomNoun);
+
     } catch (error) {
       console.log('error : ', error);
     }
@@ -125,10 +136,12 @@ function SignupPage() {
         data: {
           userid: userid,
           password: password,
+          confirmPassword: confirmPassword,
           nickname: nickname
         }
       })
       console.log(res.data);
+      alert('회원가입 성공');
     } catch (error) {
       console.log('error : ', error);
     }
@@ -256,8 +269,6 @@ function SignupPage() {
                 register();
               }else if(count === 0){
                 alert('아이디 중복검사를 진행해주세요')
-              }else {
-                alert('입력한 정보를 다시 한 번 확인해주세요');
               }
             }}
           >
