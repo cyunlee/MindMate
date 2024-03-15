@@ -108,7 +108,9 @@ function SignupPage() {
         method: 'get',
         url: '/api/random',
       })
-      console.log(res.data);
+      let adjectiveArr = res.data.adjective;
+      console.log('adjective', res.data.adjective);
+      console.log('noun', res.data.noun);
     } catch (error) {
       console.log('error : ', error);
     }
