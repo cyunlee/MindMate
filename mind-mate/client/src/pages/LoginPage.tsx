@@ -1,4 +1,5 @@
-import React, {ChangeEvent, useState, useEffect, useRef} from 'react';
+import React, {ChangeEvent, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
 import '../styles/LoginPage.scss';
@@ -25,10 +26,13 @@ function LoginPage() {
             })
             console.log(res.data);
             alert('로그인 성공');
+            navigate('/');
         }catch (error) {
             console.log('error : ', error);
         }
     }
+
+    const navigate = useNavigate();
 
     return ( 
         <>
@@ -49,7 +53,7 @@ function LoginPage() {
                     </div>
                     <div className='authbtn-box'>
                         <button className='login-btn' onClick={()=>{login(userid, password)}}>로그인</button>
-                        <button className='signup-btn'>회원가입</button>
+                        <button className='signup-btn' onClick={()=>{navigate('/signup')}}>회원가입</button>
                     </div>
                 </div>
                 <div className='auth-line'></div>
