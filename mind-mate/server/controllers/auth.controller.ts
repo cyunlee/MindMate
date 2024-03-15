@@ -117,3 +117,38 @@ export async function signup(
         next(err);
     }
 }
+
+export async function login(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<Response | void> {
+    const {
+        userid : userid,
+        password : password
+    } = req.body;
+
+    try{
+        let loginUser = await User.findOne({
+            where : {
+                userid : userid,
+                password : password
+            }
+        })
+        if(loginUser){
+            return res.json({
+                msg: 'Login success!',
+                isError: false
+            })
+        }
+        if(!loginUser){
+            return res.json({
+                msg: 'User not found',
+                isError: true
+            })
+        }
+    }catch (err){
+        next(err)
+    }
+    
+}
