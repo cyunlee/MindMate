@@ -62,18 +62,18 @@ function SignupPage() {
   let idMsg = useRef<HTMLDivElement>(null);
   let pwMsg = useRef<HTMLDivElement>(null);
   let confirmPwMsg = useRef<HTMLDivElement>(null);
-  let nicknameMsg = useRef<HTMLDivElement>(null)
+  let nicknameMsg = useRef<HTMLDivElement>(null);
   let duplicatePassMsg = useRef<HTMLDivElement>(null);
 
   //let duplicateCount = 0;
-  const [ count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   //아이디 중복체크, 함수에 값을 파라미터로 전달
   const checkDuplicate = async (userid: any) => {
     try {
       const res = await axios({
         method: 'get',
-        url: '/api/idcheck',
+        url: 'http://localhost:3000/api/idcheck',
         params: {
           userid: userid,
         },
@@ -82,19 +82,19 @@ function SignupPage() {
       //duplicateCount++;
       setCount(count + 1);
 
-      //아이디 조건이 맞지 않을 때 중복검사 진행한 후 메시지 
+      //아이디 조건이 맞지 않을 때 중복검사 진행한 후 메시지
       console.log(res.data);
-      if(idMsg.current!==null) {
+      if (idMsg.current !== null) {
         idMsg.current.innerHTML = '아이디 입력 조건을 확인해주세요';
       }
       //아이디 조건 충족 후 중복검사 진행한 후 메시지
-      if(duplicatePassMsg.current!==null && userid.length>=6) {
+      if (duplicatePassMsg.current !== null && userid.length >= 6) {
         duplicatePassMsg.current.innerHTML = res.data.msg;
       }
       //아이디 조건 충족 후 중복검사 진행한 후 결과에 따라 유효성 셋팅
-      if(userid.length>=6 && res.data.isDuplicated===false) {
+      if (userid.length >= 6 && res.data.isDuplicated === false) {
         setIsValidID(true);
-      }else {
+      } else {
         setIsValidID(false);
       }
     } catch (error) {
@@ -103,16 +103,18 @@ function SignupPage() {
   };
 
   const getRandom = async () => {
+    console.log('client random');
     try {
       const res = await axios({
         method: 'get',
         url: '/api/random',
-      })
+      });
+      console.log('client random try');
       console.log(res.data);
     } catch (error) {
       console.log('error : ', error);
     }
-  }
+  };
 
   //회원가입
   const register = () => {
@@ -158,9 +160,8 @@ function SignupPage() {
                     아이디는 6글자 이상이어야 합니다
                   </div>
                 )}
-                {userid.length >=6 && (
-                  <div className='passMsg' ref={duplicatePassMsg}>
-                  </div>
+                {userid.length >= 6 && (
+                  <div className="passMsg" ref={duplicatePassMsg}></div>
                 )}
               </div>
             </div>
@@ -204,7 +205,9 @@ function SignupPage() {
                   required
                 ></input>
                 {confirmPassword.length > 0 && password !== confirmPassword && (
-                  <div className="errorMsg" ref={confirmPwMsg}>비밀번호가 일치하지 않습니다</div>
+                  <div className="errorMsg" ref={confirmPwMsg}>
+                    비밀번호가 일치하지 않습니다
+                  </div>
                 )}
               </div>
             </div>
@@ -224,9 +227,14 @@ function SignupPage() {
                     onChange={onChangeHandler}
                     required
                   ></input>
-                  <button className="random-btn" onClick={()=>{
-                    getRandom()
-                  }}>랜덤생성</button>
+                  <button
+                    className="random-btn"
+                    onClick={() => {
+                      getRandom();
+                    }}
+                  >
+                    랜덤생성
+                  </button>
                 </div>
                 {nickname.length > 0 && nickname.length <= 1 && (
                   <div className="errorMsg" ref={nicknameMsg}>
@@ -243,9 +251,9 @@ function SignupPage() {
               if (isValidAccount === true) {
                 register();
                 alert('회원가입 성공');
-              }else if(count === 0){
-                alert('아이디 중복검사를 진행해주세요')
-              }else {
+              } else if (count === 0) {
+                alert('아이디 중복검사를 진행해주세요');
+              } else {
                 alert('입력한 정보를 다시 한 번 확인해주세요');
               }
             }}

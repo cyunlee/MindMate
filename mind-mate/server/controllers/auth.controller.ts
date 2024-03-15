@@ -5,94 +5,86 @@ const Adjective = db.Adjective;
 const Noun = db.Noun;
 
 export async function idcheck(
-    req: Request,
-    res: Response,
-    next: NextFunction
+  req: Request,
+  res: Response,
+  next: NextFunction
 ): Promise<Response | void> {
-    const {
-        userid
-    } = req.query;
+  const { userid } = req.query;
 
-    try{
-        let existingUser = await User.findOne({
-            where: {userid: req.query.userid}
-        })
+  try {
+    let existingUser = await User.findOne({
+      where: { userid: req.query.userid },
+    });
 
-        if(existingUser){
-            return res.json({
-                msg: '이미 존재하는 아이디가 있습니다',
-                isDuplicated: true,
-                isError: true
-            })
-        }else if(!existingUser){
-            return res.json({
-                msg: '사용 가능한 아이디입니다',
-                isDuplicated: false,
-                isError: false
-            })
-        }
-
-    }catch (err){
-        next(err);
+    if (existingUser) {
+      return res.json({
+        msg: '이미 존재하는 아이디가 있습니다',
+        isDuplicated: true,
+        isError: true,
+      });
+    } else if (!existingUser) {
+      return res.json({
+        msg: '사용 가능한 아이디입니다',
+        isDuplicated: false,
+        isError: false,
+      });
     }
+  } catch (err) {
+    next(err);
+  }
 }
 
 export async function random(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) : Promise<Response | void> {
-    try{
-        //조건 없이 해도 될지는 모르겠지만...
-        let randomAdjective = await Adjective.findAll({});
-        let randomNoun = await Noun.findAll({});
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> {
+  try {
+    //조건 없이 해도 될지는 모르겠지만...
+    let randomAdjective = await Adjective.findAll({});
+    let randomNoun = await Noun.findAll({});
 
-        return res.json({
-            adjective: randomAdjective,
-            noun: randomNoun
-        })
-    }catch (err){
-        next(err);
-    }
+    return res.json({
+      adjective: randomAdjective,
+      noun: randomNoun,
+    });
+  } catch (err) {
+    next(err);
+  }
 }
 
 export async function signup(
-    req: Request,
-    res: Response,
-    next: NextFunction
+  req: Request,
+  res: Response,
+  next: NextFunction
 ): Promise<Response | void> {
-    const {
-        userid,
-        password,
-        confirmPassword,
-        nickname
-    } = req.body;
+  const { userid, password, confirmPassword, nickname } = req.body;
 
-    if (!userid || userid.trim().length <= 5) {
-        return res.json({
-            msg: '아이디는 6글자 이상이어야 합니다',
-            isError: true,
-        });
-    }
+  if (!userid || userid.trim().length <= 5) {
+    return res.json({
+      msg: '아이디는 6글자 이상이어야 합니다',
+      isError: true,
+    });
+  }
 
-    if (!password || password.trim().length <= 5) {
-        return res.json({
-            msg: '비밀번호는 4글자 이상이어야 합니다',
-            isError: true,
-        });
-    }
+  if (!password || password.trim().length <= 5) {
+    return res.json({
+      msg: '비밀번호는 4글자 이상이어야 합니다',
+      isError: true,
+    });
+  }
 
-    if (!(password === confirmPassword)) {
-        return res.json({
-            msg: '비밀번호를 다시 한 번 확인해주세요',
-            isError: true,
-        });
-    }
+  if (!(password === confirmPassword)) {
+    return res.json({
+      msg: '비밀번호를 다시 한 번 확인해주세요',
+      isError: true,
+    });
+  }
 
-    if (!nickname || nickname.trim().length < 2) {
-        return res.json({
-            msg: '닉네임은 2글자 이상이어야 합니다',
-            isError: true,
-        });
-    }
+  if (!nickname || nickname.trim().length < 2) {
+    return res.json({
+      msg: '닉네임은 2글자 이상이어야 합니다',
+      isError: true,
+    });
+  }
 }
