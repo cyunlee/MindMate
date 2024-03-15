@@ -43,9 +43,9 @@ export async function random(
     next: NextFunction
 ) : Promise<Response | void> {
     try{
-        //조건 없이 해도 될지는 모르겠지만...
-        let randomAdjective = await Adjective.findAll({});
-        let randomNoun = await Noun.findAll({});
+
+        let randomAdjective = await Adjective.findAll();
+        let randomNoun = await Noun.findAll();
 
         return res.json({
             adjective: randomAdjective,
@@ -64,35 +64,10 @@ export async function signup(
     const {
         userid,
         password,
-        confirmPassword,
         nickname
     } = req.body;
 
-    if (!userid || userid.trim().length <= 5) {
-        return res.json({
-            msg: '아이디는 6글자 이상이어야 합니다',
-            isError: true,
-        });
-    }
-
-    if (!password || password.trim().length <= 5) {
-        return res.json({
-            msg: '비밀번호는 4글자 이상이어야 합니다',
-            isError: true,
-        });
-    }
-
-    if (!(password === confirmPassword)) {
-        return res.json({
-            msg: '비밀번호를 다시 한 번 확인해주세요',
-            isError: true,
-        });
-    }
-
-    if (!nickname || nickname.trim().length < 2) {
-        return res.json({
-            msg: '닉네임은 2글자 이상이어야 합니다',
-            isError: true,
-        });
-    }
+    console.log(userid);
+    console.log(password);
+    console.log(nickname);
 }
