@@ -103,13 +103,11 @@ function SignupPage() {
   };
 
   const getRandom = async () => {
-    console.log('client random');
     try {
       const res = await axios({
         method: 'get',
         url: '/api/random',
-      });
-      console.log('client random try');
+      })
       console.log(res.data);
     } catch (error) {
       console.log('error : ', error);
@@ -117,11 +115,21 @@ function SignupPage() {
   };
 
   //회원가입
-  const register = () => {
-    console.log(userid);
-    console.log(password);
-    console.log(confirmPassword);
-    console.log(nickname);
+  const register = async () => {
+    try {
+      const res = await axios({
+        method: 'post',
+        url: '/api/signup',
+        data: {
+          userid: userid,
+          password: password,
+          nickname: nickname
+        }
+      })
+      console.log(res.data);
+    } catch (error) {
+      console.log('error : ', error);
+    }
   };
 
   return (
@@ -227,14 +235,9 @@ function SignupPage() {
                     onChange={onChangeHandler}
                     required
                   ></input>
-                  <button
-                    className="random-btn"
-                    onClick={() => {
-                      getRandom();
-                    }}
-                  >
-                    랜덤생성
-                  </button>
+                  <button className="random-btn" onClick={()=>{
+                    getRandom()
+                  }}>랜덤생성</button>
                 </div>
                 {nickname.length > 0 && nickname.length <= 1 && (
                   <div className="errorMsg" ref={nicknameMsg}>
@@ -250,10 +253,9 @@ function SignupPage() {
             onClick={() => {
               if (isValidAccount === true) {
                 register();
-                alert('회원가입 성공');
-              } else if (count === 0) {
-                alert('아이디 중복검사를 진행해주세요');
-              } else {
+              }else if(count === 0){
+                alert('아이디 중복검사를 진행해주세요')
+              }else {
                 alert('입력한 정보를 다시 한 번 확인해주세요');
               }
             }}

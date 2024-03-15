@@ -53,6 +53,25 @@ export async function random(
   }
 }
 
+export async function random(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<Response | void> {
+    try{
+
+        let randomAdjective = await Adjective.findAll();
+        let randomNoun = await Noun.findAll();
+
+        return res.json({
+            adjective: randomAdjective,
+            noun: randomNoun
+        })
+    }catch (err){
+        next(err);
+    }
+}
+
 export async function signup(
   req: Request,
   res: Response,
@@ -87,4 +106,14 @@ export async function signup(
       isError: true,
     });
   }
+}
+    const {
+        userid,
+        password,
+        nickname
+    } = req.body;
+
+    console.log(userid);
+    console.log(password);
+    console.log(nickname);
 }
