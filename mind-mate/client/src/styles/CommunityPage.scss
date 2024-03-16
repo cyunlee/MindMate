@@ -1,0 +1,224 @@
+@import '../styles/Common.scss';
+
+$category-size: 15px;
+
+.community-container{
+    width: 100%;
+    height: 870px;
+    margin-top: 36px;
+    @include flex-horizontal-space-evenly;
+}
+.category-container{
+    width: 160px;
+    height: 530px;
+    margin-left: 162px;
+    @include flex-vertical-space-between;
+
+    .category{
+        width: 160px;
+        height: 66px;
+        border: 1px solid #DCDCDC;
+        border-radius: 12px;
+        cursor: pointer;
+
+        img{
+            opacity: 0.8;
+        }
+    }
+
+    .category:hover{
+        background-color: $focus-color;
+        border: 1px solid $focus-color;
+    }
+
+    .category.all{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex;
+        justify-content: center;
+    }
+
+    .category.all:hover{
+        color: #fff;
+    }
+
+    .category.study{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex-horizontal-space-evenly;
+
+        #study-img{
+            width: 48px;
+            height: 44px;
+        }
+    }
+
+    .category.study:hover{
+        color: #fff;
+    }
+
+    .category.money{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex-horizontal-space-evenly;
+
+        #money-img{
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .category.money:hover{
+        color: #fff;
+    }
+
+    .category.work{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex-horizontal-space-evenly;
+
+        #work-img{
+            width: 44px;
+            height: 48px;
+        }
+    }
+
+    .category.work:hover{
+        color: #fff;
+    }
+
+    .category.love{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex-horizontal-space-evenly;
+
+        #love-img{
+            width: 40px;
+            height: 38px;
+        }
+    }
+
+    .category.love:hover{
+        color: #fff;
+    }
+
+    .category.people{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex-horizontal-space-evenly;
+
+        #friend-img{
+            width: 56px;
+            height: 60px;
+        }
+    }
+
+    .category.people:hover{
+        color: #fff;
+    }
+
+    .category.general{
+        font-size: $category-size;
+        font-weight: bold;
+        color: $secondary-color;
+        @include flex-horizontal-space-evenly;
+
+        #general-img{
+            width: 56px;
+            height: 60px;
+        }
+    }
+
+    .category.general:hover{
+        color: #fff;
+    }
+}
+
+.board-container{
+    width: 730px;
+    height: 870px;
+    margin-right: 162px;
+
+    .title-container{
+        width: 712px;
+        height: 93px;
+        border: 1px solid #F9F6E3;
+        border-radius: 10px;
+        background-image: url('../image/titlebg.png');
+        background-size: cover;
+        @include flex-horizontal-space-between;
+        #community-content{
+            font-size: 26px;
+            font-weight: bold;
+            color: #454545;
+            margin-left: 21px;
+        }
+        #community-quote{
+            font-size: 14px;
+            color: #A2A2A2;
+            margin-left: 21px;
+        }
+    }
+
+    .btn-container{
+        width: 708px;
+        height: 34px;
+        margin-top: 16px;
+        @include flex;
+
+        .btn-set{
+            width: fit-content;
+            height: fit-content;
+            @include flex;
+            margin-left: auto;
+        }
+
+        .write-post{
+            width: 86px;
+            height: 34px;
+            border-radius: 6px;
+            background-color: $major-color;
+            border: 1px solid $major-color;
+            color: #fff;
+            font-weight: bold;
+            margin-right: 10px;
+            cursor: pointer;
+            @include flex-horizontal-space-evenly;
+
+            .write-img{
+                width: 19px;
+                height: 19px;
+            }
+        }
+        .filter-post{
+            width: 86px;
+            height: 34px;
+            border-radius: 6px;
+            background-color: #fff;
+            border: 1px solid $secondary-color;
+            color: $secondary-color;
+            font-weight: bold;
+            cursor: pointer;
+            @include flex-horizontal-space-evenly;
+
+            .filter-img{
+                width: 19px;
+                height: 19px;
+            }
+            
+        }
+    }
+    .board-line{
+        width: 730px;
+        height: 2px;
+        background-color: $border-color;
+        margin-top: 22px;
+        margin-bottom: 22px;
+    }
+}
