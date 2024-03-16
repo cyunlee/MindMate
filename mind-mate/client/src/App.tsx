@@ -9,7 +9,6 @@ import ChatPage from './pages/ChatPage';
 import TestChat from './pages/TestChat';
 import CommunityPage from './pages/CommunityPage';
 import RoutinePage from './pages/RoutinePage';
-import PlacePage from './pages/PlacesPage';
 import PlacesPage from './pages/PlacesPage';
 import CounsultPage from './pages/ConsultPage';
 
