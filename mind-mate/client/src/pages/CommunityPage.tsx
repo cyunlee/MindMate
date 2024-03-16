@@ -5,6 +5,7 @@ function CommunityPage() {
     return ( 
         <>
             <TopBar/>
+            
         </>
      );
 }

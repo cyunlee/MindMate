@@ -8,6 +8,10 @@ import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import TestChat from './pages/TestChat';
 import CommunityPage from './pages/CommunityPage';
+import RoutinePage from './pages/RoutinePage';
+import PlacePage from './pages/PlacesPage';
+import PlacesPage from './pages/PlacesPage';
+import CounsultPage from './pages/ConsultPage';
 
 interface AppProps {
   socket: Socket;
@@ -22,6 +26,9 @@ const App: React.FC<AppProps> = ({ socket }) => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/community" element={<CommunityPage/>}/>
+          <Route path="/routine" element={<RoutinePage/>}/>
+          <Route path="/places" element={<PlacesPage/>}/>
+          <Route path="/consult" element={<CounsultPage/>}/>
           <Route
             path="/testchat/:roomId"
             element={<ChatPage />} // Pass the socket instance as a prop

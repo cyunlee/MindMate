@@ -80,6 +80,22 @@
             .bottom-btn:hover{
                 color: $focus-color;
             }
+
+            .bottom-btn.community{
+                color: $focus-color;
+            }
+            
+            .bottom-btn.routine{
+                color: $focus-color;
+            }
+
+            .bottom-btn.places{
+                color: $focus-color;
+            }
+
+            .bottom-btn.consult{
+                color: $focus-color;
+            }
         }
 
         .mypage-icon{
@@ -92,3 +108,4 @@
         }
     }
 }
+
