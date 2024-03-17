@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
 import Post from '../components/CommunityPage/Post';
@@ -14,6 +15,8 @@ function CommunityPage() {
     const friends = require('../image/friends.png');
     const general = require('../image/general.png');
     const people = require('../image/people.png');
+
+    const navigate = useNavigate();
 
     return ( 
         <>
@@ -38,7 +41,7 @@ function CommunityPage() {
                     </div>
                     <div className='btn-container'>
                         <div className='btn-set'>
-                            <div className='write-post'><img className='write-img' alt='글작성' src={pen}/>글작성</div>
+                            <div className='write-post' onClick={()=>navigate('/writepost')}><img className='write-img' alt='글작성' src={pen}/>글작성</div>
                             <div className='filter-post'><img className='filter-img' alt='필터' src={filter}/>최신순</div>
                         </div>
                     </div>
@@ -46,6 +49,8 @@ function CommunityPage() {
                     <div className='article-container'>
                         <Post/>
                     </div>
+                    <div className='page-change'></div>
+                    <div className='post-search'></div>
                 </div>
 
 

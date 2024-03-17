@@ -1,0 +1,124 @@
+@import '../styles/Common.scss';
+
+.writepost-container{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    .writepost-banner{
+        width: 730px;
+        height: fit-content;
+        margin-top: 38px;
+
+        .writepost-content-title{
+            font-size: 27px;
+            font-weight: bold;
+            color: #454545;
+        }
+
+        .writepost-content{
+            font-size: 14px;
+            color: #A2A2A2;
+        }
+    }
+
+    .writepost-line{
+        width: 730px;
+        height: 2px;
+        background-color: #C6C6C6;
+        margin-top: 20px;
+        margin-bottom: 32px;
+    }
+
+    .writepost-content{
+        width: 730px;
+        height: fit-content;
+        margin-bottom: 16px;
+
+        .writepost-title{
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        #writepost-category-select{
+            width: 720px;
+            height: 36px;
+            border: 1px solid #B6B6B6;
+            border-radius: 10px;
+            font-size: 16px;
+            padding-left: 16px;
+        }
+
+        select{
+            appearance: none;
+            background: url('../image/chevron-down.png') no-repeat right 24px center;
+        }
+
+        #writepost-title-input{
+            width: 700px;
+            height: 36px;
+            border: 1px solid #B6B6B6;
+            border-radius: 10px;
+            font-size: 16px;
+            padding-left: 16px;
+        }
+
+        #writepost-title-input::placeholder{
+            color: #9C9C9C;
+        }
+
+        #writepost-article-input{
+            width: 688px;
+            height: 400px;
+            border: 1px solid #B6B6B6;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 16px;
+        }
+
+        textarea{
+            resize: none;
+        }
+
+        #writepost-article-input::placeholder{
+            color: #9C9C9C;
+            font-size: 16px;
+        }
+
+    }
+
+    .writepost-btn-container{
+        width: 720px;
+        height: fit-content;
+        text-align: right;
+        margin-bottom: 60px;
+
+        #temporary-save{
+            margin-right: 10px;
+            color: $secondary-color;
+            font-weight: bold;
+            width: 86px;
+            height: 34px;
+            border: 1px solid $secondary-color;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #complete-post{
+            color: $secondary-color;
+            font-weight: bold;
+            width: 86px;
+            height: 34px;
+            border: 1px solid $secondary-color;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    }
+}
