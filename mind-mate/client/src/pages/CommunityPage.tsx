@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
+import Post from '../components/CommunityPage/Post';
 
 function CommunityPage() {
 
@@ -42,7 +43,9 @@ function CommunityPage() {
                         </div>
                     </div>
                     <div className='board-line'></div>
-                    <div className='article-container'></div>
+                    <div className='article-container'>
+                        <Post/>
+                    </div>
                 </div>
 
 

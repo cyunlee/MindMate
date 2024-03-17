@@ -1,0 +1,91 @@
+@import '../styles/Common.scss';
+
+.postdiv-container{
+    width: 734px;
+    height: 106px;
+    border-bottom: 1px solid $border-color;
+    @include flex-horizontal-space-between;
+
+    .postcontent-container{
+        width: fit-content;
+        height: fit-content;
+
+        .postcontent-box{
+            width: fit-content;
+            height: fit-content;
+            margin-bottom: 5px;
+            @include flex-horizontal-space-between;
+
+            #postcontent-title{
+                font-size: 16px;
+                font-weight: bold;
+                margin-right: 10px;
+                color: #454545;
+                cursor: pointer;
+            }
+
+            #postcontent-time{
+                font-size: 13px;
+                color: #454545;
+            }
+
+            #postcontent-photo{
+                width: 26px;
+                height: 26px;
+                border: 1px solid $border-color;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+
+            #postcontent-name{
+                font-size: 14px;
+                color: #454545;
+                margin-right: 10px;
+            }
+
+            #postcontent-category{
+                font-size: 14px;
+                font-weight: bold;
+                color: $major-color;
+            }
+
+            .postemoji-box{
+                width: fit-content;
+                height: fit-content;
+                margin-right: 10px;
+                @include flex-horizontal-space-between;
+
+                .postinfo-num{
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: $secondary-color;
+                }
+            }
+        }
+
+    }
+
+    .postanswer-container{
+        width: 156px;
+        height: 70px;
+        @include flex-horizontal-space-between;
+
+        .response-box{
+            width: 70px;
+            height: 70px;
+            border: 1px solid $border-color;
+            border-radius: 10px;
+            cursor: pointer;
+            @include flex-vertical-space-evenly;
+
+            .response-title{
+                font-size: 14px;
+            }
+
+            .response-number{
+                font-size: 24px;
+                font-weight: 500;
+            }
+        }
+    }
+}
