@@ -31,33 +31,57 @@ function SignupPage() {
   let [isValidAccount, setIsValidAccount] = useState<boolean>(false);
 
   //최종적으로 계산된 상태 값을 바탕으로 isValidAccount 상태 업데이트 (무한 리렌더링 방지)
+  // useEffect(() => {
+  //    if (userid.trim().length >= 6) setIsValidID(true);
+  //   else setIsValidID(false);
+
+  //   if (pwValidCheck.test(password.trim())) setIsValidPassword(true);
+  //   else setIsValidPassword(false);
+
+  //   if (
+  //     password.trim().length > 0 &&
+  //     confirmPassword.trim().length > 0 &&
+  //     password.trim() === confirmPassword.trim()
+  //   )
+  //     setIsValidConfirmPassword(true);
+  //   else setIsValidConfirmPassword(false);
+
+  //   if (nickname.trim().length >= 2) setIsValidNickname(true);
+  //   else setIsValidNickname(false);
+
+  //   if (
+  //     isValidID &&
+  //     isValidPassword &&
+  //     isValidConfirmPassword &&
+  //     isValidNickname
+  //   )
+  //     setIsValidAccount(true);
+  //   else setIsValidAccount(false);
+  // }, [userid, password, confirmPassword, nickname]);
+
   useEffect(() => {
-     if (userid.trim().length >= 6) setIsValidID(true);
-    else setIsValidID(false);
-
-    if (pwValidCheck.test(password.trim())) setIsValidPassword(true);
-    else setIsValidPassword(false);
-
-    if (
+    setIsValidID(userid.trim().length >= 6);
+  }, [userid]);
+  
+  useEffect(() => {
+    setIsValidPassword(pwValidCheck.test(password.trim()));
+  }, [password, pwValidCheck]);
+  
+  useEffect(() => {
+    setIsValidConfirmPassword(
       password.trim().length > 0 &&
       confirmPassword.trim().length > 0 &&
       password.trim() === confirmPassword.trim()
-    )
-      setIsValidConfirmPassword(true);
-    else setIsValidConfirmPassword(false);
-
-    if (nickname.trim().length >= 2) setIsValidNickname(true);
-    else setIsValidNickname(false);
-
-    if (
-      isValidID &&
-      isValidPassword &&
-      isValidConfirmPassword &&
-      isValidNickname
-    )
-      setIsValidAccount(true);
-    else setIsValidAccount(false);
-  }, [userid, password, confirmPassword, nickname]);
+    );
+  }, [password, confirmPassword]);
+  
+  useEffect(() => {
+    setIsValidNickname(nickname.trim().length >= 2);
+  }, [nickname]);
+  
+  useEffect(() => {
+    setIsValidAccount(isValidID && isValidPassword && isValidConfirmPassword && isValidNickname);
+  }, [isValidID, isValidPassword, isValidConfirmPassword, isValidNickname]);
 
   //에러메시지
   let idMsg = useRef<HTMLDivElement>(null);
@@ -268,7 +292,7 @@ function SignupPage() {
           <button
             className="signup-btn"
             onClick={() => {
-              if (isValidAccount === true) {
+              if (isValidAccount===true) {
                 register();
               }else if(count === 0){
                 alert('아이디 중복검사를 진행해주세요')

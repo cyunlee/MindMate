@@ -71,6 +71,8 @@ export async function signup(
         confirmPassword
     } = req.body;
 
+    console.log(req.body);
+
     try{
         let existingUser = await User.findOne({
             where: {userid: req.body.userid}
