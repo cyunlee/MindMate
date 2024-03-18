@@ -5,6 +5,9 @@ export const NounModel = (sequelize: any, DataTypes: any) => {
             noun: {
                 type: DataTypes.STRING(30)
             }
+        },
+        {
+            freezeTableName: true,
         }
     )
     return Noun;

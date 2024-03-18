@@ -20,15 +20,18 @@ const sequelize = new Sequelize(
 import { UserModel } from './User';
 import { AdjectiveModel } from './Adjective';
 import { NounModel } from './Noun';
+import { PostModel } from './Post';
 
 const User = UserModel(sequelize, Sequelize);
 const Adjective = AdjectiveModel(sequelize, Sequelize);
 const Noun = NounModel(sequelize, Sequelize);
+const Post = PostModel(sequelize, Sequelize);
 
 export const db = {
     User,
     Adjective,
     Noun,
+    Post,
     sequelize,
     Sequelize,
 };

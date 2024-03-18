@@ -16,6 +16,11 @@ function CommunityPage() {
     const general = require('../image/general.png');
     const people = require('../image/people.png');
 
+    const prevall = require('../image/prev-all.png');
+    const prevarrow = require('../image/prev-arrow.png');
+    const nextall = require('../image/next-all.png');
+    const nextarrow = require('../image/next-arrow.png');
+
     const navigate = useNavigate();
 
     return ( 
@@ -48,9 +53,42 @@ function CommunityPage() {
                     <div className='board-line'></div>
                     <div className='article-container'>
                         <Post/>
+                        <Post/>
+                        <Post/>
+                        <Post/>
+                        <Post/>
                     </div>
-                    <div className='page-change'></div>
-                    <div className='post-search'></div>
+                    <div className='post-search'>
+                        <select name="" id="">
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="writer">작성자</option>
+                        </select>
+                        <input type="text" />
+                        <button>검색</button>
+                    </div>
+                    <div className='page-change'>
+                        <div className='prev-btn-set'>
+                            <img src={prevall} alt="전체이전" />
+                            <img src={prevarrow} alt="바로이전" />
+                        </div>
+                        <div className='numberset'>
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                            <div>10</div>
+                        </div>
+                        <div className='next-btn-set'>
+                            <img src={nextarrow} alt="바로다음" />
+                            <img src={nextall} alt="전체다음" />
+                        </div>
+                    </div>
                 </div>
 
 

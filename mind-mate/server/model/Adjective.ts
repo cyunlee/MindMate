@@ -5,6 +5,9 @@ export const AdjectiveModel = (sequelize: any, DataTypes: any) => {
             adjective: {
                 type: DataTypes.STRING(30)
             }
+        },
+        {
+            freezeTableName: true,
         }
     );
     return Adjective;

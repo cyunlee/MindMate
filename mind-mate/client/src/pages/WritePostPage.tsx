@@ -15,12 +15,12 @@ function WritePostPage() {
                     <div className='writepost-title'>카테고리</div>
                     <select id='writepost-category-select' >
                         <option value="" disabled selected>카테고리를 선택해주세요</option>
-                        <option value="">학업·진로</option>
-                        <option value="">금전·사업</option>
-                        <option value="">직장</option>
-                        <option value="">연애</option>
-                        <option value="">대인관계</option>
-                        <option value="">일반 고민</option>
+                        <option value="study">학업·진로</option>
+                        <option value="money">금전·사업</option>
+                        <option value="work">직장</option>
+                        <option value="love">연애</option>
+                        <option value="people">대인관계</option>
+                        <option value="general">일반 고민</option>
                     </select>
                 </div>
                 <div className='writepost-content'>
@@ -32,7 +32,7 @@ function WritePostPage() {
                     <textarea id='writepost-article-input' placeholder="내용을 입력해주세요"></textarea>
                 </div>
                 <div className='writepost-btn-container'>
-                    <button id='temporary-save'>임시저장</button>
+                    {/* <button id='temporary-save'>임시저장</button> */}
                     <button id='complete-post'>출간하기</button>
                 </div>
             </div>           

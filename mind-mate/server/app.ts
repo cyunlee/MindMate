@@ -9,6 +9,7 @@ import sequelize from 'sequelize';
 import path from 'path';
 import { Op } from 'sequelize';
 import { authRouter } from './routes/auth.routes';
+import { postRouter } from './routes/post.routes';
 import { db } from './model';
 import {
   ClientToServerEvents,
@@ -16,14 +17,18 @@ import {
   InterServerEvents,
   SocketData,
 } from './types/types';
+
 const app = express();
+
 
 const SERVERPORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', authRouter);
+app.use('/api', postRouter);
 app.use(cors());
+
 
 const server = createServer(app); // Create HTTP server
 

@@ -128,6 +128,7 @@ export async function login(
         password : password
     } = req.body;
 
+
     try{
         let loginUser = await User.findOne({
             where : {

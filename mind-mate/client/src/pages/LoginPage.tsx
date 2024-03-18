@@ -21,12 +21,10 @@ function LoginPage() {
                 url: '/api/login',
                 data: {
                 usreid: userid,
-                password: password
+                password: password,
             }
             })
-            console.log(res.data);
-            alert('로그인 성공');
-            navigate('/');
+
         }catch (error) {
             console.log('error : ', error);
         }
