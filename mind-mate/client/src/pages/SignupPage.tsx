@@ -80,6 +80,8 @@ function SignupPage() {
         },
       });
 
+      console.log(res.data);
+
       //duplicateCount++;
       setCount(count + 1);
 

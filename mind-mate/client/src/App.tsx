@@ -12,6 +12,7 @@ import RoutinePage from './pages/RoutinePage';
 import PlacesPage from './pages/PlacesPage';
 import CounsultPage from './pages/ConsultPage';
 import WritePostPage from './pages/WritePostPage';
+import DetailPostPage from './pages/DetailPostPage';
 
 interface AppProps {
   socket: Socket;
@@ -27,6 +28,7 @@ const App: React.FC<AppProps> = ({ socket }) => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/community" element={<CommunityPage/>}/>
           <Route path='/writepost' element={<WritePostPage/>}/>
+          <Route path='/detailpost' element={<DetailPostPage/>}/>
           <Route path="/routine" element={<RoutinePage/>}/>
           <Route path="/places" element={<PlacesPage/>}/>
           <Route path="/consult" element={<CounsultPage/>}/>

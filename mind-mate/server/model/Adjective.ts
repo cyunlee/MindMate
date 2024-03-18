@@ -6,9 +6,6 @@ export const AdjectiveModel = (sequelize: any, DataTypes: any) => {
                 type: DataTypes.STRING(30)
             }
         },
-        {
-            freezeTableName: true,
-        }
     );
     return Adjective;
 }

@@ -20,10 +20,11 @@ function LoginPage() {
                 method: 'post',
                 url: '/api/login',
                 data: {
-                usreid: userid,
+                userid: userid,
                 password: password,
-            }
-            })
+                }
+            });
+            console.log(res.data);
 
         }catch (error) {
             console.log('error : ', error);

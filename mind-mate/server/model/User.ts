@@ -15,9 +15,6 @@ export const UserModel = (sequelize: any, DataTypes: any) => {
                 allowNull: false,
             }
         },
-        {
-            freezeTableName: true,
-        }
     );
     return User;
 }
