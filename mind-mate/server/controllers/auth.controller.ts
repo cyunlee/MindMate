@@ -141,10 +141,10 @@ export async function login(
             }
         });
         if(loginUser){
-            // const token = jwt.sign({userid: userid}, JWT_SECRET, {expiresIn: '1h'});
+            const token = jwt.sign({userid: userid}, JWT_SECRET, {expiresIn: '1h'});
             return res.json({
                 msg: '로그인 성공',
-                // token: token,
+                token: token,
                 isError: false
             })
         }
@@ -160,30 +160,30 @@ export async function login(
     
 }
 
-// JWT 인증 미들웨어
+//JWT 인증 미들웨어
 
-// interface CustomRequest extends Request {
-//     userid?: string; // userid 속성은 선택적으로 정의
-// }
+interface CustomRequest extends Request {
+    userid?: string; // userid 속성은 선택적으로 정의
+}
 
-// export function authenticateJWT(req: CustomRequest, res: Response, next: NextFunction) {
-//     const token = req.headers.authorization;
+export function authenticateJWT(req: CustomRequest, res: Response, next: NextFunction) {
+    const token = req.headers.authorization;
 
-//     if (token) {
-//         jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
-//             if (err) {
-//                 return res.status(403).json({ msg: 'Failed to authenticate token' });
-//             }
+    if (token) {
+        jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+            if (err) {
+                return res.status(403).json({ msg: 'Failed to authenticate token' });
+            }
 
-//             // decodedToken에서 userid를 가져옴
-//             const userid = (decodedToken as JwtPayload).userid;
+            // decodedToken에서 userid를 가져옴
+            const userid = (decodedToken as JwtPayload).userid;
 
-//             // req에 userid를 추가
-//             req.userid = userid;
+            // req에 userid를 추가
+            req.userid = userid;
 
-//             next();
-//         });
-//     } else {
-//         return res.status(401).json({ msg: 'No token provided' });
-//     }
-// }
+            next();
+        });
+    } else {
+        return res.status(401).json({ msg: 'No token provided' });
+    }
+}

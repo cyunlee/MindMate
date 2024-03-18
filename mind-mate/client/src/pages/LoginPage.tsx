@@ -24,10 +24,14 @@ function LoginPage() {
                 password: password,
                 }
             });
-            console.log(res.data);
             alert(res.data.msg);
-            if(res.data.isError===false) navigate('/');
 
+            if(res.data.isError===false) {
+                const token = res.data.token;
+                localStorage.setItem('token', token);
+                navigate('/');
+            }
+            
         }catch (error) {
             console.log('error : ', error);
         }
