@@ -14,9 +14,9 @@ function LoginPage() {
         if (name === 'password') setPassword(value);
       };
 
-    const login = async () => {
+    const signin = async () => {
         try {
-            const res = await({
+            const res = await axios({
                 method: 'post',
                 url: '/api/login',
                 data: {
@@ -25,6 +25,8 @@ function LoginPage() {
                 }
             });
             console.log(res.data);
+            alert(res.data.msg);
+            if(res.data.isError===false) navigate('/');
 
         }catch (error) {
             console.log('error : ', error);
@@ -51,7 +53,7 @@ function LoginPage() {
                             </div>
                     </div>
                     <div className='authbtn-box'>
-                        <button className='login-btn' onClick={()=>{login()}}>로그인</button>
+                        <button className='login-btn' onClick={()=>{signin()}}>로그인</button>
                         <button className='signup-btn' onClick={()=>{navigate('/signup')}}>회원가입</button>
                     </div>
                 </div>
