@@ -1,6 +1,6 @@
 export const NounModel = (sequelize: any, DataTypes: any) => {
     const Noun = sequelize.define(
-        'Noun',
+        'Nouns',
         {
             noun: {
                 type: DataTypes.STRING(30)

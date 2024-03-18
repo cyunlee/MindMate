@@ -127,15 +127,15 @@ export async function login(
     next: NextFunction
 ) : Promise<Response | void> {
     const {
-        userid : userid,
-        password : password
+        userid,
+        password
     } = req.body;
 
     try{
         let loginUser = await User.findOne({
             where : {
-                userid : userid,
-                password : password
+                userid: req.body.userid,
+                password: req.body.password
             }
         });
         if(loginUser){

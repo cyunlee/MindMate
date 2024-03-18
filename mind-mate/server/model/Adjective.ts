@@ -1,6 +1,6 @@
 export const AdjectiveModel = (sequelize: any, DataTypes: any) => {
     const Adjective = sequelize.define(
-        'Adjective',
+        'Adjectives',
         {
             adjective: {
                 type: DataTypes.STRING(30)

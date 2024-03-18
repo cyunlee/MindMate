@@ -131,7 +131,7 @@ function SignupPage() {
   }
 
   //회원가입
-  const register = async (userid: any, password: any, confirmPassword: any, nickname: any) => {
+  const register = async () => {
     try {
       const res = await axios({
         method: 'post',
@@ -269,7 +269,7 @@ function SignupPage() {
             className="signup-btn"
             onClick={() => {
               if (isValidAccount === true) {
-                register(userid, password, confirmPassword, nickname);
+                register();
               }else if(count === 0){
                 alert('아이디 중복검사를 진행해주세요')
               }

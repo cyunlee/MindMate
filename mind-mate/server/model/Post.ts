@@ -1,6 +1,6 @@
 export const PostModel = (sequelize:any, DataTypes: any) => {
     const Post = sequelize.define(
-        'Post',
+        'Posts',
     {
         postid: {
             type: DataTypes.INTEGER,

@@ -14,7 +14,7 @@ function LoginPage() {
         if (name === 'password') setPassword(value);
       };
 
-    const login = async (userid: any, password: any) => {
+    const login = async () => {
         try {
             const res = await({
                 method: 'post',
@@ -51,7 +51,7 @@ function LoginPage() {
                             </div>
                     </div>
                     <div className='authbtn-box'>
-                        <button className='login-btn' onClick={()=>{login(userid, password)}}>로그인</button>
+                        <button className='login-btn' onClick={()=>{login()}}>로그인</button>
                         <button className='signup-btn' onClick={()=>{navigate('/signup')}}>회원가입</button>
                     </div>
                 </div>

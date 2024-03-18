@@ -19,12 +19,15 @@ import {
 } from './types/types';
 
 const app = express();
+const bodyParser = require('body-parser');
 
 
 const SERVERPORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', authRouter);
 app.use('/api', postRouter);
 app.use(cors());

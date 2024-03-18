@@ -1,6 +1,6 @@
 export const UserModel = (sequelize: any, DataTypes: any) => {
     const User = sequelize.define(
-        'User',
+        'Users',
         {
             userid: {
                 primaryKey: true,
@@ -14,7 +14,7 @@ export const UserModel = (sequelize: any, DataTypes: any) => {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             }
-        },
+        }
     );
     return User;
 }
