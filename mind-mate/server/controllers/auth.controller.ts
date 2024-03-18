@@ -1,11 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { db } from '../model';
+import { Next } from 'mysql2/typings/mysql/lib/parsers/typeCast';
+import { access } from 'fs';
+
 const User = db.User;
 const Adjective = db.Adjective;
 const Noun = db.Noun;
 
-const JWT_SECRET: string = process.env.JWT_SECRET as string;
+import crypto from 'crypto';
+
+const generateRandomString = (length: number): string => {
+    return crypto.randomBytes(Math.ceil(length / 2))
+      .toString('hex')
+      .slice(0, length);
+  };
+  
+const JWT_SECRET: string = generateRandomString(32);
 
 export async function idcheck(
     req: Request,
@@ -141,10 +152,10 @@ export async function login(
             }
         });
         if(loginUser){
-            const token = jwt.sign({userid: userid}, JWT_SECRET, {expiresIn: '1h'});
+            let accessToken = jwt.sign({userid: loginUser.userid}, JWT_SECRET, {expiresIn: '1h'});
             return res.json({
                 msg: '로그인 성공',
-                token: token,
+                accessToken: accessToken,
                 isError: false
             })
         }

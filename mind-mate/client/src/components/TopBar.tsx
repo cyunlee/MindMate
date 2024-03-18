@@ -1,5 +1,7 @@
 import '../styles/TopBar.scss';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function TopBar() {
     const logoUrl = '/logo.png';
@@ -11,6 +13,25 @@ function TopBar() {
     const isRoutinePage = location.pathname === '/routine';
     const isPlacesPage = location.pathname === '/places';
     const isConsultPage = location.pathname === '/consult';
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(()=>{
+        const accessToken = localStorage.getItem('accessToken');
+        if(accessToken) setIsLoggedIn(true);
+    }, [])
+
+    const logout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('expiredTime');
+
+        setIsLoggedIn(false);
+
+        alert('로그아웃 성공');
+        navigate('/login');
+        console.log(localStorage);
+    }
+
     return ( 
         <>
             <div className='topbar'>
@@ -18,7 +39,7 @@ function TopBar() {
                     <div className='top-btn-container'>
                         <div className='top-btn' onClick={()=>{navigate('/signup')}}>회원가입</div>
                         <div className='top-line'></div>
-                        <div className='top-btn' onClick={()=>{navigate('/login')}}>로그인</div>
+                        {isLoggedIn ? <div className='top-btn' onClick={()=>{logout()}}>로그아웃</div> : <div className='top-btn' onClick={()=>{navigate('/login')}}>로그인</div>}
                         <div className='top-line'></div>
                         <button className='auth-btn'>전문가인증</button>
                     </div>

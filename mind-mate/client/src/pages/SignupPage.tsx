@@ -7,6 +7,8 @@ import '../styles/SignupPage.scss';
 function SignupPage() {
   //react hook에서 state 사용
 
+  const navigate = useNavigate();
+
   const [userid, setUserid] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -169,6 +171,7 @@ function SignupPage() {
       })
       console.log(res.data);
       alert('회원가입 성공');
+      navigate('/login');
     } catch (error) {
       console.log('error : ', error);
     }
