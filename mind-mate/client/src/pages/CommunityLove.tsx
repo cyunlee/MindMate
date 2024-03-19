@@ -4,7 +4,7 @@ import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
 import Post from '../components/CommunityPage/Post';
 
-function CommunityPage() {
+function CommunityLove() {
 
     const pen = require('../image/pen.png');
     const filter = require('../image/menu.png');
@@ -35,7 +35,7 @@ function CommunityPage() {
                     <div className={`category work ${currentPath === '/community/work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
                     <div className={`category love ${currentPath === '/community/love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
                     <div className={`category people ${currentPath === '/community/people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
-                    <div className={`category general ${currentPath === '/community/general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')}}><img id='general-img' src={general} alt="일반고민" />일반 고민</div>
+                    <div className={`category general ${currentPath === '/community/general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')}} ><img id='general-img' src={general} alt="일반고민" />일반 고민</div>
                 </div>
                 <div className='board-container'>
                     <div className='title-container'>
@@ -100,4 +100,4 @@ function CommunityPage() {
      );
 }
 
-export default CommunityPage;
+export default CommunityLove;

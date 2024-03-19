@@ -16,6 +16,8 @@ function WritePostPage() {
     const titleRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
 
+    const navigate = useNavigate();
+
     const onCategoryHandler = () => {
         const categoryVal : any = categoryRef.current?.value;
         setCategory(categoryVal);
@@ -49,6 +51,7 @@ function WritePostPage() {
                 }
             })
             console.log(res.data);
+            navigate('/community');
 
         } catch (error) {
         console.log('error : ', error);

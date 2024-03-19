@@ -19,6 +19,7 @@ $category-size: 15px;
         height: 66px;
         border: 1px solid #DCDCDC;
         border-radius: 12px;
+        @include flex-horizontal-space-between;
         cursor: pointer;
 
         img{
@@ -138,6 +139,13 @@ $category-size: 15px;
     .category.general:hover{
         color: #fff;
     }
+
+    .category.color{
+        color: #fff;
+        background: $focus-color;
+    }
+
+    
 }
 
 .board-container{
@@ -238,6 +246,7 @@ $category-size: 15px;
             width: 66px;
             height: 27px;
             padding-left: 4px;
+            margin-right: 4px;
             border: 1px solid #A2A2A2;
             appearance: none;
             background: url('../image/dropdown.png') no-repeat right 4px center;

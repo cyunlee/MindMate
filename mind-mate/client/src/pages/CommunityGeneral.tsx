@@ -4,7 +4,7 @@ import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
 import Post from '../components/CommunityPage/Post';
 
-function CommunityPage() {
+function CommunityGeneral() {
 
     const pen = require('../image/pen.png');
     const filter = require('../image/menu.png');
@@ -100,4 +100,4 @@ function CommunityPage() {
      );
 }
 
-export default CommunityPage;
+export default CommunityGeneral;

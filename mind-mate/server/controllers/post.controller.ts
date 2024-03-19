@@ -33,7 +33,7 @@ export async function writepost(
         const decoded = await jwt.verify(authorization, JWT_SECRET) as { userid: string, nickname: string };
 
         console.log(decoded);
-        
+
         const newPost = await Post.create({
             postType: category,
             title: title,
@@ -50,4 +50,12 @@ export async function writepost(
     }catch(err){
         next(err);
     }
+}
+
+export async function getAllPost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    
 }
