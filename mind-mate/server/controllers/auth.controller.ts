@@ -152,7 +152,7 @@ export async function login(
             }
         });
         if(loginUser){
-            let accessToken = jwt.sign({userid: loginUser.userid}, JWT_SECRET, {expiresIn: '1h'});
+            let accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname}, JWT_SECRET, {expiresIn: '1h'});
             return res.json({
                 msg: '로그인 성공',
                 accessToken: accessToken,
