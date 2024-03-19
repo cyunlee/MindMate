@@ -25,12 +25,14 @@ function TopBar() {
             try{
                 const res = await axios({
                 method: 'get',
-                url: '/api/userinfo',
+                url: '/api/verify',
                 headers: {
                     Authorization: accessToken
                     }
                 });
                 const verifyid = res.data.decoded?.userid;
+                console.log(res.data);
+                console.log(verifyid);
                 setUserid(verifyid);
             }catch(err){
                 console.log(err);

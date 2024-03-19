@@ -6,4 +6,4 @@ authRouter.post('/signup', controller.signup);
 authRouter.get('/idcheck', controller.idcheck);
 authRouter.get('/random', controller.random);
 authRouter.post('/login', controller.login);
-authRouter.get('/userinfo', controller.userinfo)
+authRouter.get('/verify', controller.verifyToken)

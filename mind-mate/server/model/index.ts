@@ -27,13 +27,34 @@ const Adjective = AdjectiveModel(sequelize, Sequelize);
 const Noun = NounModel(sequelize, Sequelize);
 const Post = PostModel(sequelize, Sequelize);
 
+//User가 작성한 Post들 (1:N)
+User.hasMany(
+  Post,
+  
+)
+
+
+///User가 작성한 댓글들 (1:N)
+
+
+//User가 작성한 답변들 (1:N)
+
+
+//Post에 달린 댓글들 (1:N)
+
+
+//Post에 달린 답변들(1:N)
+
+
+
+
 export const db = {
-    User,
-    Adjective,
-    Noun,
-    Post,
-    sequelize,
-    Sequelize,
+  User,
+  Adjective,
+  Noun,
+  Post,
+  sequelize,
+  Sequelize,
 };
 
 db.Sequelize = Sequelize;

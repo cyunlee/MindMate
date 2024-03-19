@@ -173,7 +173,7 @@ export async function login(
     
 }
 
-export async function userinfo(
+export async function verifyToken(
     req: Request,
     res: Response,
     next: NextFunction

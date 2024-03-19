@@ -14,6 +14,12 @@ function LoginPage() {
         if (name === 'password') setPassword(value);
       };
 
+    const enterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.keyCode === 13) {
+            signin();
+        }
+    }
+
     const signin = async () => {
         try {
             const res = await axios({
@@ -48,8 +54,8 @@ function LoginPage() {
                 <div className='auth-title'>로그인</div>
                 <div className='login-box'>
                     <div className='login-contents'>
-                            <input type="text" placeholder='아이디를 입력해주세요' className='auth-content' name="userid" value={userid} onChange={onChangeHandler}/>
-                            <input type="password" placeholder='비밀번호를 입력해주세요' className='auth-content' name="password" value={password} onChange={onChangeHandler}/>
+                            <input type="text" placeholder='아이디를 입력해주세요' className='auth-content' name="userid" value={userid} onChange={onChangeHandler} required/>
+                            <input type="password" placeholder='비밀번호를 입력해주세요' className='auth-content' name="password" value={password} onChange={onChangeHandler} onKeyDown={enterkey} required/>
                             <div className='find-info-container'>
                                 <div className='infos'>
                                     <div className='find-content'>비밀번호 찾기</div>
