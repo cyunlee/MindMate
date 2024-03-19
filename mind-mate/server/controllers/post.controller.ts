@@ -70,3 +70,25 @@ export async function getAllPost(
     }
 }
 
+export async function getPost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    try {
+
+        const {category} = req.query;
+
+        let Posts = await Post.findAll({
+             where: {postType: category}
+        })
+
+        return res.json({
+            Posts: Posts,
+            isError: false
+        })
+    }catch(err){
+        next(err);
+    }
+}
+

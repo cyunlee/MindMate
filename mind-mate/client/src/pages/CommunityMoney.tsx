@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
 import Post from '../components/CommunityPage/Post';
+import axios from 'axios';
 
 function CommunityMoney() {
 
@@ -24,18 +25,48 @@ function CommunityMoney() {
     const navigate = useNavigate();
     const currentPath = window.location.pathname;
 
+    const [category, setCategory] = useState('money');
+
+    useEffect(()=>{
+        if(currentPath === '/community') setCategory('all');
+        if(currentPath === '/community/study') setCategory('study');
+        if(currentPath === '/community/money') setCategory('money');
+        if(currentPath === '/community/work') setCategory('work');
+        if(currentPath === '/community/love') setCategory('love');
+        if(currentPath === '/community/people') setCategory('people');
+        if(currentPath === '/community/general') setCategory('general');
+
+        getPost()
+    }, [])
+
+
+    const getPost = async () => {
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/api/getpost',
+                params: {
+                    category: category
+                }
+            })
+            console.log('money post', res.data);
+        }catch(error){
+            console.log('error : ', error);
+        }
+    }
+
     return ( 
         <>
             <TopBar/>
             <div className='community-container'>
                 <div className='category-container'>
-                    <div className={`category all ${currentPath === '/community' ? 'color' : ''}`}  onClick={()=>{navigate('/community')}}>전체</div>
-                    <div className={`category study ${currentPath === '/community/study' ? 'color' : ''}`}  onClick={()=>{navigate('/community/study')}}><img id='study-img' src={study} alt="학업/진로" />학업·진로</div>
-                    <div className={`category money ${currentPath === '/community/money' ? 'color' : ''}`}  onClick={()=>{navigate('/community/money')}}><img id='money-img' src={money} alt="금전/사업" />금전·사업</div>
-                    <div className={`category work ${currentPath === '/community/work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
-                    <div className={`category love ${currentPath === '/community/love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
-                    <div className={`category people ${currentPath === '/community/people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
-                    <div className={`category general ${currentPath === '/community/general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')}}><img id='general-img' src={general} alt="일반고민" />일반 고민</div>
+                    <div className={`category all ${category === 'all' ? 'color' : ''}`}  onClick={()=>{navigate('/community')}}>전체</div>
+                    <div className={`category study ${category === 'stduy' ? 'color' : ''}`}  onClick={()=>{navigate('/community/study')}}><img id='study-img' src={study} alt="학업/진로" />학업·진로</div>
+                    <div className={`category money ${category === 'money' ? 'color' : ''}`}  onClick={()=>{navigate('/community/money')}}><img id='money-img' src={money} alt="금전/사업" />금전·사업</div>
+                    <div className={`category work ${category === 'work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
+                    <div className={`category love ${category === 'love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
+                    <div className={`category people ${category === 'people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
+                    <div className={`category general ${category==='general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')} }><img id='general-img' src={general} alt="일반고민" />일반 고민</div>
                 </div>
                 <div className='board-container'>
                     <div className='title-container'>

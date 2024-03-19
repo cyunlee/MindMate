@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
 import Post from '../components/CommunityPage/Post';
+import axios from 'axios';
 
 function CommunityPage() {
 
@@ -23,6 +24,22 @@ function CommunityPage() {
 
     const navigate = useNavigate();
     const currentPath = window.location.pathname;
+
+    const getAllPost = async () => {
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/api/getallpost'
+            })
+            console.log('all post', res.data);
+        }catch(error){
+            console.log('error : ', error);
+        }
+    }
+
+    useEffect(()=>{
+        getAllPost()
+    }, []);
 
     return ( 
         <>
