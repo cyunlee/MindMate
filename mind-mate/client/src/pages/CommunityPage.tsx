@@ -25,6 +25,29 @@ function CommunityPage() {
     const navigate = useNavigate();
     const currentPath = window.location.pathname;
 
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    const checkLogin = async () => {
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/api/verify',
+                headers: {
+                    Authorization: accessToken
+                }
+            })
+            if(res.data.isError===true){
+                setIsLogin(false);
+            }else if(res.data.isError===false){
+                setIsLogin(true);
+            }
+        }catch(error) {
+            console.log('error : ', error);
+        }
+    }
+
     const getAllPost = async () => {
         try {
             const res = await axios({
@@ -39,6 +62,7 @@ function CommunityPage() {
 
     useEffect(()=>{
         getAllPost()
+        checkLogin()
     }, []);
 
     return ( 
@@ -64,7 +88,7 @@ function CommunityPage() {
                     </div>
                     <div className='btn-container'>
                         <div className='btn-set'>
-                            <div className='write-post' onClick={()=>navigate('/writepost')}><img className='write-img' alt='글작성' src={pen}/>글작성</div>
+                            {isLogin===true ? <div className='write-post' onClick={()=>navigate('/writepost')}><img className='write-img' alt='글작성' src={pen}/>글작성</div> : ''}
                             <div className='filter-post'><img className='filter-img' alt='필터' src={filter}/>최신순</div>
                         </div>
                     </div>
