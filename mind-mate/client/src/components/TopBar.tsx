@@ -31,17 +31,21 @@ function TopBar() {
                     }
                 });
                 const verifyid = res.data.decoded?.userid;
-                console.log(res.data);
-                console.log(verifyid);
-                setUserid(verifyid);
+                if(verifyid!==undefined){
+                    setUserid(verifyid);
+                    setIsLoggedIn(true);
+                }else if(verifyid===undefined){
+                    setIsLoggedIn(false);
+                }
             }catch(err){
                 console.log(err);
             }
         }
 
         if(accessToken) {
-            setIsLoggedIn(true);
-            getUserInfo();
+            getUserInfo();    
+        }else if(!accessToken) {
+            setIsLoggedIn(false);
         }
     }, [])
 
