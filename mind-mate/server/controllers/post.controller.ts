@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 const Post = db.Post;
 const JWT_SECRET: string = process.env.JWT_SECRET as string;
 
-export async function writepost(
+export async function writePost(
     req: Request,
     res: Response,
     next: NextFunction
@@ -57,5 +57,12 @@ export async function getAllPost(
     res: Response,
     next: NextFunction
 ): Promise<Response | void> {
-    
+    const {
+        category,
+        title,
+        content,
+        userid,
+        nickname
+    } = req.query
 }
+

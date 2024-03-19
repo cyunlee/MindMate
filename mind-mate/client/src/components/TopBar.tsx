@@ -10,7 +10,7 @@ function TopBar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const isCommunityPage = location.pathname === '/community';
+    const isCommunityPage = location.pathname === '/community' || location.pathname === '/community/study' || location.pathname === '/community/money' || location.pathname === '/community/work' || location.pathname === '/community/love' || location.pathname === '/community/people' || location.pathname === '/community/general'
     const isRoutinePage = location.pathname === '/routine';
     const isPlacesPage = location.pathname === '/places';
     const isConsultPage = location.pathname === '/consult';
