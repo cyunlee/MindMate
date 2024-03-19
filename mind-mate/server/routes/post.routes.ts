@@ -3,3 +3,4 @@ import * as controller from '../controllers/post.controller';
 export const postRouter = express();
 
 postRouter.post('/writepost', controller.writepost);
+

@@ -1,7 +1,61 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
+
 import TopBar from "../components/TopBar";
 import '../styles/WritePostPage.scss';
 
+
 function WritePostPage() {
+
+    const [category, setCategory] = useState('');
+    const [title, setTitle] = useState<String>("");
+    const [content, setContent] = useState('');
+
+    const categoryRef = useRef<HTMLSelectElement>(null);
+    const titleRef = useRef<HTMLInputElement>(null);
+    const contentRef = useRef<HTMLTextAreaElement>(null);
+
+    const onCategoryHandler = () => {
+        const categoryVal : any = categoryRef.current?.value;
+        setCategory(categoryVal);
+    }
+
+    const onTitleHandler = () => {
+        const titleVal = titleRef.current?.value;
+        setTitle(titleVal || ''); //titleVal이 undefined일 경우 ''으로 state 설정
+    }
+
+    const onContentHandler = () => {
+        const contentVal = contentRef.current?.value
+        setContent(contentVal || ''); //contentVal이 undefined일 경우 ''으로 state 설정
+    }
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    //글 출간하는 함수
+    const writePost = async () => {
+        try {
+            const res = await axios({
+                method: 'post',
+                url: '/api/writepost',
+                data: {
+                    category: category,
+                    title: title,
+                    content: content,
+                },
+                headers: {
+                    Authorization: accessToken
+                }
+            })
+            console.log(res.data);
+
+        } catch (error) {
+        console.log('error : ', error);
+         }
+    }
+
+
     return ( 
         <>
             <TopBar/>
@@ -13,8 +67,8 @@ function WritePostPage() {
                 <div className='writepost-line'></div>
                 <div className='writepost-content'>
                     <div className='writepost-title'>카테고리</div>
-                    <select id='writepost-category-select' >
-                        <option value="" disabled selected>카테고리를 선택해주세요</option>
+                    <select id='writepost-category-select' ref={categoryRef} onChange={onCategoryHandler}>
+                        <option disabled selected>카테고리를 선택해주세요</option>
                         <option value="study">학업·진로</option>
                         <option value="money">금전·사업</option>
                         <option value="work">직장</option>
@@ -25,15 +79,15 @@ function WritePostPage() {
                 </div>
                 <div className='writepost-content'>
                     <div className='writepost-title'>제목</div>
-                    <input id='writepost-title-input' placeholder="제목을 입력해주세요"></input>
+                    <input id='writepost-title-input' placeholder="제목을 입력해주세요" ref={titleRef} onChange={onTitleHandler}></input>
                 </div>
                 <div className='writepost-content'>
                     <div className='writepost-title'>본문</div>
-                    <textarea id='writepost-article-input' placeholder="내용을 입력해주세요"></textarea>
+                    <textarea id='writepost-article-input' placeholder="내용을 입력해주세요" ref={contentRef} onChange={onContentHandler}></textarea>
                 </div>
                 <div className='writepost-btn-container'>
                     {/* <button id='temporary-save'>임시저장</button> */}
-                    <button id='complete-post'>출간하기</button>
+                    <button id='complete-post' onClick={()=>{writePost()}}>출간하기</button>
                 </div>
             </div>           
         </>

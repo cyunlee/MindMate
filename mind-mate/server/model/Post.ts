@@ -7,7 +7,6 @@ export const PostModel = (sequelize:any, DataTypes: any) => {
             allowNull: false,
             primaryKey: true,
             autoIncrement: true
-
         },
         postType: {
             type: DataTypes.STRING(30)
@@ -26,16 +25,7 @@ export const PostModel = (sequelize:any, DataTypes: any) => {
             type: DataTypes.STRING(30),
             allowNull: false
         },
-        likesNum: {
-            type: DataTypes.INTEGER
-        },
-        commentsNum: {
-            type: DataTypes.INTEGER
-        }
     },
-    {
-        freezeTableName: true,
-    }
     );
     return Post;
 }

@@ -13,6 +13,11 @@ export const UserModel = (sequelize: any, DataTypes: any) => {
             nickname: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
+            },
+            isExpert: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue : false
             }
         }
     );
