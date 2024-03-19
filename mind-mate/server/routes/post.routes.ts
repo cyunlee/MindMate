@@ -3,4 +3,5 @@ import * as controller from '../controllers/post.controller';
 export const postRouter = express();
 
 postRouter.post('/writepost', controller.writePost);
+postRouter.get('/getallpost', controller.getAllPost);
 

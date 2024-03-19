@@ -57,12 +57,16 @@ export async function getAllPost(
     res: Response,
     next: NextFunction
 ): Promise<Response | void> {
-    const {
-        category,
-        title,
-        content,
-        userid,
-        nickname
-    } = req.query
+
+    try {
+        let allPosts = await Post.findAll();
+
+        return res.json({
+            allPosts: allPosts,
+            isError: false
+        })
+    }catch (err) {
+        next(err);
+    }
 }
 
