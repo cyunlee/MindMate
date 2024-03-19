@@ -8,15 +8,17 @@ const User = db.User;
 const Adjective = db.Adjective;
 const Noun = db.Noun;
 
-import crypto from 'crypto';
+// import crypto from 'crypto';
 
-const generateRandomString = (length: number): string => {
-    return crypto.randomBytes(Math.ceil(length / 2))
-      .toString('hex')
-      .slice(0, length);
-  };
+// const generateRandomString = (length: number): string => {
+//     return crypto.randomBytes(Math.ceil(length / 2))
+//       .toString('hex')
+//       .slice(0, length);
+//   };
   
-const JWT_SECRET: string = generateRandomString(32);
+// const JWT_SECRET: string = generateRandomString(32);
+
+const JWT_SECRET: string = process.env.JWT_SECRET as string;
 
 export async function idcheck(
     req: Request,
@@ -167,6 +169,38 @@ export async function login(
         }
     }catch (err){
         next(err)
+    }
+    
+}
+
+export async function userinfo(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<Response | void> {
+    const {authorization} = req.headers;
+
+    if(!authorization) {
+        return res.json({
+            msg: '토큰이 없습니다',
+            isError: true
+        })
+    }
+
+    if(authorization) {
+        jwt.verify(authorization, JWT_SECRET, (err, decoded) => {
+            if (err) {
+                return res.json({
+                    msg: '유효하지 않은 토큰입니다',
+                    isError: true
+                })
+            }else {
+                return res.json ({
+                    decoded: decoded,
+                    isError: false 
+                })
+            }
+        })
     }
     
 }

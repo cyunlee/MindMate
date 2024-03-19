@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+
 function TopBar() {
     const logoUrl = '/logo.png';
     const mypageIconUrl = '/user.png';
@@ -15,10 +16,31 @@ function TopBar() {
     const isConsultPage = location.pathname === '/consult';
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userid, setUserid] = useState('');
 
     useEffect(()=>{
         const accessToken = localStorage.getItem('accessToken');
-        if(accessToken) setIsLoggedIn(true);
+
+        const getUserInfo = async () => {
+            try{
+                const res = await axios({
+                method: 'get',
+                url: '/api/userinfo',
+                headers: {
+                    Authorization: accessToken
+                    }
+                });
+                const verifyid = res.data.decoded?.userid;
+                setUserid(verifyid);
+            }catch(err){
+                console.log(err);
+            }
+        }
+
+        if(accessToken) {
+            setIsLoggedIn(true);
+            getUserInfo();
+        }
     }, [])
 
     const logout = () => {
@@ -37,7 +59,7 @@ function TopBar() {
             <div className='topbar'>
                 <div className='top'>
                     <div className='top-btn-container'>
-                        <div className='top-btn' onClick={()=>{navigate('/signup')}}>회원가입</div>
+                        {isLoggedIn ? <div className='top-btn'>{userid}님</div> : <div className='top-btn' onClick={()=>{navigate('/signup')}}>회원가입</div>}
                         <div className='top-line'></div>
                         {isLoggedIn ? <div className='top-btn' onClick={()=>{logout()}}>로그아웃</div> : <div className='top-btn' onClick={()=>{navigate('/login')}}>로그인</div>}
                         <div className='top-line'></div>

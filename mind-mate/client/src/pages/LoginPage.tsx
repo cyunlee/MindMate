@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
 import '../styles/LoginPage.scss';
-import { access } from 'fs';
 
 function LoginPage() {
     const [userid, setUserid] = useState('');

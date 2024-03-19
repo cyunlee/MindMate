@@ -13,7 +13,7 @@
         @include flex;
 
         .top-btn-container{
-            width: 226px;
+            width: fit-content;
             height: 33px;
             position: absolute;
             right: 44px;
@@ -24,6 +24,7 @@
                 font-size: $minor-size;
                 color: $secondary-color;
                 cursor: pointer;
+                margin-right: 8px;
             }
     
             .top-btn:hover{
@@ -34,6 +35,7 @@
                 width: 1px;
                 height: 20px;
                 background-color: $border-color;
+                margin-right: 8px;
             }
     
             .auth-btn{
