@@ -229,13 +229,13 @@ $category-size: 15px;
     }
 
     .post-search{
-        width: 490px;
+        width: 500px;
         height: 34px;
         margin-top: 32px;
         @include flex-horizontal-space-between;
 
         select{
-            width: 53px;
+            width: 66px;
             height: 27px;
             padding-left: 4px;
             border: 1px solid #A2A2A2;
