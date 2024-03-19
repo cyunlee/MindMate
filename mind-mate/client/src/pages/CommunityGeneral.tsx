@@ -89,12 +89,12 @@ function CommunityGeneral() {
             <div className='community-container'>
                 <div className='category-container'>
                     <div className={`category all ${category === 'all' ? 'color' : ''}`}  onClick={()=>{navigate('/community')}}>전체</div>
-                    <div className={`category study ${category === 'study' ? 'color' : ''}`}  onClick={()=>{navigate('/community/study')}}><img id='study-img' src={study} alt="학업/진로" />학업·진로</div>
-                    <div className={`category money ${category === 'money' ? 'color' : ''}`}  onClick={()=>{navigate('/community/money')}}><img id='money-img' src={money} alt="금전/사업" />금전·사업</div>
-                    <div className={`category work ${category === 'work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
-                    <div className={`category love ${category === 'love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
-                    <div className={`category people ${category === 'people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
-                    <div className={`category general ${category==='general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')} }><img id='general-img' src={general} alt="일반고민" />일반고민</div>
+                    <div className={`category study ${category === '학업·진로' ? 'color' : ''}`}  onClick={()=>{navigate('/community/study')}}><img id='study-img' src={study} alt="학업/진로" />학업·진로</div>
+                    <div className={`category money ${category === '금전·사업' ? 'color' : ''}`}  onClick={()=>{navigate('/community/money')}}><img id='money-img' src={money} alt="금전/사업" />금전·사업</div>
+                    <div className={`category work ${category === '직장' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
+                    <div className={`category love ${category === '연애' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
+                    <div className={`category people ${category === '대인관계' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
+                    <div className={`category general ${category==='일반고민' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')} }><img id='general-img' src={general} alt="일반고민" />일반고민</div>
                 </div>
                 <div className='board-container'>
                     <div className='title-container'>
