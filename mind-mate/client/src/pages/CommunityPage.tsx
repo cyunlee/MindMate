@@ -25,6 +25,8 @@ function CommunityPage() {
     const navigate = useNavigate();
     const currentPath = window.location.pathname;
 
+    const [allPostDatas, setAllPostDatas] = useState([]);
+
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
     const accessToken = localStorage.getItem('accessToken');
@@ -54,7 +56,9 @@ function CommunityPage() {
                 method: 'get',
                 url: '/api/getallpost'
             })
-            console.log('all post', res.data);
+
+            setAllPostDatas(res.data.allPosts);
+
         }catch(error){
             console.log('error : ', error);
         }
@@ -76,7 +80,7 @@ function CommunityPage() {
                     <div className={`category work ${currentPath === '/community/work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
                     <div className={`category love ${currentPath === '/community/love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
                     <div className={`category people ${currentPath === '/community/people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
-                    <div className={`category general ${currentPath === '/community/general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')}}><img id='general-img' src={general} alt="일반고민" />일반 고민</div>
+                    <div className={`category general ${currentPath === '/community/general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')}}><img id='general-img' src={general} alt="일반고민" />일반고민</div>
                 </div>
                 <div className='board-container'>
                     <div className='title-container'>
@@ -94,11 +98,16 @@ function CommunityPage() {
                     </div>
                     <div className='board-line'></div>
                     <div className='article-container all'>
-                        <Post/>
-                        <Post/>
-                        <Post/>
-                        <Post/>
-                        <Post/>
+                        {  
+                            allPostDatas.slice(0).reverse().map((postData:any, index) =>(
+                                <Post key={index}
+                                      title={postData.title}
+                                      nickname={postData.nickname}
+                                      createdAt={postData.createdAt}
+                                      category={postData.postType}
+                                />
+                            ))
+                        }
                     </div>
                     <div className='post-search'>
                         <select name="" id="">

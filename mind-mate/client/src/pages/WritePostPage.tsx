@@ -72,12 +72,12 @@ function WritePostPage() {
                     <div className='writepost-title'>카테고리</div>
                     <select id='writepost-category-select' ref={categoryRef} onChange={onCategoryHandler}>
                         <option disabled selected>카테고리를 선택해주세요</option>
-                        <option value="study">학업·진로</option>
-                        <option value="money">금전·사업</option>
-                        <option value="work">직장</option>
-                        <option value="love">연애</option>
-                        <option value="people">대인관계</option>
-                        <option value="general">일반 고민</option>
+                        <option value="학업·진로">학업·진로</option>
+                        <option value="금전·사업">금전·사업</option>
+                        <option value="직장">직장</option>
+                        <option value="연애">연애</option>
+                        <option value="대인관계">대인관계</option>
+                        <option value="일반고민">일반고민</option>
                     </select>
                 </div>
                 <div className='writepost-content'>

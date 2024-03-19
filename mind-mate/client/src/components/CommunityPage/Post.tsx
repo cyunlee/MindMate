@@ -1,6 +1,6 @@
 import '../../styles/PostComponent.scss';
 
-function Post() {
+function Post(props: any) {
 
     const heartEmoji = require('../../image/heart.png');
     const commentEmoji = require('../../image/comment.png');
@@ -11,13 +11,13 @@ function Post() {
             <div className='postdiv-container'>
                 <div className='postcontent-container'>
                     <div className='postcontent-box'>
-                        <div id='postcontent-title'>수능실패와 진로고민</div>
-                        <div id='postcontent-time'>약 1분전</div>
+                        <div id='postcontent-title'>{props.title}</div>
+                        <div id='postcontent-time'>{props.createdAt}</div>
                     </div>
                     <div className='postcontent-box'>
                         <div id='postcontent-photo'></div>
-                        <div id='postcontent-name'>무럭무럭 자라는 새싹</div>
-                        <div id='postcontent-category'>학업·진로</div>
+                        <div id='postcontent-name'>{props.nickname}</div>
+                        <div id='postcontent-category'>{props.category}</div>
                     </div>
                     <div className='postcontent-box'>
                         <div className='postemoji-box'>

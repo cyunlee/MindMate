@@ -25,6 +25,8 @@ function CommunityGeneral() {
     const navigate = useNavigate();
     const currentPath = window.location.pathname;
 
+    const [generalPostDatas, setGeneralPostdatas] = useState([]);
+
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
     const accessToken = localStorage.getItem('accessToken');
@@ -48,16 +50,16 @@ function CommunityGeneral() {
         }
     }
 
-    const [category, setCategory] = useState('general');
+    const [category, setCategory] = useState("일반고민");
 
     useEffect(()=>{
         if(currentPath === '/community') setCategory('all');
-        if(currentPath === '/community/study') setCategory('study');
-        if(currentPath === '/community/money') setCategory('money');
-        if(currentPath === '/community/work') setCategory('work');
-        if(currentPath === '/community/love') setCategory('love');
-        if(currentPath === '/community/people') setCategory('people');
-        if(currentPath === '/community/general') setCategory('general');
+        if(currentPath === '/community/study') setCategory("학업·진로");
+        if(currentPath === '/community/money') setCategory("금전·사업");
+        if(currentPath === '/community/work') setCategory("직장");
+        if(currentPath === '/community/love') setCategory("연애");
+        if(currentPath === '/community/people') setCategory("대인관계");
+        if(currentPath === '/community/general') setCategory("일반고민");
 
         getPost()
         checkLogin()
@@ -75,6 +77,7 @@ function CommunityGeneral() {
                 }
             })
             console.log('general post ', res.data);
+            setGeneralPostdatas(res.data.Posts);
         }catch(error){
             console.log('error : ', error);
         }
@@ -91,7 +94,7 @@ function CommunityGeneral() {
                     <div className={`category work ${category === 'work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
                     <div className={`category love ${category === 'love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
                     <div className={`category people ${category === 'people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
-                    <div className={`category general ${category==='general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')} }><img id='general-img' src={general} alt="일반고민" />일반 고민</div>
+                    <div className={`category general ${category==='general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')} }><img id='general-img' src={general} alt="일반고민" />일반고민</div>
                 </div>
                 <div className='board-container'>
                     <div className='title-container'>
@@ -109,11 +112,16 @@ function CommunityGeneral() {
                     </div>
                     <div className='board-line'></div>
                     <div className='article-container all'>
-                        <Post/>
-                        <Post/>
-                        <Post/>
-                        <Post/>
-                        <Post/>
+                    {  
+                            generalPostDatas.slice(0).reverse().map((postData:any, index) =>(
+                                <Post key={index}
+                                      title={postData.title}
+                                      nickname={postData.nickname}
+                                      createdAt={postData.createdAt}
+                                      category={postData.postType}
+                                />
+                            ))
+                        }
                     </div>
                     <div className='post-search'>
                         <select name="" id="">
