@@ -9,6 +9,7 @@ import '../styles/WritePostPage.scss';
 function WritePostPage() {
 
     const [category, setCategory] = useState('');
+    const [categoryVal, setCategoryVal] = useState('');
     const [title, setTitle] = useState<String>("");
     const [content, setContent] = useState('');
 
@@ -19,8 +20,15 @@ function WritePostPage() {
     const navigate = useNavigate();
 
     const onCategoryHandler = () => {
-        const categoryVal : any = categoryRef.current?.value;
-        setCategory(categoryVal);
+        const categoryWord : any = categoryRef.current?.value;
+        setCategory(categoryWord);
+        if(categoryWord==='전체') setCategoryVal('all');
+        if(categoryWord==='학업·진로') setCategoryVal('study');
+        if(categoryWord==='금전·사업') setCategoryVal('money');
+        if(categoryWord==='직장') setCategoryVal('work');
+        if(categoryWord==='연애') setCategoryVal('love');
+        if(categoryWord==='대인관계') setCategoryVal('people');
+        if(categoryWord==='일반고민') setCategoryVal('general');
     }
 
     const onTitleHandler = () => {
@@ -35,6 +43,7 @@ function WritePostPage() {
 
     const accessToken = localStorage.getItem('accessToken');
 
+
     //글 출간하는 함수
     const writePost = async () => {
         try {
@@ -45,13 +54,14 @@ function WritePostPage() {
                     category: category,
                     title: title,
                     content: content,
+                    categoryVal: categoryVal
                 },
                 headers: {
                     Authorization: accessToken
                 }
             })
             console.log(res.data);
-            navigate('/community');
+            navigate('/community/all');
 
         } catch (error) {
         console.log('error : ', error);

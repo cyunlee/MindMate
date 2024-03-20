@@ -16,7 +16,8 @@ export async function writePost(
     const {
         category,
         title,
-        content
+        content,
+        categoryVal
     } = req.body;
 
     const {authorization} = req.headers;
@@ -38,6 +39,7 @@ export async function writePost(
             postType: category,
             title: title,
             content: content,
+            categoryVal: categoryVal,
             userid: decoded.userid,
             nickname: decoded.nickname 
         })
@@ -87,6 +89,34 @@ export async function getPost(
             Posts: Posts,
             isError: false
         })
+    }catch(err){
+        next(err);
+    }
+}
+
+export async function getSinglePost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    const {createdAt} = req.query;
+    try{
+        let singlePost = await Post.findOne({
+            where: {createdAt: createdAt}
+        })
+
+        if(singlePost){
+            return res.json({
+                singlePost: singlePost,
+                isError: false
+            })
+        }else if(!singlePost){
+            return res.json({
+                msg: '해당하는 포스트가 없습니다',
+                isError: true
+            })
+        }
+
     }catch(err){
         next(err);
     }

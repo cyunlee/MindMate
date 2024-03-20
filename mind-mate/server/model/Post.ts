@@ -9,13 +9,16 @@ export const PostModel = (sequelize:any, DataTypes: any) => {
             autoIncrement: true
         },
         postType: {
-            type: DataTypes.STRING(30)
+            type: DataTypes.STRING(30),
+            allowNull: false
         },
         title: {
-            type: DataTypes.STRING(100)
+            type: DataTypes.STRING(100),
+            allowNull: false
         },
         content: {
             type: DataTypes.STRING(2000),
+            allowNull: false
         },
         userid: {
             type: DataTypes.STRING(30),
@@ -25,6 +28,10 @@ export const PostModel = (sequelize:any, DataTypes: any) => {
             type: DataTypes.STRING(30),
             allowNull: false
         },
+        categoryVal: {
+            type: DataTypes.STRING(30),
+            allowNull: false
+        }
     },
     );
     return Post;
