@@ -10,7 +10,7 @@ function TopBar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const isCommunityPage = location.pathname === '/community' || location.pathname === '/community/study' || location.pathname === '/community/money' || location.pathname === '/community/work' || location.pathname === '/community/love' || location.pathname === '/community/people' || location.pathname === '/community/general'
+    const isCommunityPage = location.pathname === '/community/all' || location.pathname === '/community/study' || location.pathname === '/community/money' || location.pathname === '/community/work' || location.pathname === '/community/love' || location.pathname === '/community/people' || location.pathname === '/community/general'
     const isRoutinePage = location.pathname === '/routine';
     const isPlacesPage = location.pathname === '/places';
     const isConsultPage = location.pathname === '/consult';
@@ -76,7 +76,7 @@ function TopBar() {
                 <div className='bottom'>
                     <img className='logo' alt='logo' src={logoUrl} onClick={()=>{navigate('/')}}/>
                     <div className='bottom-btn-container'>
-                        <div className={`bottom-btn ${isCommunityPage ? 'community' : ''}`} onClick={()=>{navigate('/community')}}>커뮤니티</div>
+                        <div className={`bottom-btn ${isCommunityPage ? 'community' : ''}`} onClick={()=>{navigate('/community/all')}}>커뮤니티</div>
                         <div className={`bottom-btn ${isPlacesPage ? 'places' : ''}`} onClick={()=>{navigate('/places')}}>주변장소</div>
                         <div className={`bottom-btn ${isRoutinePage ? 'routine' : ''}`} onClick={()=>{navigate('/routine')}}>루틴관리</div>
                         <div className={`bottom-btn ${isConsultPage ? 'consult' : ''}`} onClick={()=>{navigate('/consult')}}>상담하기</div>
