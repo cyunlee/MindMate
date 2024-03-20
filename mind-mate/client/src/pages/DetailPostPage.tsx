@@ -61,7 +61,7 @@ function DetailPostPage() {
                             </div>
                         </div>
                     </div>     
-                    <div id='singlepost-content'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quo ipsam quos velit, possimus similique? Reprehenderit officiis magni, ut quasi in cumque minus at illo praesentium molestiae saepe maiores autem.</div>
+                    <div id='singlepost-content'>안녕하세요 반가워요</div>
                     <div className='singlepost-bottombar-container'>
                         <div className='singlepost-reaction-box'>
                             <div className='singlepost-heart-box'>

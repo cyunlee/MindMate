@@ -92,7 +92,7 @@
         }
 
         #singlepost-content {
-            font-size: 18px;
+            font-size: 17px;
             color: $secondary-color;
         }
 
@@ -170,12 +170,14 @@
                     }
 
                     textarea {
-                        width :645px;
-                        height: 110px;
+                        width :629px;
+                        height: 94px;
                         overflow: auto;
                         resize: none;
                         border: 1px solid $border-color;
                         border-radius: 10px;
+                        padding: 8px;
+                        font-size: 15px;
                     }
                 }
 
