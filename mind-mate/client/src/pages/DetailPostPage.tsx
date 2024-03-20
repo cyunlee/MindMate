@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
 import '../styles/DetailPostPage.scss';
+import Comment from '../components/CommunityPage/Comment';
 
 function DetailPostPage() {
     const arrowright = require('../image/arrow-right.png');
@@ -86,7 +87,8 @@ function DetailPostPage() {
                             </div>
                         </div>
                         <div className='comments-box'>
-
+                            <Comment/>
+                            <Comment/>
                         </div>
                     </div> 
                     

@@ -33,7 +33,7 @@
 
             .singlepost-title {
                 color: $secondary-color;
-                margin-top: 4px;
+                margin-top: 8px;
                 font-size: 24px;;
                 font-weight: bold;
             }
@@ -92,7 +92,7 @@
         }
 
         #singlepost-content {
-            font-size: 19px;
+            font-size: 18px;
             color: $secondary-color;
         }
 
@@ -150,7 +150,6 @@
             width: 740px;
             height: fit-content;
             margin-top: 48px;
-            @include flex;
 
             .comment-input-box {
                 width: 740px;
