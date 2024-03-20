@@ -15,7 +15,7 @@
             height: 114px;
 
             .singlepost-category {
-                font-size: 16px;
+                font-size: 15px;
                 color: #A2A2A2;
                 display: flex;
                 align-items: center;
@@ -26,7 +26,7 @@
                 }
 
                 span {
-                    font-size: 16px;
+                    font-size: 15px;
                     color: $major-color;
                 }
             }
@@ -34,7 +34,7 @@
             .singlepost-title {
                 color: $secondary-color;
                 margin-top: 4px;
-                font-size: 28px;;
+                font-size: 24px;;
                 font-weight: bold;
             }
 
@@ -62,20 +62,20 @@
                     }
 
                     #singlepost-info-nickname{
-                        font-size: 17px;
+                        font-size: 15px;
                         font-weight: bold;
                     }
 
                     #singlepost-info-count{
-                        font-size: 17px;
+                        font-size: 15px;
                     }
 
                     #singlepost-info-dot{
-                        font-size: 17px;
+                        font-size: 15px;
                     }
 
                     #singlepost-info-date{
-                        font-size: 17px;
+                        font-size: 15px;
                     }
                 }
                 .singlepost-action-box{
@@ -92,7 +92,7 @@
         }
 
         #singlepost-content {
-            font-size: 21px;
+            font-size: 19px;
             color: $secondary-color;
         }
 
@@ -158,7 +158,7 @@
         #answers-text{
             width: 740px;
             text-align: left;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
 
             span{
