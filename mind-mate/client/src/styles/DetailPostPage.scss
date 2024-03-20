@@ -1,0 +1,180 @@
+@import '../styles/Common.scss';
+
+.detailpost-container{
+    width: 100%;
+    height: fit-content;
+    margin-top: 100px;
+    @include flex-vertical-center;
+
+    .singlepost-container{
+        width: 740px;
+        height: fit-content;
+
+        .singlepost-top-container{
+            width: 740px;
+            height: 114px;
+
+            .singlepost-category {
+                font-size: 16px;
+                color: #A2A2A2;
+                display: flex;
+                align-items: center;
+
+                img {
+                    margin-left: 4px;
+                    margin-right: 4px;
+                }
+
+                span {
+                    font-size: 16px;
+                    color: $major-color;
+                }
+            }
+
+            .singlepost-title {
+                color: $secondary-color;
+                margin-top: 4px;
+                font-size: 28px;;
+                font-weight: bold;
+            }
+
+            .singlepost-topbar-container{
+                @include flex-horizontal-space-between;
+                margin-top : 4px;
+                .singlepost-info-box{
+                    @include flex;
+                    width: fit-content;
+                    height: fit-content;
+
+                    div {
+                        margin-right: 4px;
+                    }
+
+                    img {
+                        margin-right: 4px;
+                    }
+
+                    #singlepost-info-profile{
+                        width: 24px;
+                        height: 24px;
+                        border: 1px solid $border-color;
+                        border-radius: 50%;
+                    }
+
+                    #singlepost-info-nickname{
+                        font-size: 17px;
+                        font-weight: bold;
+                    }
+
+                    #singlepost-info-count{
+                        font-size: 17px;
+                    }
+
+                    #singlepost-info-dot{
+                        font-size: 17px;
+                    }
+
+                    #singlepost-info-date{
+                        font-size: 17px;
+                    }
+                }
+                .singlepost-action-box{
+                    @include flex;
+                    width: fit-content;
+                    height: fit-content;
+                    img{
+                        margin-right: 8px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+
+        #singlepost-content {
+            font-size: 21px;
+            color: $secondary-color;
+        }
+
+        .singlepost-bottombar-container{
+            width: 740px;
+            height: fit-content;
+            margin-top: 30px;
+            padding-bottom: 44px;
+            border-bottom: 4px solid $border-color;
+            @include flex-horizontal-space-between;
+
+            .singlepost-reaction-box{
+                width: fit-content;
+                height: fit-content;
+                @include flex-horizontal-space-between;
+
+                .singlepost-heart-box{
+                    width: fit-content;
+                    height: fit-content;
+                    margin-right: 16px;
+                    @include flex-horizontal-space-between;
+
+                    img{
+                        margin-right: 4px;
+                        cursor: pointer;
+                    }
+                }
+
+                .singlepost-comment-box{
+                    width: fit-content;
+                    height: fit-content;
+                    @include flex-horizontal-space-between;
+
+                    img{
+                        margin-right: 4px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            button {
+                width: 86px;
+                height: 34px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #fff;
+                background-color: $focus-color;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .answers-container{
+        width: 100%;
+        min-height: 500px;
+        height : fit-content;
+        background-image: linear-gradient(to top, $beige-color, #fff);
+        margin-top: 100px;
+        @include flex-vertical-center;
+
+        #answers-text{
+            width: 740px;
+            text-align: left;
+            font-size: 24px;
+            font-weight: bold;
+
+            span{
+                color: $major-color;
+            }
+        }
+
+        .expertanswer-container{
+            width: 740px;
+            height: fit-content;
+        }
+
+        .generalanswer-container{
+            width: 740px;
+            height: fit-content;
+        }
+    }
+
+}

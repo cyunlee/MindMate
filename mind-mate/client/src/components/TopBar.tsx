@@ -1,6 +1,6 @@
 import '../styles/TopBar.scss';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 
@@ -9,8 +9,10 @@ function TopBar() {
     const mypageIconUrl = '/user.png';
     const navigate = useNavigate();
     const location = useLocation();
+    
 
-    const isCommunityPage = location.pathname === '/community/all' || location.pathname === '/community/study' || location.pathname === '/community/money' || location.pathname === '/community/work' || location.pathname === '/community/love' || location.pathname === '/community/people' || location.pathname === '/community/general'
+    const isCommunityPage = location.pathname === '/community/all' || location.pathname === '/community/study' || location.pathname === '/community/money' || location.pathname === '/community/work' || location.pathname === '/community/love' || location.pathname === '/community/people' || location.pathname === '/community/general' 
+
     const isRoutinePage = location.pathname === '/routine';
     const isPlacesPage = location.pathname === '/places';
     const isConsultPage = location.pathname === '/consult';
@@ -47,6 +49,8 @@ function TopBar() {
         }else if(!accessToken) {
             setIsLoggedIn(false);
         }
+
+
     }, [])
 
     const logout = () => {
