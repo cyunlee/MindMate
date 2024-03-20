@@ -13,18 +13,21 @@ import PlacesPage from './pages/PlacesPage';
 import CounsultPage from './pages/ConsultPage';
 import WritePostPage from './pages/WritePostPage';
 import DetailPostPage from './pages/DetailPostPage';
-import CommunityStudy from './pages/CommunityStudy';
-import CommunityMoney from './pages/CommunityMoney';
-import CommunityWork from './pages/CommunityWork';
-import CommunityLove from './pages/CommunityLove';
-import CommunityPeople from './pages/CommunityPeople';
-import CommunityGeneral from './pages/CommunityGeneral';
+// import CommunityStudy from './pages/CommunityStudy';
+// import CommunityMoney from './pages/CommunityMoney';
+// import CommunityWork from './pages/CommunityWork';
+// import CommunityLove from './pages/CommunityLove';
+// import CommunityPeople from './pages/CommunityPeople';
+// import CommunityGeneral from './pages/CommunityGeneral';
+
+import { useParams } from 'react-router-dom';
 
 interface AppProps {
   socket: Socket;
 }
 
 const App: React.FC<AppProps> = ({ socket }) => {
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -37,13 +40,16 @@ const App: React.FC<AppProps> = ({ socket }) => {
           <Route path="/login" element={<LoginPage />} />
 
           {/* 커뮤니티 페이지 */}
-          <Route path="/community" element={<CommunityPage/>}/>
-          <Route path="/community/study" element={<CommunityStudy/>}/>
+          <Route path="/community/:categoryVal" element={<CommunityPage/>}/>
+
+          {/* <Route path="/community/:category" element={<CommunityPage/>}/> */}
+
+          {/* <Route path="/community/study" element={<CommunityStudy/>}/>
           <Route path="/community/money" element={<CommunityMoney/>}/>
           <Route path="/community/work" element={<CommunityWork/>}/>
           <Route path="/community/love" element={<CommunityLove/>}/>
           <Route path="/community/people" element={<CommunityPeople/>}/>
-          <Route path="/community/general" element={<CommunityGeneral/>}/>
+          <Route path="/community/general" element={<CommunityGeneral/>}/> */}
 
           {/* 포스트 페이지 */}
           <Route path='/writepost' element={<WritePostPage/>}/>

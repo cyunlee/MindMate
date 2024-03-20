@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import '../styles/CommunityPage.scss';
 import Post from '../components/CommunityPage/Post';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function CommunityPage() {
 
@@ -26,6 +27,7 @@ function CommunityPage() {
     const currentPath = window.location.pathname;
 
     const [allPostDatas, setAllPostDatas] = useState([]);
+    const [postDatas, setPostDatas] = useState([]);
 
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
@@ -64,23 +66,63 @@ function CommunityPage() {
         }
     }
 
-    useEffect(()=>{
-        getAllPost()
+    const getPost = async (category:any) => {
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/api/getpost',
+                params: {
+                    category: category
+                }
+            })
+            console.log(res)
+            setPostDatas(res.data.Posts);
+            
+        }catch(error){
+            console.log('error : ', error);
+        }
+    }
+
+    const [category, setCategory] = useState('');
+    // const [categoryVal, setCategoryVal] = useState('all');
+    const categoryVal = useParams();
+    const cstring = categoryVal.categoryVal
+
+    const onclick =(url:string) => {
+        navigate(url)
+        if(url==="/community/study") setCategory("학업·진로");
+        if(url==="/community/money") setCategory("금전·사업");
+        if(url==="/community/work") setCategory("직장");
+        if(url==="/community/love") setCategory("연애");
+        if(url==="/community/people") setCategory("대인관계");
+        if(url==="/community/general") setCategory("일반고민");
+        
+        console.log(category);
+    }
+
+    useLayoutEffect(()=>{
+        if(currentPath === '/community/all') {
+            setCategory('전체');
+            // setCategoryVal('all');
+            getAllPost()
+        }
+        getPost(category);
         checkLogin()
-    }, []);
+    }, [currentPath, cstring])
+
 
     return ( 
         <>
             <TopBar/>
             <div className='community-container'>
                 <div className='category-container'>
-                    <div className={`category all ${currentPath === '/community' ? 'color' : ''}`}  onClick={()=>{navigate('/community')}}>전체</div>
-                    <div className={`category study ${currentPath === '/community/study' ? 'color' : ''}`}  onClick={()=>{navigate('/community/study')}}><img id='study-img' src={study} alt="학업/진로" />학업·진로</div>
-                    <div className={`category money ${currentPath === '/community/money' ? 'color' : ''}`}  onClick={()=>{navigate('/community/money')}}><img id='money-img' src={money} alt="금전/사업" />금전·사업</div>
-                    <div className={`category work ${currentPath === '/community/work' ? 'color' : ''}`}  onClick={()=>{navigate('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
-                    <div className={`category love ${currentPath === '/community/love' ? 'color' : ''}`}  onClick={()=>{navigate('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
-                    <div className={`category people ${currentPath === '/community/people' ? 'color' : ''}`}  onClick={()=>{navigate('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
-                    <div className={`category general ${currentPath === '/community/general' ? 'color' : ''}`} onClick={()=>{navigate('/community/general')}}><img id='general-img' src={general} alt="일반고민" />일반고민</div>
+                <div className={`category all ${category === '전체' ? 'color' : ''}`}  onClick={()=>{onclick('/community/all')}}>전체</div>
+                    <div className={`category study ${category === '학업·진로' ? 'color' : ''}`}  onClick={()=>{onclick('/community/study')}}><img id='study-img' src={study} alt="학업/진로" />학업·진로</div>
+                    <div className={`category money ${category === '금전·사업' ? 'color' : ''}`}  onClick={()=>{onclick('/community/money')}}><img id='money-img' src={money} alt="금전/사업" />금전·사업</div>
+                    <div className={`category work ${category === '직장' ? 'color' : ''}`}  onClick={()=>{onclick('/community/work')}}><img id='work-img' src={work} alt="직장" />직장</div>
+                    <div className={`category love ${category === '연애' ? 'color' : ''}`}  onClick={()=>{onclick('/community/love')}}><img id='love-img' src={love} alt="연애" />연애</div>
+                    <div className={`category people ${category === '대인관계' ? 'color' : ''}`}  onClick={()=>{onclick('/community/people')}}><img id='friend-img' src={friends} alt="대인관계" />대인관계</div>
+                    <div className={`category general ${category==='일반고민' ? 'color' : ''}`} onClick={()=>{onclick('/community/general')} }><img id='general-img' src={general} alt="일반고민" />일반고민</div>
                 </div>
                 <div className='board-container'>
                     <div className='title-container'>
@@ -98,16 +140,29 @@ function CommunityPage() {
                     </div>
                     <div className='board-line'></div>
                     <div className='article-container all'>
-                        {  
-                            allPostDatas.slice(0).reverse().map((postData:any, index) =>(
-                                <Post key={index}
-                                      title={postData.title}
-                                      nickname={postData.nickname}
-                                      createdAt={postData.createdAt}
-                                      category={postData.postType}
-                                />
-                            ))
+                        { allPostDatas.length>0 && cstring ==='all' ?  
+                            ( allPostDatas.slice(0).reverse().map((postData:any, index) =>(
+                                    <Post key={index}
+                                        title={postData.title}
+                                        nickname={postData.nickname}
+                                        createdAt={postData.createdAt}
+                                        category={postData.postType}
+                                    />
+                                ))
+                            ) : ''
                         }
+
+                        { (cstring==='study'||cstring==='money'||cstring==='work'||cstring==='love'||cstring==='people'||cstring==='general') ?  
+                            ( postDatas.slice(0).reverse().map((postData:any, index) =>(
+                                    <Post key={index}
+                                        title={postData.title}
+                                        nickname={postData.nickname}
+                                        createdAt={postData.createdAt}
+                                        category={postData.postType}
+                                    />
+                                ))
+                            ) : ''
+                        }    
                     </div>
                     <div className='post-search'>
                         <select name="" id="">
