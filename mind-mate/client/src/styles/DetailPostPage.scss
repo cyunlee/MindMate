@@ -97,7 +97,7 @@
         }
 
         .singlepost-bottombar-container{
-            width: 740px;
+            width: 730px;
             height: fit-content;
             margin-top: 30px;
             padding-bottom: 44px;
@@ -145,6 +145,65 @@
                 cursor: pointer;
             }
         }
+
+        .post-comments-container {
+            width: 740px;
+            height: fit-content;
+            margin-top: 48px;
+            @include flex;
+
+            .comment-input-box {
+                width: 740px;
+                height: 170px;
+                @include flex-vertical-space-between;
+
+                .comment-input-top {
+                    width: 740px;
+                    height: fit-content;
+                    @include flex-pure;
+
+                    #writer-profileimg{
+                        margin-right: 20px;
+                        width: 56px;
+                        height: 56px;
+                        border: 1px solid $border-color;
+                        border-radius: 50%;
+                    }
+
+                    textarea {
+                        width :645px;
+                        height: 110px;
+                        overflow: auto;
+                        resize: none;
+                        border: 1px solid $border-color;
+                        border-radius: 10px;
+                    }
+                }
+
+                .comment-input-bottom{
+                    width: 730px;
+                    height: fit-content;
+                    text-align: right;
+
+                    button{
+                        width: 86px;
+                        height: 34px;
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #fff;
+                        background-color: $major-color;
+                        border: none;
+                        border-radius: 6px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+
+        .vanish {
+            display : none;
+        }
     }
 
     .answers-container{
@@ -178,3 +237,4 @@
     }
 
 }
+

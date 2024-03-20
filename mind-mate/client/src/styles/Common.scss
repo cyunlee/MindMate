@@ -13,6 +13,10 @@ $topbar-size: 20px;
     align-items: center;
 }
 
+@mixin flex-pure(){
+    display: flex;
+}
+
 //세로 방향 가로 가운데
 @mixin flex-vertical-center() {
     display: flex;
