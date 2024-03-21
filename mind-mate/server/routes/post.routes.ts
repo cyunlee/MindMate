@@ -8,8 +8,10 @@ postRouter.post('/writepost', controller.writePost);
 postRouter.get('/getallpost', controller.getAllPost);
 //카테고리별 포스트 가져오기
 postRouter.get('/getpost', controller.getPost);
-//디테일 포스트 가져오기
+//디테일 포스트로 이동하기
 postRouter.get('/getsinglepost', controller.getSinglePost);
+//디테일 포스트 정보 가져오기
+postRouter.get('/getdetailpost', controller.getDetailPost);
 
 
 

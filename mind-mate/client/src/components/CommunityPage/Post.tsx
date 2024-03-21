@@ -10,7 +10,7 @@ function Post(props: any) {
 
     const navigate = useNavigate();
 
-    const {communityVal, postid} = useParams();
+    const {categoryVal, postid} = useParams();
 
     const getSinglePost = async () =>{
         try {

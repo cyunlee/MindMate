@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import { useRef } from 'react';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
@@ -18,6 +18,15 @@ function DetailPostPage() {
 
     const commentsBox = useRef<HTMLDivElement>(null);
 
+    const {postid} = useParams();
+    
+    const [category, setCategory] = useState<any>();
+    const [title, setTitle] = useState();
+    const [nickname, setNickname] = useState();
+    const [createdAt, setCreatedAt] = useState();
+    const [content, setContent] = useState();
+    
+
     const handleCommentOpen = () => {
         switch(isCommentOpen){
             case false :
@@ -29,6 +38,26 @@ function DetailPostPage() {
         }
     }
 
+    const getDetailPost = async() => {
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/api/getdetailpost',
+                params: {
+                    postid: postid
+                }
+            })
+            const detailPost = res.data.detailPost;
+            setCategory(detailPost.postType);
+            setTitle(detailPost.title);
+            setNickname(detailPost.nickname);
+            setCreatedAt(detailPost.createdAt);
+            setContent(detailPost.content);
+        }catch(error){
+            console.log('error :', error);
+        }
+    } 
+
     useEffect(()=>{
         if(isCommentOpen===true && commentsBox.current){
             commentsBox.current.classList.remove('vanish');
@@ -37,6 +66,10 @@ function DetailPostPage() {
         }
     }, [handleCommentOpen])
 
+    useEffect(()=>{
+        getDetailPost()
+    }, [])
+
 
     return ( 
         <>
@@ -44,16 +77,16 @@ function DetailPostPage() {
             <div className='detailpost-container'>
                 <div className='singlepost-container'>
                     <div className='singlepost-top-container'>
-                        <div className='singlepost-category'>커뮤니티|Q&A<img src={arrowright} alt="" /> <span >학업, 진로</span></div>
-                        <div className='singlepost-title'>영어로는 타이틀 한글로는 제목입니당</div>
+                        <div className='singlepost-category'>커뮤니티|Q&A<img src={arrowright} alt="" /> <span >{category}</span></div>
+                        <div className='singlepost-title'>{title}</div>
                         <div className='singlepost-topbar-container'>
                             <div className='singlepost-info-box'>
                                 <div id='singlepost-info-profile'></div>
-                                <div id='singlepost-info-nickname'>부끄러운 어피치</div>
+                                <div id='singlepost-info-nickname'>{nickname}</div>
                                 <img src={eyes} alt="조회수" />
                                 <div id='singlepost-info-count'>456</div>
                                 <div id='singlepost-info-dot'>·</div>
-                                <div id='singlepost-info-date'>하루 전</div>
+                                <div id='singlepost-info-date'>{createdAt}</div>
                             </div>
                             <div className='singlepost-action-box'>
                                 <img src={share} alt="" />
@@ -61,7 +94,7 @@ function DetailPostPage() {
                             </div>
                         </div>
                     </div>     
-                    <div id='singlepost-content'>안녕하세요 반가워요</div>
+                    <div id='singlepost-content'>{content}</div>
                     <div className='singlepost-bottombar-container'>
                         <div className='singlepost-reaction-box'>
                             <div className='singlepost-heart-box'>

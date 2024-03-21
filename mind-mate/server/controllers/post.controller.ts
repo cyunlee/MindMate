@@ -122,3 +122,31 @@ export async function getSinglePost(
     }
 }
 
+export async function getDetailPost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    const {postid} = req.query;
+    try{
+        let detailPost = await Post.findOne({
+            where: {postid: postid}
+        })
+
+        if(detailPost){
+            return res.json({
+                detailPost: detailPost,
+                isError: false
+            })
+        }else if(!detailPost){
+            return res.json({
+                msg: '해당하는 포스트 정보가 없습니다',
+                isError: true
+            })
+        }
+
+    }catch(err){
+        next(err);
+    }
+}
+
