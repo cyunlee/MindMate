@@ -38,6 +38,7 @@ function LoginPage() {
                 localStorage.setItem('accessToken', accessToken);
                 axios.defaults.headers.common['x-access-token'] = accessToken;
                 console.log('로그인 로컬스토리지 결과', localStorage.getItem('accessToken'));
+                navigate('/');
             }
 
         }catch (error) {
