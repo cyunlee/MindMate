@@ -154,7 +154,7 @@ function TopBar() {
                     <div className='top-btn-container'>
                         {isLoggedIn ? <div className='top-btn'>{userid}님</div> : <div className='top-btn' onClick={()=>{navigate('/signup')}}>회원가입</div>}
                         <div className='top-line'></div>
-                        {isLoggedIn ? <div className='top-btn' onClick={()=>{logout();}}>로그아웃</div> : <div className='top-btn' onClick={()=>{navigate('/login');}}>로그인</div>}
+                        {isLoggedIn ? <div className='top-btn' onClick={()=>{logout(); alert('로그아웃 성공');}}>로그아웃</div> : <div className='top-btn' onClick={()=>{navigate('/login');}}>로그인</div>}
                         <div className='top-line'></div>
                         <button className='auth-btn'>전문가인증</button>
                     </div>
