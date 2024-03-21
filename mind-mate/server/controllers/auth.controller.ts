@@ -152,7 +152,7 @@ export async function login(
             }
         });
         if(loginUser){
-            let accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname}, JWT_SECRET, {expiresIn: '1h'});
+            const accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname}, JWT_SECRET, {expiresIn: '1h'});
             return res.json({
                 msg: '로그인 성공',
                 accessToken: accessToken,
@@ -178,6 +178,9 @@ export async function verifyToken(
 ) : Promise<Response | void> {
     const {authorization} = req.headers;
 
+    console.log('verify 백엔드 결과 >>>>>>', authorization)
+   
+
     if(!authorization) {
         return res.json({
             msg: '토큰이 없습니다',
@@ -186,7 +189,7 @@ export async function verifyToken(
     }
 
     if(authorization) {
-        jwt.verify(authorization, JWT_SECRET, (err, decoded) => {
+         jwt.verify(authorization, JWT_SECRET, (err, decoded) => {
             if (err) {
                 return res.json({
                     msg: '유효하지 않은 토큰입니다',

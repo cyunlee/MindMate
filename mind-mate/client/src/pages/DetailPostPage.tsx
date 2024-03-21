@@ -110,7 +110,8 @@ function DetailPostPage() {
                 method : 'post',
                 url : '/api/postcomment',
                 data : {
-                    content : commentContent
+                    content : commentContent,
+                    postid : postid
                 },
                 headers : {
                     Authorization : accessToken

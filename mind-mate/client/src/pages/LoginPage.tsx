@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {redirect, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
 import '../styles/LoginPage.scss';
@@ -34,10 +34,10 @@ function LoginPage() {
             console.log(res.data);
 
             if(res.data.isError===false) {
-                let accessToken= res.data.accessToken;
+                const accessToken= res.data.accessToken;
                 localStorage.setItem('accessToken', accessToken);
                 axios.defaults.headers.common['x-access-token'] = accessToken;
-                navigate('/');
+                console.log('로그인 로컬스토리지 결과', localStorage.getItem('accessToken'));
             }
 
         }catch (error) {

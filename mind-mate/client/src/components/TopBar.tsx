@@ -22,6 +22,7 @@ function TopBar() {
 
     useEffect(()=>{
         const accessToken = localStorage.getItem('accessToken');
+        console.log("top bar accessToken >>>>", accessToken);
 
         const getUserInfo = async () => {
             try{
@@ -32,6 +33,7 @@ function TopBar() {
                     Authorization: accessToken
                     }
                 });
+                console.log('top bar verify 결과 >>>>>>', res.data);
                 const verifyid = res.data.decoded?.userid;
                 if(verifyid!==undefined){
                     setUserid(verifyid);

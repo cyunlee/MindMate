@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 import {db} from '../model';
 
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 const Comment = db.Comment;
 
@@ -14,38 +14,48 @@ export async function postComment(
     next: NextFunction
 ): Promise<Response | void> {
     const {
-        content 
+        content,
+        postid
     } = req.body;
 
-    const { authorization } = req.headers;
+
+    let { authorization } = req.headers;
 
     try {
 
         if(typeof authorization !== 'string'){
             return res.status(400).json({
-                msg: '유효하지 않은 토큰입니다',
+                msg: '토큰 타입이 string이 아닙니다',
                 isError: true
             });
         }
+        try{
+            const decoded = jwt.verify(authorization, JWT_SECRET) as { userid: string, nickname: string };
 
-        const decoded = await jwt.verify(authorization, JWT_SECRET) as { userid: string, nickname: string };
+             console.log("decode: ", decoded, "postid: ", postid, "content: ", content)
 
-        let newComment = await Comment.create({
-            nickname: decoded.nickname,
-            content: content
-        })
+            const newComment = await Comment.create({
+                nickname: decoded.nickname,
+                content: content,
+                postid: postid,
+            })
 
-        if(newComment){
-            return res.json({
+             return res.json({
                 msg: '댓글 생성완료',
                 isError: false
             })
-        }else if(!newComment){
-            return res.json({
-                msg: '댓글 생성 실패',
-                isError: true
-            })
+
+            }catch(err){
+                if(err instanceof TokenExpiredError){
+                    return res.status(401).json({
+                        msg: '토큰이 만료되었습니다',
+                        isError: true
+                });
+            }else{
+                next(err)
+            }
         }
+        
     }catch(err){
         next(err)
     }
