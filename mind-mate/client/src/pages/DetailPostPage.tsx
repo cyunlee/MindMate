@@ -13,18 +13,56 @@ function DetailPostPage() {
     const commentdefault = require('../image/bigcommentdefault.png');
     const share = require('../image/share.png');
     const dotthree = require('../image/dotthree.png');
-    
-    const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
-
-    const commentsBox = useRef<HTMLDivElement>(null);
 
     const {postid} = useParams();
+
+    //로그인 여부 체크
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const accessToken = localStorage.getItem('accessToken');
     
+    //디테일 포스트
     const [category, setCategory] = useState<any>();
     const [title, setTitle] = useState();
     const [nickname, setNickname] = useState();
     const [createdAt, setCreatedAt] = useState();
     const [content, setContent] = useState();
+
+    //댓글 여닫기
+    const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
+    const commentsBox = useRef<HTMLDivElement>(null);
+
+    //댓글 내용
+    const [commentContent, setCommentContent] = useState<string>();
+    const commentRef = useRef<HTMLTextAreaElement>(null)
+
+    //답변 달기
+    const createAnswerRef = useRef<HTMLButtonElement>(null);
+    if(isLogin===true){
+        if(createAnswerRef.current){
+        createAnswerRef.current.classList.remove('vanish');
+        }
+    }
+
+
+    const verifyUser = async() => {
+        try{
+            const res = await axios({
+                method: 'get',
+                url: '/api/verify',
+                headers: {
+                    Authorization : accessToken
+                }
+            })
+            console.log(res.data);
+            if(res.data.isError === false) {
+                setIsLogin(true);
+            }else if(res.data.isError === true) {
+                setIsLogin(false);
+            }
+        }catch(error){
+            console.log('error :', error);
+        }
+    }  
     
 
     const handleCommentOpen = () => {
@@ -58,6 +96,32 @@ function DetailPostPage() {
         }
     } 
 
+    const onCommentContentHandler = () => {
+        if(commentRef.current){
+            const commentRefContent = commentRef.current.value;
+            setCommentContent(commentRefContent);
+        }
+        console.log(commentContent);
+    }
+
+    const createComment = async () => {
+        try {
+            const res = await axios({
+                method : 'post',
+                url : '/api/postcomment',
+                data : {
+                    content : commentContent
+                },
+                headers : {
+                    Authorization : accessToken
+                }
+            })
+            console.log(res.data);
+        }catch (error) {
+            console.log('error : ', error);
+        }
+    }
+
     useEffect(()=>{
         if(isCommentOpen===true && commentsBox.current){
             commentsBox.current.classList.remove('vanish');
@@ -68,7 +132,10 @@ function DetailPostPage() {
 
     useEffect(()=>{
         getDetailPost()
+        verifyUser()
     }, [])
+
+
 
 
     return ( 
@@ -106,17 +173,17 @@ function DetailPostPage() {
                                 <div className='singlepost-reaction-text'>10</div>
                             </div>
                         </div>
-                        <button id='write-answer'>답변작성</button>
+                        <button id='write-answer' className='answerBtn vanish' ref={createAnswerRef}>답변작성</button>
                     </div>
 
                     <div className='post-comments-container vanish' ref={commentsBox}>
                         <div className='comment-input-box'>
                             <div className='comment-input-top'>
                                 <div id='writer-profileimg'></div>
-                                <textarea></textarea>
+                                <textarea ref={commentRef} onChange={onCommentContentHandler} onClick={()=>{if(isLogin===false) alert('로그인을 해야 이용하실 수 있습니다')}} ></textarea>
                             </div>
                             <div className='comment-input-bottom'>
-                                <button>댓글등록</button>
+                                <button onClick={()=>{if(commentContent?.length)createComment(); else{alert('댓글을 입력해야 등록할 수 있습니다')}}}>댓글등록</button>
                             </div>
                         </div>
                         <div className='comments-box'>
