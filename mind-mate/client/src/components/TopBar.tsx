@@ -115,6 +115,7 @@ function TopBar() {
                 localStorage.setItem('nickname', nickname);
 
                 setIsLoggedIn(true);
+                setIsExpired(false);
             }
            // console.log('클라이언트 변수 맨 처음 로그인 및 렌더 후 값 확인 >>>>', userid, password, nickname); 
 
