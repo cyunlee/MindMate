@@ -17,7 +17,7 @@ function DetailPostPage() {
     const {postid} = useParams();
 
     //로그인 여부 체크
-    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
     const accessToken = localStorage.getItem('accessToken');
     
     //디테일 포스트
@@ -37,7 +37,7 @@ function DetailPostPage() {
 
     //답변 달기
     const createAnswerRef = useRef<HTMLButtonElement>(null);
-    if(isLogin===true){
+    if(isLoggedin===true){
         if(createAnswerRef.current){
         createAnswerRef.current.classList.remove('vanish');
         }
@@ -55,12 +55,12 @@ function DetailPostPage() {
             })
             console.log(res.data);
             if(res.data.isError === false) {
-                setIsLogin(true);
+                setIsLoggedin(true);
             }else if(res.data.isError === true) {
-                setIsLogin(false);
+                setIsLoggedin(false);
             }
         }catch(error){
-            console.log('error :', error);
+            console.log('error : ', error);
         }
     }  
     
@@ -181,7 +181,7 @@ function DetailPostPage() {
                         <div className='comment-input-box'>
                             <div className='comment-input-top'>
                                 <div id='writer-profileimg'></div>
-                                <textarea ref={commentRef} onChange={onCommentContentHandler} onClick={()=>{if(isLogin===false) alert('로그인을 해야 이용하실 수 있습니다')}} ></textarea>
+                                <textarea ref={commentRef} onChange={onCommentContentHandler} onClick={()=>{if(isLoggedin===false) alert('로그인을 해야 이용하실 수 있습니다')}} ></textarea>
                             </div>
                             <div className='comment-input-bottom'>
                                 <button onClick={()=>{if(commentContent?.length)createComment(); else{alert('댓글을 입력해야 등록할 수 있습니다')}}}>댓글등록</button>

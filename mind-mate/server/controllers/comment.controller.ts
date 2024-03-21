@@ -23,6 +23,13 @@ export async function postComment(
 
     try {
 
+        if(!authorization){
+            return res.json({
+                msg: '토큰이 없습니다',
+                isError: true
+            })
+        }
+
         if(typeof authorization !== 'string'){
             return res.status(400).json({
                 msg: '토큰 타입이 string이 아닙니다',
@@ -31,8 +38,6 @@ export async function postComment(
         }
         try{
             const decoded = jwt.verify(authorization, JWT_SECRET) as { userid: string, nickname: string };
-
-             console.log("decode: ", decoded, "postid: ", postid, "content: ", content)
 
             const newComment = await Comment.create({
                 nickname: decoded.nickname,
@@ -49,7 +54,7 @@ export async function postComment(
                 if(err instanceof TokenExpiredError){
                     return res.status(401).json({
                         msg: '토큰이 만료되었습니다',
-                        isError: true
+                        isExpired: true
                 });
             }else{
                 next(err)
