@@ -156,7 +156,7 @@ export async function login(
             }
         });
         if(loginUser){
-            const accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname, password: loginUser.password}, JWT_SECRET, {expiresIn: '10s'});
+            const accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname, password: loginUser.password}, JWT_SECRET, {expiresIn: '30m'});
             return res.json({
                 msg: '로그인 성공',
                 accessToken: accessToken,
@@ -182,12 +182,12 @@ export async function loginAgain(
     next: NextFunction
 ) : Promise<Response | void> {
     const {userid, password, nickname} = req.body;
-    console.log('login again 정보 잘 받아와지는지 확인 >>>>>>', userid, password, nickname);
+    console.log('login again 정보 잘 받아와지는지 확인 >>>>>>', userid, password, nickname)
 
     try{ 
 
         console.log('서버에서 토큰 재발급 중');
-        const accessToken = jwt.sign({userid: userid, nickname: nickname, password: password}, JWT_SECRET, {expiresIn: '1m'});
+        const accessToken = jwt.sign({userid: userid, nickname: nickname, password: password}, JWT_SECRET, {expiresIn: '30m'});
         return res.json({
             msg: '로그인 연장용 토큰 재발급 성공',
             accessToken: accessToken,
