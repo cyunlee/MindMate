@@ -10,6 +10,7 @@ import path from 'path';
 import { Op } from 'sequelize';
 import { authRouter } from './routes/auth.routes';
 import { postRouter } from './routes/post.routes';
+import { chatRouter } from './routes/chat.routes';
 import { db } from './model';
 import {
   ClientToServerEvents,
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', authRouter);
 app.use('/api', postRouter);
+app.use('/api', chatRouter);
 app.use(cors());
 
 
@@ -44,14 +46,36 @@ const io = new Server(server, {
 // Handle the connection event
 io.on('connection', (socket: Socket) => {
   console.log('A client connected');
-
-  // Handle custom events from clients
-  socket.on('chat message', (msg: string) => {
-    console.log('Message received from client:', msg);
-
-    // Broadcast the message to all connected clients
-    io.emit('chat message', msg);
+  //room join
+  socket.on('join', ({ userId, roomId }) => {
+    console.log(`User ${userId} joined room ${roomId}`);
+    
+    // Associate the socket with the specified room
+    socket.join(roomId);
   });
+
+
+// Handle custom events from clients
+socket.on('chat message', async (roomId: number, userId: string, message: string) => {
+  console.log('Message received from client:', message);
+  console.log('chat message', roomId, userId, message);
+  try {
+    // Save the message to the database using Sequelize
+    await db.ChatMessage.create({
+      chatroomID: roomId,
+      userid: userId,
+      content: message
+    });
+    console.log('Message saved to database');
+  } catch (error) {
+    console.error('Error saving message to database:', error);
+  }
+
+  // Broadcast the message to all connected clients
+  io.emit('chat message', message);
+});
+
+
 
   // Handle disconnect event
   socket.on('disconnect', () => {
