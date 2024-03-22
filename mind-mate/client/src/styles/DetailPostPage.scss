@@ -184,7 +184,13 @@
                 .comment-input-bottom{
                     width: 730px;
                     height: fit-content;
-                    text-align: right;
+                    @include flex-pure;
+                    justify-content: flex-end;
+
+                    .comment-count{
+                        margin-right: 8px;
+                        color: $border-color;
+                    }
 
                     button{
                         width: 86px;
@@ -242,4 +248,11 @@
 
 .vanish{
     display: none;
+}
+
+.comment-none{
+    width: 740px;
+    text-align: center;
+    font-style: italic;
+    color: $minor-color;
 }

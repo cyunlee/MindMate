@@ -59,3 +59,13 @@
         }
     }
 }
+
+.comment-info-container{
+    width: 645px;
+    height: fit-contnet;
+    @include flex-horizontal-space-between;
+
+    img{
+        cursor: pointer;
+    }
+}

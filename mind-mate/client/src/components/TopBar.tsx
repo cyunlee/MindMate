@@ -75,14 +75,15 @@ function TopBar() {
                     await loginAgain(useridval, passwordval, nicknameval);
                     alert('로그인 연장 성공');
                     window.location.reload();
-                }else{
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('userid');
-                    localStorage.removeItem('password');
-                    localStorage.removeItem('nickname')
-                    alert('로그아웃 성공');
-                    window.location.reload();
                 }
+            }else{
+                // localStorage.removeItem('accessToken');
+                // localStorage.removeItem('userid');
+                // localStorage.removeItem('password');
+                // localStorage.removeItem('nickname')
+                logout();
+                alert('로그아웃 성공');
+                window.location.reload();
             }
         }catch(error){
             console.log('error : ', error);
@@ -142,6 +143,7 @@ function TopBar() {
         localStorage.removeItem('nickname');
 
         setIsLoggedIn(false);
+        setIsExpired(true);
 
         // navigate('/login');
         // console.log(localStorage);

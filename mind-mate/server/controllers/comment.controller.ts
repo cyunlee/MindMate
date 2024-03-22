@@ -3,6 +3,7 @@ import {db} from '../model';
 
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
+
 const Comment = db.Comment;
 
 const JWT_SECRET: string = process.env.JWT_SECRET as string;
@@ -59,8 +60,13 @@ export async function getComment(
     res: Response,
     next: NextFunction
 ):Promise<Response | void> {
+    const {
+        postid
+    } = req.query;
     try {
-        let comments = await Comment.findAll({});
+        let comments = await Comment.findAll({
+            where: {postid: req.query.postid}
+        });
         if(comments){
             return res.json({
                 comments: comments,
@@ -74,5 +80,70 @@ export async function getComment(
         }
     }catch(err) {
         next(err)
+    }
+}
+
+//댓글 삭제하기
+export async function deleteComment(
+    req: Request,
+    res: Response,
+    next: NextFunction
+):Promise<Response | void>{
+
+    const {commentid} = req.query;
+
+    try{
+        let commentdelete = await Comment.destroy({
+            where: {commentid: req.query.commentid}
+        })
+
+        if(commentdelete){
+            return res.json({
+                msg: '댓글 삭제 완료',
+                isError: false
+            })
+        }else if(!commentdelete){
+            return res.json({
+                msg: '댓글 삭제 실패',
+                isError: true
+            })
+        }
+    }catch(err){
+        next(err)
+    }
+}
+
+//댓글 수정하기
+
+export async function updateComment(
+    req: Request,
+    res: Response,
+    next: NextFunction
+):Promise<Response | void>{
+    const {
+        commentid,
+        newcontent
+    }  = req.body;
+
+    try{
+        let commentupdate = await Comment.update(
+            {content: {newcontent}},
+            {where: {commentid: commentid}}
+        )
+
+        if(commentupdate){
+            return res.json({
+                msg: '댓글 수정 완료',
+                isError: false
+            })
+        }else if(!commentupdate){
+            return res.json({
+                msg: '댓글 수정 실패',
+                isError: true
+            })
+        }
+
+    }catch(err){
+        next(err);
     }
 }

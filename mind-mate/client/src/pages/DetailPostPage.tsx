@@ -182,9 +182,6 @@ function DetailPostPage() {
     }, [isCommentOpen])
 
 
-
-
-
     return ( 
         <>
             <TopBar/>
@@ -230,6 +227,7 @@ function DetailPostPage() {
                                 <textarea ref={commentRef} onChange={onCommentContentHandler} onClick={()=>{if(isLoggedin===false) alert('로그인을 해야 이용하실 수 있습니다')}} ></textarea>
                             </div>
                             <div className='comment-input-bottom'>
+                                <div className='comment-count'>{commentContent.length}/1000</div>
                                 <button onClick={()=>{
                                     if(commentContent?.length){createComment(); getAllComment();}
                                     else{alert('댓글을 입력해야 등록할 수 있습니다')}}
@@ -239,7 +237,7 @@ function DetailPostPage() {
                         <div className='comments-box'>     
                             {
                                 ( commentDatas.length > 0 ? 
-                                    commentDatas.map((commentData:any, index:any)=>(
+                                    commentDatas.slice(0).reverse().map((commentData:any, index:any)=>(
                                         <Comment key={index}
                                                  nickname={commentData.nickname}
                                                  content={commentData.content}
@@ -247,7 +245,7 @@ function DetailPostPage() {
                                                  isAuthor={commentData.isauthor}
                                                 />
                                 ))
-                                : ''
+                                : <div className='comment-none'>댓글이 없습니다. 댓글을 입력해볼까요?</div>
                             )
                                 
                         }
