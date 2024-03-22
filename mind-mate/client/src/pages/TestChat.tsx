@@ -1,39 +1,49 @@
-// src/pages/TestChat.tsx
 import React, { useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client'; // Import io function
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { io, Socket } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+
 interface TestChatProps {
   socket: Socket;
 }
 
 const TestChat: React.FC<TestChatProps> = ({ socket }) => {
-  let { userID, roomId } = useParams();
-  const navigate = useNavigate();
-  console.log('roomId', roomId);
+  const { userId, roomId } = useParams<{ userId: string, roomId: string }>();
   const socketRef = useRef<Socket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
   const [messageInput, setMessageInput] = useState('');
 
   useEffect(() => {
+    // Connect to socket server when component mounts
     socketRef.current = io('http://localhost:4000');
-
-    // Use optional chaining to handle null case
-    socketRef.current?.on('message', (message: string) => {
-      setMessages(messages.concat(message));
+  
+    // Join the chatroom when component mounts
+    if (socketRef.current && userId && roomId) {
+      socketRef.current.emit('join', { userId, roomId });
+    }
+  
+    // Attach event listener for incoming chat messages
+    socketRef.current?.on('chat message', (message: string) => {
+      console.log('Received message:', message);
+      console.log('Received message object:',  message);
+      setMessages(prevMessages => [...prevMessages, message]);
     });
-
+    
+  
+    // Clean up socket connection and event listeners when component unmounts
     return () => {
-      // Use optional chaining to handle null case
-      socketRef.current?.disconnect();
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current.off('chat message');
+      }
     };
-  }, []);
+  }, [userId, roomId]);
+  
 
   const sendMessage = () => {
     if (socketRef.current && messageInput.trim() !== '') {
-      // Use optional chaining to handle null case
-      socketRef.current?.emit('message', messageInput);
-      console.log('message', messageInput);
+      // Emit the 'chat message' event with the roomId, userId, and messageInput
+      console.log('chat message', roomId, userId, messageInput);
+      socketRef.current.emit('chat message', roomId, userId, messageInput);
       setMessageInput('');
     }
   };
