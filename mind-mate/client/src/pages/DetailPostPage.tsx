@@ -27,22 +27,30 @@ function DetailPostPage() {
     const [createdAt, setCreatedAt] = useState();
     const [content, setContent] = useState();
 
-    //댓글 여닫기
+    //댓글 여닫기 여부
     const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
     const commentsBox = useRef<HTMLDivElement>(null);
 
     //댓글 내용
-    const [commentContent, setCommentContent] = useState<string>();
+    const [commentContent, setCommentContent] = useState<string>('');
     const commentRef = useRef<HTMLTextAreaElement>(null)
 
-    //답변 달기
+    //댓글 정보
+    const [commentNickname, setCommentNickname] = useState<any>();
+
+    //댓글 개수 변화 체크
+    let commentCount: number = 0;
+
+    //댓글 데이터 가져오기
+    const [commentDatas, setCommentDatas] = useState([]);
+
+    //답변 달기 버튼 유무(로그인 상태에 따라 달라짐)
     const createAnswerRef = useRef<HTMLButtonElement>(null);
     if(isLoggedin===true){
         if(createAnswerRef.current){
         createAnswerRef.current.classList.remove('vanish');
         }
     }
-
 
     const verifyUser = async() => {
         try{
@@ -53,9 +61,12 @@ function DetailPostPage() {
                     Authorization : accessToken
                 }
             })
-            console.log(res.data);
+            // console.log('verify user>>>>', res.data);
             if(res.data.isError === false) {
                 setIsLoggedin(true);
+                const decoded = res.data.decoded;
+                // console.log('decoded>>>>', decoded);
+                setCommentNickname(decoded.nickname);
             }else if(res.data.isError === true) {
                 setIsLoggedin(false);
             }
@@ -101,7 +112,6 @@ function DetailPostPage() {
             const commentRefContent = commentRef.current.value;
             setCommentContent(commentRefContent);
         }
-        console.log(commentContent);
     }
 
     const createComment = async () => {
@@ -111,32 +121,50 @@ function DetailPostPage() {
                 url : '/api/postcomment',
                 data : {
                     content : commentContent,
-                    postid : postid
+                    postid : postid,
+                    nickname : commentNickname
                 },
-                headers : {
-                    Authorization : accessToken
-                }
             })
             console.log(res.data);
+            if(res.data.isError===false) {commentCount=commentCount+1;}
+
         }catch (error) {
+            console.log('error : ', error);
+        }
+    }
+
+    const getAllComment = async() => {
+        try{
+            const res = await axios({
+                method: 'get',
+                url: '/api/getcomment',
+                params: {
+                    postid: postid
+                }
+            })
+            setCommentDatas(res.data.comments);
+        }catch(error){
             console.log('error : ', error);
         }
     }
 
     useEffect(()=>{
         if(isCommentOpen===true && commentsBox.current){
-            commentsBox.current.classList.remove('vanish');
+            commentsBox.current.classList.remove('vanish')
         }else if(isCommentOpen===false && commentsBox.current){
             commentsBox.current.classList.add('vanish');
         }
     }, [handleCommentOpen])
 
     useEffect(()=>{
-        getDetailPost()
-        verifyUser()
+        getDetailPost();
+        verifyUser();
     }, [])
 
-
+    useEffect(()=>{
+        getAllComment();
+        console.log(commentDatas);
+    }, [isCommentOpen, commentCount])
 
 
     return ( 
@@ -170,7 +198,7 @@ function DetailPostPage() {
                                 <div className='singlepost-reaction-text'>0</div>
                             </div>
                             <div className='singlepost-comment-box'>
-                                <img src={commentdefault} alt="" onClick={handleCommentOpen} />
+                                <img src={commentdefault} alt="" onClick={handleCommentOpen}  />
                                 <div className='singlepost-reaction-text'>10</div>
                             </div>
                         </div>
@@ -187,9 +215,20 @@ function DetailPostPage() {
                                 <button onClick={()=>{if(commentContent?.length)createComment(); else{alert('댓글을 입력해야 등록할 수 있습니다')}}}>댓글등록</button>
                             </div>
                         </div>
-                        <div className='comments-box'>
-                            <Comment/>
-                            <Comment/>
+                        <div className='comments-box'>     
+                            {
+                                ( commentDatas.length > 0 ? 
+                                    commentDatas.map((commentData:any, index:any)=>(
+                                        <Comment key={index}
+                                                 nickname={commentData.nickname}
+                                                 content={commentData.content}
+                                                 createdAt={commentData.createdAt}
+                                                />
+                                ))
+                                : ''
+                            )
+                                
+                        }
                         </div>
                     </div> 
                     

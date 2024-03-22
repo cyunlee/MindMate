@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 const Post = db.Post;
 const JWT_SECRET: string = process.env.JWT_SECRET as string;
 
+//포스트 작성하기
 export async function writePost(
     req: Request,
     res: Response,
@@ -54,6 +55,7 @@ export async function writePost(
     }
 }
 
+//게시글 목록 가져오기 (전체)
 export async function getAllPost(
     req: Request,
     res: Response,
@@ -72,6 +74,7 @@ export async function getAllPost(
     }
 }
 
+//게시글 목록 가져오기(카테고리)
 export async function getPost(
     req: Request,
     res: Response,
@@ -94,6 +97,7 @@ export async function getPost(
     }
 }
 
+//디테일 포스트로 이동하기
 export async function getSinglePost(
     req: Request,
     res: Response,
@@ -122,6 +126,7 @@ export async function getSinglePost(
     }
 }
 
+//상세포스트 가져오기 
 export async function getDetailPost(
     req: Request,
     res: Response,

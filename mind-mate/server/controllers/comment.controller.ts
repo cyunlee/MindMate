@@ -15,56 +15,39 @@ export async function postComment(
 ): Promise<Response | void> {
     const {
         content,
-        postid
+        postid,
+        nickname
     } = req.body;
 
-
-    let { authorization } = req.headers;
-
     try {
-
-        if(!authorization){
-            return res.json({
-                msg: '토큰이 없습니다',
-                isError: true
-            })
-        }
-
-        if(typeof authorization !== 'string'){
-            return res.status(400).json({
-                msg: '토큰 타입이 string이 아닙니다',
-                isError: true
-            });
-        }
-        try{
-            const decoded = jwt.verify(authorization, JWT_SECRET) as { userid: string, nickname: string };
-
             const newComment = await Comment.create({
-                nickname: decoded.nickname,
+                nickname: nickname,
                 content: content,
                 postid: postid,
             })
 
-             return res.json({
-                msg: '댓글 생성완료',
-                isError: false
-            })
+            console.log(newComment.nickname);
+            console.log(newComment.content);
+            console.log(newComment.postid);
 
-            }catch(err){
-                if(err instanceof TokenExpiredError){
-                    return res.status(401).json({
-                        msg: '토큰이 만료되었습니다',
-                        isExpired: true
-                });
-            }else{
-                next(err)
+            if(newComment){
+                return res.json({
+                    msg: '댓글 생성완료',
+                    isError: false
+                })
+            }else if(!newComment){
+                return res.json({
+                    msg: '댓글 생성실패',
+                    isError: true
+                })
             }
-        }
         
-    }catch(err){
-        next(err)
+        }catch(err){
+            next(err);
     }
 }
+            
+
 
 //댓글 가져오기
 export async function getComment(
