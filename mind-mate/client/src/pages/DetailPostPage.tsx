@@ -19,6 +19,9 @@ function DetailPostPage() {
     //로그인 여부 체크
     const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
     const accessToken = localStorage.getItem('accessToken');
+
+    //댓글 등록 버튼 클릭
+    const [isCommentBtnClicked, setIsCommentBtnClicked] = useState<boolean>(false);
     
     //디테일 포스트
     const [category, setCategory] = useState<any>();
@@ -37,9 +40,6 @@ function DetailPostPage() {
 
     //댓글 정보
     const [commentNickname, setCommentNickname] = useState<any>();
-
-    //댓글 개수 변화 체크
-    let commentCount: number = 0;
 
     //댓글 데이터 가져오기
     const [commentDatas, setCommentDatas] = useState([]);
@@ -126,7 +126,6 @@ function DetailPostPage() {
                 },
             })
             console.log(res.data);
-            if(res.data.isError===false) {commentCount=commentCount+1;}
 
         }catch (error) {
             console.log('error : ', error);
@@ -164,7 +163,7 @@ function DetailPostPage() {
     useEffect(()=>{
         getAllComment();
         console.log(commentDatas);
-    }, [isCommentOpen, commentCount])
+    }, [isCommentOpen, isCommentBtnClicked])
 
 
     return ( 
@@ -212,7 +211,10 @@ function DetailPostPage() {
                                 <textarea ref={commentRef} onChange={onCommentContentHandler} onClick={()=>{if(isLoggedin===false) alert('로그인을 해야 이용하실 수 있습니다')}} ></textarea>
                             </div>
                             <div className='comment-input-bottom'>
-                                <button onClick={()=>{if(commentContent?.length)createComment(); else{alert('댓글을 입력해야 등록할 수 있습니다')}}}>댓글등록</button>
+                                <button onClick={()=>{
+                                    if(commentContent?.length){createComment(); getAllComment();}
+                                    else{alert('댓글을 입력해야 등록할 수 있습니다')}}
+                                }>댓글등록</button>
                             </div>
                         </div>
                         <div className='comments-box'>     
