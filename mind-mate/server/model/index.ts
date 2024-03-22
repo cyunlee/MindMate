@@ -67,6 +67,23 @@ Comment.belongsTo(
   }
 )
 
+//User가 작성한 댓글들(1:N)
+User.hasMany(
+  Comment, {
+    foreignKey: 'userid',
+    sourceKey: 'userid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  }
+)
+
+Comment.belongsTo(
+  User, {
+    foreignKey: 'userid',
+    targetKey: 'userid',
+  }
+)
+
 
 //Post에 달린 답변들(1:N)
 

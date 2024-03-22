@@ -16,7 +16,9 @@ export async function postComment(
     const {
         content,
         postid,
-        nickname
+        nickname,
+        isauthor,
+        userid
     } = req.body;
 
     try {
@@ -24,6 +26,8 @@ export async function postComment(
                 nickname: nickname,
                 content: content,
                 postid: postid,
+                isauthor: isauthor,
+                userid: userid
             })
 
             console.log(newComment.nickname);

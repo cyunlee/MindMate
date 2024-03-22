@@ -20,6 +20,15 @@ export const CommentModel = (sequelize:any, DataTypes: any) => {
                 primaryKey: true,
                 autoIncrement: true
             },
+            isauthor: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+            },
+            userid: {
+                type: DataTypes.STRING(30),
+                allowNull: false
+            }
 
         }
     );

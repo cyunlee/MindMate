@@ -29,6 +29,8 @@ function DetailPostPage() {
     const [nickname, setNickname] = useState();
     const [createdAt, setCreatedAt] = useState();
     const [content, setContent] = useState();
+    const [userid, setUserid] = useState();
+
 
     //댓글 여닫기 여부
     const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
@@ -40,6 +42,8 @@ function DetailPostPage() {
 
     //댓글 정보
     const [commentNickname, setCommentNickname] = useState<any>();
+    const [isAuthor, setIsAuthor] = useState<boolean>(false);
+    const [commentUserid, setCommentUserid] = useState<any>();
 
     //댓글 데이터 가져오기
     const [commentDatas, setCommentDatas] = useState([]);
@@ -52,6 +56,7 @@ function DetailPostPage() {
         }
     }
 
+    //로그인 상태 확인하기 위해 (댓글 달 때 활용)
     const verifyUser = async() => {
         try{
             const res = await axios({
@@ -67,6 +72,8 @@ function DetailPostPage() {
                 const decoded = res.data.decoded;
                 // console.log('decoded>>>>', decoded);
                 setCommentNickname(decoded.nickname);
+                if(decoded.userid!==undefined) setCommentUserid(decoded.userid);
+                
             }else if(res.data.isError === true) {
                 setIsLoggedin(false);
             }
@@ -97,11 +104,14 @@ function DetailPostPage() {
                 }
             })
             const detailPost = res.data.detailPost;
+            console.log('detail post>>>>', detailPost);
             setCategory(detailPost.postType);
             setTitle(detailPost.title);
-            setNickname(detailPost.nickname);
+            setNickname(detailPost.nickname); 
             setCreatedAt(detailPost.createdAt);
             setContent(detailPost.content);
+            if(detailPost.userid!==undefined) setUserid(detailPost.userid);
+
         }catch(error){
             console.log('error :', error);
         }
@@ -122,7 +132,9 @@ function DetailPostPage() {
                 data : {
                     content : commentContent,
                     postid : postid,
-                    nickname : commentNickname
+                    nickname : commentNickname,
+                    isauthor: isAuthor,
+                    userid: commentUserid
                 },
             })
             console.log(res.data);
@@ -164,6 +176,13 @@ function DetailPostPage() {
         getAllComment();
         console.log(commentDatas);
     }, [isCommentOpen, isCommentBtnClicked])
+
+    useEffect(()=>{
+        if(userid===commentUserid) {console.log('최종', userid); console.log('최종', commentUserid); setIsAuthor(true)};
+    }, [isCommentOpen])
+
+
+
 
 
     return ( 
@@ -225,6 +244,7 @@ function DetailPostPage() {
                                                  nickname={commentData.nickname}
                                                  content={commentData.content}
                                                  createdAt={commentData.createdAt}
+                                                 isAuthor={commentData.isauthor}
                                                 />
                                 ))
                                 : ''
