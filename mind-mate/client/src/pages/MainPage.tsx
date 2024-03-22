@@ -1,54 +1,59 @@
-// App.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import ChatPage from './ChatPage'; // Import the ChatPage component
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 const App = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [showChat, setShowChat] = useState(false);
+  const [userId, setUserId] = useState<string>('');
 
-    const accessToken = localStorage.getItem('accessToken');
-
-    const [userId, setUserId] = useState<string>('');
-
+  useEffect(() => {
     const checkLogin = async () => {
-        try {
-            const res = await axios({
-                method: 'get',
-                url: '/api/verify',
-                headers: {
-                    Authorization: accessToken
-                }
-            })
-            if(res.data.isError===true){
-                setIsLogin(false);
-                console.log(res.data)
-            }else if(res.data.isError===false){
-                setIsLogin(true);
-                console.log(res.data)
-            }
-        }catch(error) {
-            console.log('error : ', error);
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          setIsLogin(false);
+          return;
         }
-    }
-  let userID = '1234';
-  const [showChat, setShowChat] = useState(false); // State to control chat page visibility
+        
+        const res = await axios.get('/api/verify', {
+          headers: {
+            Authorization: accessToken
+          }
+        });
+
+        if (res.data.isError) {
+          setIsLogin(false);
+          console.log(res.data,'User not logged in');
+        } else {
+          setIsLogin(true);
+          console.log(res.data.decoded.userid, 'User logged in');
+          setUserId(res.data.decoded.userid);
+        }
+      } catch (error) {
+        console.error('Error checking login:', error);
+        setIsLogin(false); // Reset login state on error
+      }
+    };
+
+    checkLogin();
+  }, []); // Run once on component mount
 
   // Function to handle button click event
-  const handleClickEvent = async () => {
-    // Check if the user is logged in
-    await checkLogin();
-  
-    // If the user is logged in, show the chat page
-    if (isLogin) {
-      setShowChat(true);
-    } else {
-      // If the user is not logged in, redirect to the login page or display a message
-      console.log('User is not logged in. Redirect to login page or display a message.');
-    }
-  };
-  
+  // Function to handle button click event
+const handleClickEvent = () => {
+  // If the user is logged in, show the chat page
+  if (isLogin) {
+    setShowChat(true);
+  } else {
+    // If the user is not logged in, display a message or redirect to the login page
+    alert('Please log in to access the chat.'); // Display a simple alert message
+    // You can also redirect to the login page using React Router: history.push('/login');
+  }
+};
+
 
   return (
     <div style={{ width: '100%' }}>
@@ -66,7 +71,7 @@ const App = () => {
       </button>
 
       {/* Conditional rendering of the ChatPage component */}
-      {showChat && <ChatPage userId={userID} />} {/* Pass the userId prop */}
+      {showChat && <ChatPage userId={userId} />} {/* Pass the userId prop */}
     </div>
   );
 };
