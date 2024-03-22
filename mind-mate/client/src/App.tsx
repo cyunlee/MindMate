@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route , useParams} from 'react-router-dom';
 import { Socket } from 'socket.io-client';
 import MainPage from './pages/MainPage';
 import Error404 from './pages/errors/Error404';
@@ -20,13 +20,19 @@ import DetailPostPage from './pages/DetailPostPage';
 // import CommunityPeople from './pages/CommunityPeople';
 // import CommunityGeneral from './pages/CommunityGeneral';
 
-import { useParams } from 'react-router-dom';
-
 interface AppProps {
   socket: Socket;
 }
 
+// Remove the duplicate import of useParams
+//import { useParams } from 'react-router-dom';
+
 const App: React.FC<AppProps> = ({ socket }) => {
+  // Define ChatPageWrapper component to handle route parameters
+  const ChatPageWrapper: React.FC = () => {
+    const { userId } = useParams<{ userId: string }>(); // Use the useParams hook to access route parameters
+    return <ChatPage userId={userId || ''} />; // Pass the userId prop to ChatPage, ensuring it is always a string
+  };
 
   return (
     <div className="App">
@@ -59,14 +65,17 @@ const App: React.FC<AppProps> = ({ socket }) => {
           <Route path="/routine" element={<RoutinePage/>}/>
           <Route path="/places" element={<PlacesPage/>}/>
           <Route path="/consult" element={<CounsultPage/>}/>
-          <Route
-            path="/testchat/:roomId"
-            element={<ChatPage />} // Pass the socket instance as a prop
-          />
+
+          {/* ChatPage route */}
+          <Route path="/chatpage/:userId" element={<ChatPageWrapper />} />
+
+          {/* TestChat route */}
           <Route
             path="/testchat/:userId/:roomId"
             element={<TestChat socket={socket} />} // Pass the socket instance as a prop
           />
+
+          {/* 404 page */}
           <Route path="*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>

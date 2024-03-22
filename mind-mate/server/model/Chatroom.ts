@@ -22,5 +22,5 @@ export const ChatroomModel = (sequelize: any, DataTypes: any) => {
             }
         }
     );
-    return Chatroom;   
+    return Chatroom;
 }
