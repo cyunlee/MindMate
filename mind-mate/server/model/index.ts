@@ -22,12 +22,14 @@ import { AdjectiveModel } from './Adjective';
 import { NounModel } from './Noun';
 import { PostModel } from './Post';
 import { CommentModel } from './Comment';
+import { ChatroomModel } from './Chatroom';
 
 const User = UserModel(sequelize, Sequelize);
 const Adjective = AdjectiveModel(sequelize, Sequelize);
 const Noun = NounModel(sequelize, Sequelize);
 const Post = PostModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
+const Chatroom = ChatroomModel(sequelize, Sequelize);
 
 //User가 작성한 Post들 (1:N)
 User.hasMany(
@@ -75,6 +77,7 @@ export const db = {
   Noun,
   Post,
   Comment,
+  Chatroom,
   sequelize,
   Sequelize,
 };
