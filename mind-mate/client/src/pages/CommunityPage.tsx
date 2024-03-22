@@ -75,8 +75,8 @@ function CommunityPage() {
                     category: category
                 }
             })
-            console.log(res)
             setPostDatas(res.data.Posts);
+            console.log(postDatas);
             
         }catch(error){
             console.log('error : ', error);
@@ -96,8 +96,6 @@ function CommunityPage() {
         if(url==="/community/love") setCategory("연애");
         if(url==="/community/people") setCategory("대인관계");
         if(url==="/community/general") setCategory("일반고민");
-        
-        console.log(category);
     }
 
     useLayoutEffect(()=>{

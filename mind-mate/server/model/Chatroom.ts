@@ -11,7 +11,7 @@ export const ChatroomModel = (sequelize: any, DataTypes: any) => {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
-            isChatBoot: {
+            isChatBot: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue : true,
@@ -23,5 +23,4 @@ export const ChatroomModel = (sequelize: any, DataTypes: any) => {
         }
     );
     return Chatroom;
-    
 }

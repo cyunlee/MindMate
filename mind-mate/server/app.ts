@@ -11,6 +11,7 @@ import { Op } from 'sequelize';
 import { authRouter } from './routes/auth.routes';
 import { postRouter } from './routes/post.routes';
 import { chatRouter } from './routes/chat.routes';
+import { commentRouter } from './routes/comment.routes';
 import { db } from './model';
 import {
   ClientToServerEvents,
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', authRouter);
 app.use('/api', postRouter);
 app.use('/api', chatRouter);
+app.use('/api', commentRouter);
 app.use(cors());
 
 

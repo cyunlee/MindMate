@@ -1,14 +1,43 @@
+import axios from 'axios';
 import '../../styles/PostComponent.scss';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Post(props: any) {
 
     const heartEmoji = require('../../image/heart.png');
     const commentEmoji = require('../../image/comment.png');
     const eyeEmoji = require('../../image/eye.png');
+
+    const navigate = useNavigate();
+
+    const {categoryVal, postid} = useParams();
+
+    const getSinglePost = async () =>{
+        try {
+            const res = await axios({
+                method: 'get',
+                url: '/api/getsinglepost',
+                params: {
+                    createdAt: props.createdAt,
+                }
+            })
+            if(res.data.isError===false){
+            const singlePost = res.data.singlePost;
+            const categoryAddr = singlePost.categoryVal;
+            const postidAddr = singlePost.postid;
+            console.log(singlePost);
+            navigate(`/community/${categoryAddr}/${postidAddr}`);
+            }
+            
+
+        }catch(error){
+            console.log('error : ', error);
+        }
+    }
    
     return ( 
         <>
-            <div className='postdiv-container'>
+            <div className='postdiv-container' onClick={()=>{getSinglePost()}}>
                 <div className='postcontent-container'>
                     <div className='postcontent-box'>
                         <div id='postcontent-title'>{props.title}</div>

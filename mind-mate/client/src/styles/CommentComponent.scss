@@ -1,0 +1,52 @@
+@import '../styles/Common.scss';
+
+.comment-container{
+    width: 740px;
+    height: fit-content;
+    padding: 24px 0px 24px 0px;
+    border-bottom: 1px solid $border-color;
+    @include flex;
+    
+    .comment-writer-profileimg{
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 1px solid $border-color;
+        margin-right: 24px;
+    }
+
+    .comment-right-content{
+        width: 645px;
+        height: fit-content;
+
+        .comment-info{
+            width: fit-content;
+            height: fit-content;
+            @include flex;
+            
+            .comment-writer-nickname{
+                font-size: 15px;
+                font-weight: bold;
+                margin-right: 4px;
+                color: #000;
+            }
+            .comment-dot{
+                font-size: 15px;
+                margin-right: 4px;
+                color: #454545;
+            }
+            .comment-createdAt{
+                font-size: 15px;
+                color: #454545;
+            }
+        }
+
+        .comment-content-text{
+            width: 645px;
+            height: fit-content;
+            font-size: 15px;
+            margin-top: 8px;
+            color: $secondary-color;
+        }
+    }
+}

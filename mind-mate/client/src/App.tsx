@@ -47,6 +47,7 @@ const App: React.FC<AppProps> = ({ socket }) => {
 
           {/* 커뮤니티 페이지 */}
           <Route path="/community/:categoryVal" element={<CommunityPage/>}/>
+          <Route path="/community/:categoryVal/:postid" element={<DetailPostPage/>}/>
 
           {/* <Route path="/community/:category" element={<CommunityPage/>}/> */}
 
