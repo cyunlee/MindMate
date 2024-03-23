@@ -243,6 +243,7 @@ function DetailPostPage() {
                                                  content={commentData.content}
                                                  createdAt={commentData.createdAt}
                                                  isAuthor={commentData.isauthor}
+                                                 userid={commentData.userid}
                                                 />
                                 ))
                                 : <div className='comment-none'>댓글이 없습니다. 댓글을 입력해볼까요?</div>

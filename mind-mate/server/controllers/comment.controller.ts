@@ -90,11 +90,16 @@ export async function deleteComment(
     next: NextFunction
 ):Promise<Response | void>{
 
-    const {commentid} = req.query;
+    const {nickname, createdAt, content} = req.body;
 
     try{
+        let comment = await Comment.findOne({
+            where: {nickname: nickname,
+                    createdAt: createdAt,
+                    content: content}
+        })
         let commentdelete = await Comment.destroy({
-            where: {commentid: req.query.commentid}
+            where: {commentid: comment.commentid}
         })
 
         if(commentdelete){

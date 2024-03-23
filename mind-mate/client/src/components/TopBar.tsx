@@ -145,6 +145,7 @@ function TopBar() {
         setIsLoggedIn(false);
         setIsExpired(true);
 
+        window.location.reload();
         // navigate('/login');
         // console.log(localStorage);
     }
