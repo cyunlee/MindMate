@@ -156,7 +156,7 @@ function Comment(props:any) {
                             <div className={writerClass}>{props.nickname}</div>
                             <div className='comment-dot'>·</div>
                             <div className='comment-createdat' ref={createdAtRef}>{props.createdAt}</div>
-                            <div className='update-complete vanish' ref={isUpdatedRef}>&#40;수정됨&#41;</div>
+                            {/* <div className='update-complete vanish' ref={isUpdatedRef}>&#40;수정됨&#41;</div> */}
                         </div>  
                         <img src={commentdotthree} ref={dotthree} alt="" onClick={onCommentBtnHandler}/>
                     </div>
