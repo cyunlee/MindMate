@@ -126,15 +126,27 @@ export async function updateComment(
     next: NextFunction
 ):Promise<Response | void>{
     const {
-        commentid,
+        nickname,
+        createdAt,
         newcontent
     }  = req.body;
 
     try{
+
+        let comment = await Comment.findOne({
+            where: {nickname: nickname,
+                    createdAt: createdAt,
+                    }
+        })
+        
+        console.log('comment >>>>>', comment);
+
         let commentupdate = await Comment.update(
-            {content: {newcontent}},
-            {where: {commentid: commentid}}
+            {content: newcontent},
+            {where: {commentid: comment.commentid}}
         )
+
+        console.log('update>>>>', commentupdate);
 
         if(commentupdate){
             return res.json({

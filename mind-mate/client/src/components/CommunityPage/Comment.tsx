@@ -16,6 +16,13 @@ function Comment(props:any) {
     const accessToken = localStorage.getItem('accessToken');
     const [loginUserid, setLoginUserid] = useState();
 
+    const updateTextareaRef = useRef<HTMLTextAreaElement>(null);
+    const [updatedContent, setUpdatedContent] = useState<string>('');
+    const beforeContent = useRef<HTMLDivElement>(null);
+    const commentUpdateArea = useRef<HTMLDivElement>(null);
+    const createdAtRef = useRef<HTMLDivElement>(null)
+    const isUpdatedRef = useRef<HTMLDivElement>(null);
+
     //로그인한 유저의 userid 확인하기
     const verifyUser = async() => {
         try{
@@ -43,6 +50,33 @@ function Comment(props:any) {
         }else if(commentBtnRef.current && isCommentBtnOpen===true){
             commentBtnRef.current.classList.add('vanish');
             setIsCommentBtnOpen(false);
+        }
+    }
+
+    const updateComment = async() => {
+        try{
+            const res = await axios({
+                method: 'patch',
+                url: '/api/updatecomment',
+                data: {
+                    nickname: props.nickname,
+                    createdAt: props.createdAt,
+                    newcontent: updatedContent
+                }
+            })
+            console.log(res.data)
+            if(res.data.isError===false){
+                if(commentUpdateArea.current && commentBtnRef.current && beforeContent.current && dotthree.current && createdAtRef.current && isUpdatedRef.current && beforeContent.current){
+                    commentUpdateArea.current.classList.add('vanish');
+                    beforeContent.current.classList.remove('vanish');
+                    createdAtRef.current.classList.remove('vanish');
+                    isUpdatedRef.current.classList.remove('vanish');
+                    beforeContent.current.innerHTML = updatedContent;
+                }
+                          
+            }
+        }catch(error){
+            console.log('error : ', error);
         }
     }
 
@@ -74,8 +108,32 @@ function Comment(props:any) {
         }
     }
 
+    const onContentUpdateHandler = () => {
+        if(updateTextareaRef.current){
+            setUpdatedContent(updateTextareaRef.current.value);
+        }
+    }
+
+    const onCommentUpdateHandler = () => {
+        if(commentUpdateArea.current && commentBtnRef.current && beforeContent.current && dotthree.current && createdAtRef.current){
+            commentUpdateArea.current.classList.remove('vanish');
+            commentBtnRef.current.classList.add('vanish');
+            beforeContent.current.classList.add('vanish');
+            createdAtRef.current.classList.add('vanish');
+        }
+    }
+
+    const onCommentUpdateCancleHandler = () => {
+        if(commentUpdateArea.current && commentBtnRef.current && beforeContent.current && dotthree.current && createdAtRef.current){
+            commentUpdateArea.current.classList.add('vanish');
+            beforeContent.current.classList.remove('vanish');
+            createdAtRef.current.classList.remove('vanish');
+        }
+    }
+
     useEffect(()=>{
         verifyUser()
+        if(isUpdatedRef.current) isUpdatedRef.current.classList.add('vanish');
     }, []);
 
 
@@ -97,14 +155,23 @@ function Comment(props:any) {
                         <div className='comment-info'>
                             <div className={writerClass}>{props.nickname}</div>
                             <div className='comment-dot'>·</div>
-                            <div className='comment-createdat'>{props.createdAt}</div>
+                            <div className='comment-createdat' ref={createdAtRef}>{props.createdAt}</div>
+                            <div className='update-complete vanish' ref={isUpdatedRef}>&#40;수정됨&#41;</div>
                         </div>  
                         <img src={commentdotthree} ref={dotthree} alt="" onClick={onCommentBtnHandler}/>
                     </div>
-                    <div className='comment-content-text'>{props.content}</div>
+                    <div className='comment-content-text' ref={beforeContent}>{props.content}</div>
+                    <div className='comment-update-area vanish' ref={commentUpdateArea}>
+                        <textarea ref={updateTextareaRef} onChange={onContentUpdateHandler}></textarea>
+                        <div className='textarea-bottom-box'>
+                            <div className='update-comment-count'>{updatedContent.length}/1000</div>
+                            <button id='cancleBtn' onClick={()=>{onCommentUpdateCancleHandler()}}>취소</button>
+                            <button id='updateBtn' onClick={()=>{updateComment()}}>완료</button>
+                        </div>
+                    </div>
                 </div>
                 <div className='comment-select-button vanish' ref={commentBtnRef}>
-                    <div id='comment-update'>수정</div>
+                    <div id='comment-update' onClick={onCommentUpdateHandler}>수정</div>
                     <div id='comment-delete' onClick={onCommentDeleteHandler}>삭제</div>
                 </div>
             </div>
