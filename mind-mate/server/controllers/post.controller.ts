@@ -155,3 +155,67 @@ export async function getDetailPost(
     }
 }
 
+//포스트 삭제하기
+export async function deletePost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+):Promise<Response|void> {
+    const {postid} = req.body;
+
+    try{
+        let deletePost = await Post.destroy({
+            where: {postid: postid}
+        })
+    
+        if(deletePost) {
+            return res.json({
+                msg: '포스트 삭제완료',
+                isError: false
+            })
+        }else if(!deletePost){
+            return res.json({
+                msg: '포스트 삭제실패',
+                isError: true
+            })
+        }
+    }catch(err){
+        next(err);
+    }
+}
+
+//포스트 수정하기
+export async function updatePost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void>{
+
+    const {postid, newarticle} = req.body
+
+    try{
+        let postUpdate = await Post.update(
+            {content: newarticle},
+            {where: {postid: postid }}
+        )
+
+        if(postUpdate){
+            return res.json({
+                msg: '포스트 수정완료',
+                isError: false
+            })
+        }else if(!postUpdate){
+            return res.json({
+                msg: '포스트 수정실패',
+                isError: true
+            })
+        }
+    }catch(err){
+        next(err);
+    }
+
+}
+
+
+
+
