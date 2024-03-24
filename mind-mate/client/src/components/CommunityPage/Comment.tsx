@@ -64,17 +64,15 @@ function Comment(props:any) {
                     newcontent: updatedContent
                 }
             })
-            console.log(res.data)
             if(res.data.isError===false){
-                if(commentUpdateArea.current && commentBtnRef.current && beforeContent.current && dotthree.current && createdAtRef.current && isUpdatedRef.current && beforeContent.current){
-                    commentUpdateArea.current.classList.add('vanish');
-                    beforeContent.current.classList.remove('vanish');
-                    createdAtRef.current.classList.remove('vanish');
-                    isUpdatedRef.current.classList.remove('vanish');
-                    beforeContent.current.innerHTML = updatedContent;
-                }
-                          
+                console.log('수정 완료');
+                commentUpdateArea.current?.classList.add('vanish');
+                createdAtRef.current?.classList.remove('vanish');
+                beforeContent.current?.classList.remove('vanish');
+                if(beforeContent.current) beforeContent.current.innerHTML=updatedContent;
             }
+                          
+            
         }catch(error){
             console.log('error : ', error);
         }
