@@ -31,6 +31,7 @@ function DetailPostPage() {
     const [content, setContent] = useState();
     const [userid, setUserid] = useState();
 
+    const dotthreeRef = useRef<HTMLImageElement>(null);
 
     //댓글 여닫기 여부
     const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
@@ -73,6 +74,7 @@ function DetailPostPage() {
                 // console.log('decoded>>>>', decoded);
                 setCommentNickname(decoded.nickname);
                 if(decoded.userid!==undefined) setCommentUserid(decoded.userid);
+                if(decoded.userid===userid) dotthreeRef.current?.classList.remove('vanish');
                 
             }else if(res.data.isError === true) {
                 setIsLoggedin(false);
@@ -201,7 +203,7 @@ function DetailPostPage() {
                             </div>
                             <div className='singlepost-action-box'>
                                 <img src={share} alt="" />
-                                <img src={dotthree} alt="" />
+                                <img src={dotthree} ref={dotthreeRef} className='post-dotthree vanish' alt="" />
                             </div>
                         </div>
                     </div>     
