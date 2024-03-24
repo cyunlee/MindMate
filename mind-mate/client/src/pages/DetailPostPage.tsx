@@ -74,7 +74,6 @@ function DetailPostPage() {
                 // console.log('decoded>>>>', decoded);
                 setCommentNickname(decoded.nickname);
                 if(decoded.userid!==undefined) setCommentUserid(decoded.userid);
-                if(decoded.userid===userid) dotthreeRef.current?.classList.remove('vanish');
                 
             }else if(res.data.isError === true) {
                 setIsLoggedin(false);
@@ -172,6 +171,7 @@ function DetailPostPage() {
     useEffect(()=>{
         getDetailPost();
         verifyUser();
+        if(commentUserid===userid) dotthreeRef.current?.classList.remove('vanish');
     }, [])
 
     useEffect(()=>{
