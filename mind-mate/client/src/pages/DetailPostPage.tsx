@@ -32,6 +32,8 @@ function DetailPostPage() {
     const [userid, setUserid] = useState();
 
     const dotthreeRef = useRef<HTMLImageElement>(null);
+    const postBtnRef = useRef<HTMLDivElement>(null);
+    const [isPostBtnOpen, setIsPostBtnOpen] = useState<boolean>(false);
 
     //댓글 여닫기 여부
     const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
@@ -118,6 +120,27 @@ function DetailPostPage() {
         }
     } 
 
+    if(commentUserid===userid) dotthreeRef.current?.classList.remove('vanish');
+    else if(commentUserid!==userid) dotthreeRef.current?.classList.add('vanish');
+
+    const onPostBtnHandler = () => {
+        if(isPostBtnOpen===false){
+            postBtnRef.current?.classList.remove('vanish');
+            setIsPostBtnOpen(true);
+        }else if(isPostBtnOpen===true){
+            postBtnRef.current?.classList.add('vanish');
+            setIsPostBtnOpen(false);
+        }
+    }
+
+    const onPostUpdateHandler = () => {
+
+    }
+
+    const onPostDeleteHandler = () => {
+
+    }
+
     const onCommentContentHandler = () => {
         if(commentRef.current){
             const commentRefContent = commentRef.current.value;
@@ -171,7 +194,6 @@ function DetailPostPage() {
     useEffect(()=>{
         getDetailPost();
         verifyUser();
-        if(commentUserid===userid) dotthreeRef.current?.classList.remove('vanish');
     }, [])
 
     useEffect(()=>{
@@ -203,7 +225,11 @@ function DetailPostPage() {
                             </div>
                             <div className='singlepost-action-box'>
                                 <img src={share} alt="" />
-                                <img src={dotthree} ref={dotthreeRef} className='post-dotthree vanish' alt="" />
+                                <img src={dotthree} ref={dotthreeRef} className='post-dotthree vanish' alt="" onClick={()=>{onPostBtnHandler()}} />
+                                <div className='post-select-button vanish' ref={postBtnRef}>
+                                    <div id='post-update' onClick={onPostUpdateHandler}>수정</div>
+                                    <div id='post-delete' onClick={onPostDeleteHandler}>삭제</div>
+                                </div>
                             </div>
                         </div>
                     </div>     

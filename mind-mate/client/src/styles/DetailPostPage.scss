@@ -80,6 +80,7 @@
                 }
                 .singlepost-action-box{
                     @include flex;
+                    position: relative;
                     width: fit-content;
                     height: fit-content;
                     img{
@@ -255,4 +256,40 @@
     text-align: center;
     font-style: italic;
     color: $minor-color;
+}
+
+.post-select-button{
+    width: 50px;
+    height: 60px;
+    border: 1px solid $border-color;
+    top: 30px;
+    right: 24px;
+    position: absolute;
+
+    #post-update{
+        width: 50px;
+        height: 30px;
+        border-bottom: 1px solid $border-color;
+        @include flex-pure;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    #post-delete{
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        @include flex-pure;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        background-color: #fff;
+        border-bottom: 1px solid $border-color;
+        cursor: pointer;
+    }
 }
