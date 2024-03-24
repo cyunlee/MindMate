@@ -15,6 +15,7 @@ function DetailPostPage() {
     const dotthree = require('../image/dotthree.png');
 
     const {postid} = useParams();
+    console.log(postid);
 
     //로그인 여부 체크
     const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
@@ -120,6 +121,21 @@ function DetailPostPage() {
         }
     } 
 
+    const deletePost = async () => {
+        try{
+            const res = await axios({
+                method: 'delete',
+                url: '/api/deletepost',
+                data: {
+                    postid: postid
+                }
+            })
+            console.log(res.data);
+        }catch(error){
+            console.log('error : ', error);
+        }
+    }
+
     if(commentUserid===userid) dotthreeRef.current?.classList.remove('vanish');
     else if(commentUserid!==userid) dotthreeRef.current?.classList.add('vanish');
 
@@ -134,10 +150,6 @@ function DetailPostPage() {
     }
 
     const onPostUpdateHandler = () => {
-
-    }
-
-    const onPostDeleteHandler = () => {
 
     }
 
@@ -228,7 +240,7 @@ function DetailPostPage() {
                                 <img src={dotthree} ref={dotthreeRef} className='post-dotthree vanish' alt="" onClick={()=>{onPostBtnHandler()}} />
                                 <div className='post-select-button vanish' ref={postBtnRef}>
                                     <div id='post-update' onClick={onPostUpdateHandler}>수정</div>
-                                    <div id='post-delete' onClick={onPostDeleteHandler}>삭제</div>
+                                    <div id='post-delete' onClick={()=>{if(window.confirm('포스트를 삭제하시겠습니까?')){deletePost(); window.location.href=('/community/all')}}}>삭제</div>
                                 </div>
                             </div>
                         </div>

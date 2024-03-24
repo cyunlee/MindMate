@@ -162,25 +162,20 @@ export async function deletePost(
     next: NextFunction
 ):Promise<Response|void> {
     const {postid} = req.body;
+    console.log('postid>>>>>>', postid)
 
     try{
         let deletePost = await Post.destroy({
             where: {postid: postid}
         })
     
-        if(deletePost) {
-            return res.json({
-                msg: '포스트 삭제완료',
-                isError: false
-            })
-        }else if(!deletePost){
-            return res.json({
-                msg: '포스트 삭제실패',
-                isError: true
-            })
-        }
+        return res.json({
+            msg: '포스트 삭제완료',
+            isError: false
+        });
+        
     }catch(err){
-        next(err);
+        console.log(err);
     }
 }
 

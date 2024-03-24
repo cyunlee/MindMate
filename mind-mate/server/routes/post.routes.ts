@@ -12,7 +12,10 @@ postRouter.get('/getpost', controller.getPost);
 postRouter.get('/getsinglepost', controller.getSinglePost);
 //디테일 포스트 정보 가져오기
 postRouter.get('/getdetailpost', controller.getDetailPost);
-
+//포스트 삭제
+postRouter.delete('/deletepost', controller.deletePost);
+//포스트 수정
+postRouter.patch('/updatepost', controller.updatePost);
 
 
 

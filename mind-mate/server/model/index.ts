@@ -46,7 +46,6 @@ User.hasMany(
 Post.belongsTo(
   User, {
     foreignKey: 'userid',
-    targetKey: 'userid'
   }
 )
 
@@ -63,7 +62,6 @@ Post.hasMany(
 Comment.belongsTo(
   Post, {
     foreignKey: 'postid',
-    targetKey: 'postid'
   }
 )
 
@@ -80,14 +78,11 @@ User.hasMany(
 Comment.belongsTo(
   User, {
     foreignKey: 'userid',
-    targetKey: 'userid',
   }
 )
 
 
 //Post에 달린 답변들(1:N)
-
-
 
 
 export const db = {
