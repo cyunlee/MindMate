@@ -2,6 +2,7 @@ import '../styles/TopBar.scss';
 import axios from 'axios';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ExpertAuth from './ExpertAuth';
 
 
 function TopBar() {
@@ -23,6 +24,8 @@ function TopBar() {
     const [userid, setUserid] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [nickname, setNickname] = useState<string>('');
+
+    const [isAuthBtnClicked, setIsAuthBtnClicked] = useState<boolean>(false);
 
     const accessToken = localStorage.getItem('accessToken');
     
@@ -130,6 +133,13 @@ function TopBar() {
             }
         }
     }
+    const handleAuthBtn = () => {
+        if(isAuthBtnClicked===false){
+            setIsAuthBtnClicked(true);
+        }else if(isAuthBtnClicked===true){
+            setIsAuthBtnClicked(false);
+        }
+    }
 
     useEffect(()=>{
         if(accessToken) getUserInfo()
@@ -152,6 +162,7 @@ function TopBar() {
 
     return ( 
         <>
+         {(isLoggedIn===true&&isAuthBtnClicked===true)?<ExpertAuth/>:''}
             <div className='topbar'>
                 <div className='top'>
                     <div className='top-btn-container'>
@@ -159,7 +170,7 @@ function TopBar() {
                         <div className='top-line'></div>
                         {isLoggedIn ? <div className='top-btn' onClick={()=>{logout(); alert('로그아웃 성공');}}>로그아웃</div> : <div className='top-btn' onClick={()=>{navigate('/login');}}>로그인</div>}
                         <div className='top-line'></div>
-                        <button className='auth-btn'>전문가인증</button>
+                        <button className='auth-btn' onClick={()=>{handleAuthBtn()}}>전문가인증</button>
                     </div>
                     
                 </div>
@@ -175,6 +186,7 @@ function TopBar() {
                 </div>
             </div>
         </>
+        
      );
 }
 

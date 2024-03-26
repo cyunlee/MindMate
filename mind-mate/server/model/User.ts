@@ -18,6 +18,10 @@ export const UserModel = (sequelize: any, DataTypes: any) => {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue : false
+            },
+            email: {
+                type: DataTypes.STRING(30),
+                allowNull: true
             }
         }
     );

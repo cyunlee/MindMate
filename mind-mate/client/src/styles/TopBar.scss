@@ -5,6 +5,8 @@
     height: 110px;
     background-color: #fff;
     border-bottom: 1px solid $border-color;
+    position: relative;
+    z-index: 100;
 
     .top{
         width: 100%;
@@ -110,4 +112,6 @@
         }
     }
 }
+
+
 
