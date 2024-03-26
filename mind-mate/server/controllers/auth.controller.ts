@@ -156,7 +156,7 @@ export async function login(
             }
         });
         if(loginUser){
-            const accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname, password: loginUser.password}, JWT_SECRET, {expiresIn: '10m'});
+            const accessToken = jwt.sign({userid: loginUser.userid, nickname: loginUser.nickname, password: loginUser.password}, JWT_SECRET, {expiresIn: '30m'});
             return res.json({
                 msg: '로그인 성공',
                 accessToken: accessToken,
@@ -187,7 +187,7 @@ export async function loginAgain(
     try{ 
 
         console.log('서버에서 토큰 재발급 중');
-        const accessToken = jwt.sign({userid: userid, nickname: nickname, password: password}, JWT_SECRET, {expiresIn: '10m'});
+        const accessToken = jwt.sign({userid: userid, nickname: nickname, password: password}, JWT_SECRET, {expiresIn: '30m'});
         return res.json({
             msg: '로그인 연장용 토큰 재발급 성공',
             accessToken: accessToken,
