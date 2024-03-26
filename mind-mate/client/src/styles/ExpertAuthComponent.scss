@@ -1,6 +1,7 @@
 @import '../styles/Common.scss';
 
 .expertauth{
+    border-radius: 20px;
     padding: 20px;
     width: 360px;
     height: 400px;
@@ -111,6 +112,8 @@
             @include flex-horizontal-space-between;
 
             input{
+                text-align: center;
+                font-size: 20px;
                 width: 42px;
                 height: 48px;
                 border: 1px solid $border-color;

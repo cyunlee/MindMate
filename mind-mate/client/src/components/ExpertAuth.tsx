@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/ExpertAuthComponent.scss';
 
 function ExpertAuth() {
@@ -8,6 +8,21 @@ function ExpertAuth() {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
+    const input1 = useRef<HTMLInputElement>(null);
+    const input2 = useRef<HTMLInputElement>(null);
+    const input3 = useRef<HTMLInputElement>(null);
+    const input4 = useRef<HTMLInputElement>(null);
+    const input5 = useRef<HTMLInputElement>(null);
+
+    const onInputFocusHandler = (e:any) => {
+
+        //다음 칸으로 자동으로 넘어가기
+        if(input1.current?.value.length===1 && e.target.value.length===1) input2.current?.focus();
+        if(input2.current?.value.length===1 && e.target.value.length===1) input3.current?.focus();
+        if(input3.current?.value.length===1 && e.target.value.length===1) input4.current?.focus();
+        if(input4.current?.value.length===1 && e.target.value.length===1) input5.current?.focus();
+
+    }
 
     return ( 
         <>
@@ -39,11 +54,11 @@ function ExpertAuth() {
                         <div className='expertauth-subtitle'><span>&#91;2단계&#93;</span> 인증번호 입력</div>
                         <div className='expertauth-description'>이메일로 받은 인증번호를 입력해주세요</div>
                         <div className='expertauth-numbers'>
-                            <input type="text" pattern="[0-9]+"/>
-                            <input type="text" pattern="[0-9]+" />
-                            <input type="text" pattern="[0-9]+"/>
-                            <input type="text" pattern="[0-9]+"/>
-                            <input type="text" pattern="[0-9]+"/>
+                            <input type="text" maxLength={1} pattern="[0-9]+" ref={input1} onChange={onInputFocusHandler} />
+                            <input type="text" maxLength={1} pattern="[0-9]+" ref={input2} onChange={onInputFocusHandler} />
+                            <input type="text" maxLength={1} pattern="[0-9]+" ref={input3} onChange={onInputFocusHandler} />
+                            <input type="text" maxLength={1} pattern="[0-9]+" ref={input4} onChange={onInputFocusHandler} />
+                            <input type="text" maxLength={1} pattern="[0-9]+" ref={input5} onChange={onInputFocusHandler} />
                         </div>
                         <div className='expertauth-description'>제한시간 <span>3:00</span> 남았습니다</div>
                     </div>
