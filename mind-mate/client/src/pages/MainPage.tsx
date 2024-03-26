@@ -41,37 +41,20 @@ const App = () => {
     checkLogin();
   }, []); // Run once on component mount
 
-  // Function to handle button click event
-  // Function to handle button click event
-const handleClickEvent = () => {
-  // If the user is logged in, show the chat page
-  if (isLogin) {
-    setShowChat(true);
-  } else {
-    // If the user is not logged in, display a message or redirect to the login page
-    alert('Please log in to access the chat.'); // Display a simple alert message
-    // You can also redirect to the login page using React Router: history.push('/login');
-  }
-};
-
-
   return (
     <div style={{ width: '100%' }}>
       <TopBar />
       <h1>Main</h1>
-      <h5>Start Chat</h5>
-      
-      {/* Button to show chat bot */}
-      <button
-        className="chatButton"
-        style={{ position: 'fixed', right: '100px', bottom: '100px' }}
-        onClick={handleClickEvent}
-      >
-        Show Chat
-      </button>
-
-      {/* Conditional rendering of the ChatPage component */}
-      {showChat && <ChatPage userId={userId} />} {/* Pass the userId prop */}
+      <div>
+        <Link to={`/chatpage/${userId}`}> {/* Link to the ChatPage */}
+          <img
+            src='/chatButton.png'
+            alt="Chat Button"
+            className="chatButton"
+            style={{ position: 'fixed', right: '100px', bottom: '100px' }}
+          />
+        </Link>
+      </div>
     </div>
   );
 };
