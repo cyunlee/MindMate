@@ -39,7 +39,7 @@ app.use('/api', openapiRouter);
 app.use(cors());
 
 
-const server = createServer(app); // Create HTTP server
+const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
@@ -47,24 +47,19 @@ const io = new Server(server, {
   },
 });
 
-// Handle the connection event
 io.on('connection', (socket: Socket) => {
   console.log('A client connected');
-  //room join
   socket.on('join', ({ userId, roomId }) => {
     console.log(`User ${userId} joined room ${roomId}`);
-    
-    // Associate the socket with the specified room
+
     socket.join(roomId);
   });
 
 
-// Handle custom events from clients
 socket.on('chat message', async (roomId: number, userId: string, message: string) => {
   console.log('Message received from client:', message);
   console.log('chat message', roomId, userId, message);
   try {
-    // Save the message to the database using Sequelize
     await db.ChatMessage.create({
       chatroomID: roomId,
       userid: userId,
@@ -75,13 +70,10 @@ socket.on('chat message', async (roomId: number, userId: string, message: string
     console.error('Error saving message to database:', error);
   }
 
-  // Broadcast the message to all connected clients
   io.emit('chat message', message);
 });
 
 
-
-  // Handle disconnect event
   socket.on('disconnect', () => {
     console.log('A client disconnected');
   });
@@ -97,5 +89,3 @@ db.sequelize
   .catch((err: Error) => {
     console.log(err);
   });
-
-  
