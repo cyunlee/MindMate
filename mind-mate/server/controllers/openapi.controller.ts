@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { OpenAI } from 'openai';
+import { db } from '../model';
+
+const ChatMessageModel = db.ChatMessage;
 
 const API_KEY : string = process.env.API_KEY as string;
 
@@ -14,18 +17,19 @@ export async function AiChat(
     console.log(req.body);
     console.log(req.body[0]);
     console.log(req.body.message);
-    const  question  = req.body.message; // Assuming the question is sent in the request body
-
+    const  question  = req.body.message; 
+    //유저의 대화 기록해야함(db에)
+    
     const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: question }], // Use the user's question as input
+      messages: [{ role: "user", content: question }],
       model: "gpt-3.5-turbo",
     });
 
     console.log(completion.choices[0]);
 
-    const aiResponse = completion.choices[0].message.content; // Extract the AI response from the completion
-
-    res.json({ answer: aiResponse }); // Return the AI response as an answer
+    const aiResponse = completion.choices[0].message.content;
+    //챗봇의 대답을 기록해야함(db에)
+    res.json({ answer: aiResponse });
   } catch (error) {
     console.error('Error in AI chat:', error);
     res.status(500).json({ error: 'Internal server error' });
