@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { OpenAI } from 'openai';
 
-const openai = new OpenAI({ apiKey: 'myApi' });
+const API_KEY : string = process.env.API_KEY as string;
+
+const openai = new OpenAI({ apiKey: API_KEY });
 
 export async function AiChat(
     req: Request,
