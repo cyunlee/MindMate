@@ -25,6 +25,8 @@ const bodyParser = require('body-parser');
 
 
 const SERVERPORT = 4000;
+const MINDMATE_PASS = process.env.MINDMATE_PASS;
+const MINDMATE_ACCOUNT = process.env.MINDMATE_ACCOUNT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -84,6 +86,44 @@ socket.on('chat message', async (roomId: number, userId: string, message: string
     console.log('A client disconnected');
   });
 });
+
+//nodemailer 사용
+
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail', 
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: MINDMATE_ACCOUNT, 
+        pass: MINDMATE_PASS // 앱 비밀번호 
+    }
+});
+
+async function sendMail({ to, from, html, subject }: {to: string, from: string, html: string, subject: string}) {
+    try {
+        let info = await transporter.sendMail({
+            from: from,  
+            to: to,
+            subject: subject, 
+            html: html,
+        });
+        console.log('email sent:', info.response);
+    } catch (error) {
+        console.error('error:', error);
+    }
+}
+
+sendMail({
+    from: '마음메이트',
+    to: 'perfect0301@naver.com', 
+    subject: '안녕하세요',
+    html: '<p>안녕하세요?</p>', 
+});
+
+//DB와 sequelize 동기화
 
 db.sequelize
   .sync({ force: false })
