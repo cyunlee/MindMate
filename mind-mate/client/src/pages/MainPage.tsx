@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TopBar from '../components/TopBar';
-import ChatPage from './ChatPage'; // Import the ChatPage component
+import ChatPage from './ChatPage'; 
 import axios from 'axios';
 
 const App = () => {
@@ -34,19 +34,19 @@ const App = () => {
         }
       } catch (error) {
         console.error('Error checking login:', error);
-        setIsLogin(false); // Reset login state on error
+        setIsLogin(false);
       }
     };
 
     checkLogin();
-  }, []); // Run once on component mount
+  }, []);
 
   return (
     <div style={{ width: '100%' }}>
       <TopBar />
       <h1>Main</h1>
       <div>
-        <Link to={`/chatpage/${userId}`}> {/* Link to the ChatPage */}
+        <Link to={`/chatpage/${userId}`}>
           <img
             src='/chatButton.png'
             alt="Chat Button"
