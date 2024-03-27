@@ -1,35 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
+interface Message {
+  content: string;
+  sender: 'user' | 'ai';
+}
 
 interface TestChatProps {
   socket: Socket;
 }
 
 const TestChat: React.FC<TestChatProps> = ({ socket }) => {
-  const { userId, roomId } = useParams<{ userId: string, roomId: string }>();
+  const { userId, roomId } = useParams<{ userId: string; roomId: string }>();
   const socketRef = useRef<Socket | null>(null);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState('');
 
   useEffect(() => {
-    // Connect to socket server when component mounts
     socketRef.current = io('http://localhost:4000');
-  
-    // Join the chatroom when component mounts
+
     if (socketRef.current && userId && roomId) {
       socketRef.current.emit('join', { userId, roomId });
     }
-  
-    // Attach event listener for incoming chat messages
+
     socketRef.current?.on('chat message', (message: string) => {
-      console.log('Received message:', message);
-      console.log('Received message object:',  message);
-      setMessages(prevMessages => [...prevMessages, message]);
+      setMessages(prevMessages => [...prevMessages, { content: message, sender: 'ai' }]);
     });
-    
-  
-    // Clean up socket connection and event listeners when component unmounts
+
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -37,13 +36,23 @@ const TestChat: React.FC<TestChatProps> = ({ socket }) => {
       }
     };
   }, [userId, roomId]);
-  
 
-  const sendMessage = () => {
-    if (socketRef.current && messageInput.trim() !== '') {
-      // Emit the 'chat message' event with the roomId, userId, and messageInput
-      console.log('chat message', roomId, userId, messageInput);
-      socketRef.current.emit('chat message', roomId, userId, messageInput);
+  const sendMessage = async () => {
+    if (messageInput.trim() !== '') {
+      socketRef.current?.emit('chat message', roomId, userId, messageInput);
+
+      try {
+        const response = await axios.post('/api/aichat', {
+          message: messageInput
+        });
+        console.log(response);
+        console.log(response.data.answer);
+        const aiResponse = response.data.answer;
+        setMessages(prevMessages => [...prevMessages, { content: aiResponse, sender: 'ai' }]);
+      } catch (error) {
+        console.error('Error sending message to AI:', error);
+      }
+
       setMessageInput('');
     }
   };
@@ -53,7 +62,9 @@ const TestChat: React.FC<TestChatProps> = ({ socket }) => {
       <div>
         <ul>
           {messages.map((message, index) => (
-            <li key={index}>{message}</li>
+            <li key={index} className={message.sender === 'user' ? 'user-message' : 'ai-message'}>
+              {message.content}
+            </li>
           ))}
         </ul>
       </div>
