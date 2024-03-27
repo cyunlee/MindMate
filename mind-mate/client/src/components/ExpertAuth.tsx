@@ -114,10 +114,11 @@ function ExpertAuth() {
                     data: {
                         email: userEmail,
                         isExpert: true,
-                        userid: userId
+                        userid: loginUserId
                     },
                 })
                 console.log(res.data);
+                console.log('loginUser>>>>>', loginUserId);
                 if(res.data.isError===false){
                     alert('인증 성공');
                 }
@@ -147,6 +148,9 @@ function ExpertAuth() {
         }
     }
     
+    useEffect(()=>{
+        verifyUser()
+    }, [])
 
     return ( 
         <>

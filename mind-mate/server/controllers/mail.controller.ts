@@ -43,7 +43,7 @@ export async function sendEmail(
 
     try{
 
-        const randomNum = Math.floor(Math.random() * 99998) + 1;
+        const randomNum = Math.floor(Math.random() * 89999) + 10000;
 
         sendMail({
             from: '마음메이트',
@@ -71,10 +71,12 @@ export async function expertAuth(
 
     const{email, isExpert, userid} = req.body;
 
+    console.log(email, isExpert, userid);
+
     try{
 
         let userupdate = await User.update(
-            {isExpert: isExpert, email: email},
+            {isExpert: true, email: email},
             {where: {userid: userid}}
         )
 
