@@ -31,4 +31,20 @@
             border-bottom: 3px solid $major-color;
         }
     }
+
+    .test-container{
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+        padding: 48px;
+
+        .table-title{
+            font-size: 20px;
+            margin-bottom: 24px;
+        }
+
+        table{
+            margin-bottom: 32px;
+        }
+    }
 }
