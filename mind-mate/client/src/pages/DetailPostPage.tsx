@@ -5,6 +5,8 @@ import axios from 'axios';
 import TopBar from '../components/TopBar';
 import '../styles/DetailPostPage.scss';
 import Comment from '../components/CommunityPage/Comment';
+import GenralAnswer from '../components/CommunityPage/GeneralAnswer';
+import ExpertAnswer from '../components/CommunityPage/ExpertAnswer';
 
 function DetailPostPage() {
     const arrowright = require('../image/arrow-right.png');
@@ -296,8 +298,12 @@ function DetailPostPage() {
                 </div>
                 <div className='answers-container'>
                     <div id='answers-text'><span id='expert-num'>1</span>개의 전문답변과 <span id='general-num'>1</span>개의 일반답변이 있습니다</div>
-                    <div className='expertanswer-container'></div>
-                    <div className='generalanswer-container'></div>
+                    <div className='expertanswer-container'>
+                        <ExpertAnswer/>
+                    </div>
+                    <div className='generalanswer-container'>
+                        <GenralAnswer/>
+                    </div>
                 </div>
             </div>
             
