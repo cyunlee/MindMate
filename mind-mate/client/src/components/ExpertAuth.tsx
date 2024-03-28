@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/ExpertAuthComponent.scss';
 import axios from 'axios';
 
@@ -35,6 +36,8 @@ function ExpertAuth() {
     const accessToken = localStorage.getItem('accessToken');
 
     const [loginUserId, setLoginUserId] = useState<string>("");
+
+    const navigate = useNavigate();
 
     const onInput1FocusHandler = (e:any) => {
         //다음 칸으로 자동으로 넘어가기
@@ -121,6 +124,9 @@ function ExpertAuth() {
                 console.log('loginUser>>>>>', loginUserId);
                 if(res.data.isError===false){
                     alert('인증 성공');
+                    logout();
+                    alert('다시 로그인해주세요');
+                    navigate('/login');
                 }
                 
             }else{
@@ -141,13 +147,23 @@ function ExpertAuth() {
                     email: userEmail
                 }
             })
+            alert('메일이 발송되었습니다')
             console.log(res.data.randomNum);
-            setServerNum(res.data.randomNum);
+            setServerNum(res.data.randomNum); 
         }catch(error){
             console.log('error : ', error);
         }
     }
     
+    const logout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('expiredTime');
+        localStorage.removeItem('userid');
+        localStorage.removeItem('password');
+        localStorage.removeItem('nickname');
+        localStorage.removeItem('isExpert');
+    }
+
     useEffect(()=>{
         verifyUser()
     }, [])

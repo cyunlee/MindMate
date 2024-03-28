@@ -54,10 +54,12 @@ function TopBar() {
                 const {userid} = res.data.userid;
                 const {password} = res.data.password;
                 const {nickname} = res.data.nickname;
+                const {isExpert} = res.data.isExpert;
 
                 setUserid(userid);
                 setPassword(password);
                 setNickname(nickname);
+                setIsExpert(isExpert);
 
                 setIsLoggedIn(true);
                 setIsExpired(false);
@@ -123,6 +125,8 @@ function TopBar() {
 
                 setIsLoggedIn(true);
                 setIsExpired(false);
+
+                console.log(isExpert);
             }
            // console.log('클라이언트 변수 맨 처음 로그인 및 렌더 후 값 확인 >>>>', userid, password, nickname); 
 
