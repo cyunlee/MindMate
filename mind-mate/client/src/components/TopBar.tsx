@@ -17,6 +17,7 @@ function TopBar() {
     const isRoutinePage = location.pathname === '/routine';
     const isPlacesPage = location.pathname === '/places';
     const isConsultPage = location.pathname === '/consult';
+    const isInsightPage = location.pathname === '/insight';
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [isExpired, setIsExpired] = useState<boolean>(false);
@@ -190,6 +191,7 @@ function TopBar() {
                         <div className={`bottom-btn ${isPlacesPage ? 'places' : ''}`} onClick={()=>{navigate('/places')}}>주변장소</div>
                         <div className={`bottom-btn ${isRoutinePage ? 'routine' : ''}`} onClick={()=>{navigate('/routine')}}>루틴관리</div>
                         <div className={`bottom-btn ${isConsultPage ? 'consult' : ''}`} onClick={()=>{navigate('/consult')}}>상담하기</div>
+                        <div className={`bottom-btn ${isInsightPage ? 'insight' : ''}`} onClick={()=>{navigate('/insight')}}>인사이트</div>
                     </div>
                     <img className='mypage-icon' alt='mypage-icon' src={mypageIconUrl}/>
                 </div>

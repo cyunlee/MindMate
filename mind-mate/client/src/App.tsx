@@ -13,6 +13,7 @@ import PlacesPage from './pages/PlacesPage';
 import CounsultPage from './pages/ConsultPage';
 import WritePostPage from './pages/WritePostPage';
 import DetailPostPage from './pages/DetailPostPage';
+import InsightPage from './pages/InsightPage';
 // import CommunityStudy from './pages/CommunityStudy';
 // import CommunityMoney from './pages/CommunityMoney';
 // import CommunityWork from './pages/CommunityWork';
@@ -65,6 +66,7 @@ const App: React.FC<AppProps> = ({ socket }) => {
           <Route path="/routine" element={<RoutinePage/>}/>
           <Route path="/places" element={<PlacesPage/>}/>
           <Route path="/consult" element={<CounsultPage/>}/>
+          <Route path="/insight" element={<InsightPage/>}/>
 
           {/* ChatPage route */}
           <Route path="/chatpage/:userId" element={<ChatPageWrapper />} />

@@ -69,7 +69,7 @@
         }
 
         .bottom-btn-container{
-            width: 384px;
+            width: 470px;
             height: 30px;
             position: absolute;
             right: 150px;
@@ -98,6 +98,10 @@
             }
 
             .bottom-btn.consult{
+                color: $focus-color;
+            }
+
+            .bottom-btn.insight{
                 color: $focus-color;
             }
         }
