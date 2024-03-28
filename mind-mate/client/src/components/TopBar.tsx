@@ -20,6 +20,7 @@ function TopBar() {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [isExpired, setIsExpired] = useState<boolean>(false);
+    const [isExpert, setIsExpert] = useState<boolean>(false);
 
     const [userid, setUserid] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -105,18 +106,20 @@ function TopBar() {
 
             //토큰이 만료되면 decoding이 안 되어서 userid, password, nickname에 아무 값도 없게 됨 -> 추후 로그인 연장 함수를 위한 기능
             // console.log('top bar decoded 결과>>>>>>', res.data.decoded);
-            const {userid, nickname, password} = res.data.decoded;
+            const {userid, nickname, password, isExpert} = res.data.decoded;
 
-            if(userid!==null && nickname!==null && password!==null && userid!==undefined && nickname!==undefined && password!==undefined){ //로그인 된 상태이고 다 값이 있을 때
+            if(userid!==null && nickname!==null && password!==null && isExpert!==null && userid!==undefined && nickname!==undefined && password!==undefined && isExpert!==undefined){ //로그인 된 상태이고 다 값이 있을 때
 
                 setUserid(userid);
                 setPassword(password);
                 setNickname(nickname);
+                setIsExpert(isExpert);
     
                 //그래서 로컬 스토리지에 아예 저장을 해버림
                 localStorage.setItem('userid', userid);
                 localStorage.setItem('password', password);
                 localStorage.setItem('nickname', nickname);
+                localStorage.setItem('isExpert', isExpert);
 
                 setIsLoggedIn(true);
                 setIsExpired(false);
@@ -151,6 +154,7 @@ function TopBar() {
         localStorage.removeItem('userid');
         localStorage.removeItem('password');
         localStorage.removeItem('nickname');
+        localStorage.removeItem('isExpert');
 
         setIsLoggedIn(false);
         setIsExpired(true);
@@ -166,6 +170,7 @@ function TopBar() {
             <div className='topbar'>
                 <div className='top'>
                     <div className='top-btn-container'>
+                        {isExpert ? <div className='top-btn'>전문가</div> : (isLoggedIn) ? <div className='top-btn'>일반회원</div> : ''}
                         {isLoggedIn ? <div className='top-btn'>{userid}님</div> : <div className='top-btn' onClick={()=>{navigate('/signup')}}>회원가입</div>}
                         <div className='top-line'></div>
                         {isLoggedIn ? <div className='top-btn' onClick={()=>{logout(); alert('로그아웃 성공');}}>로그아웃</div> : <div className='top-btn' onClick={()=>{navigate('/login');}}>로그인</div>}
