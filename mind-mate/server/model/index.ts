@@ -24,6 +24,8 @@ import { PostModel } from './Post';
 import { CommentModel } from './Comment';
 import { ChatroomModel } from './Chatroom';
 import { ChatMessageModel } from './ChatMessage';
+import { ExpertAnswerModel } from './ExpertAnswers';
+import { GeneralAnswerModel } from './GeneralAnswers';
 
 const User = UserModel(sequelize, Sequelize);
 const Adjective = AdjectiveModel(sequelize, Sequelize);
@@ -32,6 +34,8 @@ const Post = PostModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
 const Chatroom = ChatroomModel(sequelize, Sequelize);
 const ChatMessage = ChatMessageModel(sequelize, Sequelize);
+const ExpertAnswer = ExpertAnswerModel(sequelize, Sequelize);
+const GeneralAnswer = GeneralAnswerModel(sequelize, Sequelize);
 
 //User가 작성한 Post들 (1:N)
 User.hasMany(
@@ -82,8 +86,69 @@ Comment.belongsTo(
 )
 
 
-//Post에 달린 답변들(1:N)
+//Post에 달린 전문답변들(1:N)
+Post.hasMany(
+  ExpertAnswer, {
+    foreignKey: 'postid',
+    sourceKey: 'postid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  }
+)
 
+ExpertAnswer.belongsTo(
+  Post, {
+    foreignKey: 'postid'
+  }
+)
+
+//Post에 달린 일반답변들(1:N)
+Post.hasMany(
+  GeneralAnswer, {
+    foreignKey: 'postid',
+    sourceKey: 'postid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  }
+)
+
+GeneralAnswer.hasMany(
+  Post, {
+    foreignKey: 'postid'
+  }
+)
+
+//User가 작성한 전문답변들(1:N)
+User.hasMany(
+  ExpertAnswer, {
+    foreignKey: 'userid',
+    sourceKey: 'userid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  }
+)
+
+ExpertAnswer.belongsTo(
+  User, {
+    foreignKey: 'userid'
+  }
+)
+
+//User가 작성한 일반답변들(1:N)
+User.hasMany(
+  GeneralAnswer, {
+    foreignKey: 'userid',
+    sourceKey: 'userid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  }
+)
+
+GeneralAnswer.belongsTo(
+  User, {
+    foreignKey: 'userid'
+  }
+)
 
 export const db = {
   User,
