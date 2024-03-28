@@ -4,6 +4,7 @@ function InsightPage() {
     return ( 
         <>
             <TopBar/>
+            
         </>
      );
 }

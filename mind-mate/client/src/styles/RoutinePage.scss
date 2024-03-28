@@ -1,0 +1,34 @@
+@import '../styles/Common.scss';
+
+.routine-container{
+    width: 100%;
+    height: 100%;
+    @include flex-pure;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .routine-topbar{
+        width: 500px;
+        height: fit-content;
+        @include flex-pure;
+        justify-content: center;
+
+        button{
+            width: 100px;
+            height: fit-content;
+            font-size: 16px;
+            font-weight: bold;
+            color: $secondary-color;
+            border: none;
+            background-color: white;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            color: $major-color;
+            border-bottom: 3px solid $major-color;
+        }
+    }
+}
