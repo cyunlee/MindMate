@@ -112,7 +112,7 @@ Post.hasMany(
   }
 )
 
-GeneralAnswer.hasMany(
+GeneralAnswer.belongsTo(
   Post, {
     foreignKey: 'postid'
   }
@@ -156,6 +156,8 @@ export const db = {
   Noun,
   Post,
   Comment,
+  ExpertAnswer,
+  GeneralAnswer,
   Chatroom,
   ChatMessage,
   sequelize,
