@@ -43,13 +43,75 @@
         text-align: center;
         padding: 48px;
 
+        .table-topbar{
+            width: 700px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
         .table-title{
             font-size: 20px;
             margin-bottom: 24px;
+            margin-left: 320px;
+        }
+
+        #depressed-score{
+            font-size: 20px;
+            cursor: pointer;
+            width: 40px;
+            height: 24px;
+            border-radius: 8px;
+        }
+
+        #depressed-score:hover{
+            background-color: #DCDCDC;
+        }
+
+        #anxiety-score{
+            font-size: 20px;
+            cursor: pointer;
+            width: 40px;
+            height: 24px;
+            border-radius: 8px;
+        }
+
+        #anxiety-score:hover{
+            background-color: #DCDCDC;
         }
 
         table{
             margin-bottom: 32px;
         }
+
+        button{
+            padding: 6px 20px 6px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            background-color: $major-color;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 24px;
+        }
     }
+}
+
+.selftest-info{
+    min-width: 440px;
+    height: fit-content;
+    padding: 24px;
+    border: 1px solid $focus-color;
+    border-radius: 16px;
+    position: absolute;
+    z-index: 100;
+    background-color: #fff;
+    top: 40px;
+    left: 440px;
+    font-size: 14px;
+}
+
+.vanish{
+    display: none;
 }

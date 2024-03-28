@@ -104,7 +104,34 @@ function RoutinePage() {
          console.log('aSum>>>>>', aSum);
      }, [a1Val, a2Val, a3Val, a4Val, a5Val])
  
+     //자가진단 정보 보여주기 여부
 
+     const [isDepressInfoOpen, setIsDepressInfoOpen] = useState<boolean>(false);
+     const [isAnxietyInfoOpen, setIsAnxietyInfoOpen] = useState<boolean>(false);
+     const depressedInfoRef = useRef<HTMLDivElement>(null);
+     const anxietyInfoRef = useRef<HTMLDivElement>(null)
+
+     const showDepressSelfTestInfo = () => {
+        if(isDepressInfoOpen===false){
+            depressedInfoRef.current?.classList.remove('vanish');
+            setIsDepressInfoOpen(true)
+            console.log(depressedInfoRef)
+        }else if(isDepressInfoOpen===true){
+            depressedInfoRef.current?.classList.add('vanish');
+            setIsDepressInfoOpen(false)
+        }
+     }
+
+     const showAnxietySelfTestInfo = () => {
+        if(isAnxietyInfoOpen===false){
+            anxietyInfoRef.current?.classList.remove('vanish');
+            setIsAnxietyInfoOpen(true)
+            console.log(anxietyInfoRef)
+        }else if(isAnxietyInfoOpen===true){
+            anxietyInfoRef.current?.classList.add('vanish');
+            setIsAnxietyInfoOpen(false)
+        }
+     }
     return ( 
         <>
             <TopBar/>
@@ -116,7 +143,17 @@ function RoutinePage() {
                 </div>
                 {(isTest===true)?
                 <div className='test-container'>
-                    <div className='table-title'>우울 증상</div>
+                    <div className='table-topbar'>
+                        <div className='table-title'>우울 증상</div>
+                        <div id='depressed-score' onClick={()=>showDepressSelfTestInfo()}>?</div>
+                        <div className='selftest-info vanish' ref={depressedInfoRef}>
+                            <div>총점 0: 적응상의 지장을 초래할만한 우울 관련 증상을 거의 보고하지 않았습니다. (정상)</div>
+                            <div>총점 1-2: 경미한 수준의 우울감이 있으나 일상생활에 지장을 줄 정도는 아닙니다. (경미한 수준)</div>
+                            <div>총점 3-4: 경미한 수준의 우울감을 비교적 자주 경험하는 것으로 보고하였습니다. (경미한 수준)</div>
+                            <div>총점 5-9: 중간 수준의 우울감을 비교적 자주 경험하는 것으로 보고하였습니다. (중간 수준)</div>
+                            <div>총점 10 이상: 약간 심한 수준부터 심한 수준까지의 우울감을 경험하는 것으로 보고하였습니다. (약간심한 수준 이상)</div>
+                        </div>
+                    </div>  
                     <table border={2}>
                         <thead>
                             <tr>
@@ -176,7 +213,17 @@ function RoutinePage() {
                             </tr>
                         </tfoot>
                     </table>
+                    <div className='table-topbar'>
                     <div className='table-title'>불안 증상</div>
+                        <div id='anxiety-score' onClick={()=>showAnxietySelfTestInfo()}>?</div>
+                        <div className='selftest-info vanish' ref={anxietyInfoRef}>
+                            <div>총점 0: 주의가 필요할 정도의 과도한 걱정이나 불안을 보고하지 않았습니다. (정상)</div>
+                            <div>총점 1-2: 다소 경미한 수준의 걱정과 불안을 보고하였습니다. (경미한 수준)</div>
+                            <div>총점 3-4: 다소 경미한 수준의 걱정과 불안을 보고하였습니다. (경미한 수준)</div>
+                            <div>총점 5-9: 주의가 필요한 수준의 과도한 걱정과 불안을 보고하였습니다. (중간수준)</div>
+                            <div>총점 10 이상: 일상생활에 지장을 초래할 정도의 과도하고 심한 걱정과 불안을 보고하였습니다. (심한수준)</div>
+                        </div>
+                    </div>  
                     <table border={2}>
                         <thead>
                             <tr>
@@ -233,10 +280,15 @@ function RoutinePage() {
                             <td colSpan={2}>합계</td>
                             <td colSpan={4}>{aSum}점</td>
                         </tfoot>
-                    </table>    
+                    </table>
+                    <button>루틴 START</button>
                 </div>:''}
-                {(isTodo===true)?<div className='todo-container'>Todo</div>:''}
-                {(isAllActivity===true)?<div className='allactivity-container'>AllActivity</div>:''}
+                {(isTodo===true)?<div className='todo-container'>
+
+                </div>:''}
+                {(isAllActivity===true)?<div className='allactivity-container'>
+
+                </div>:''}
             </div>
         </>
      );
