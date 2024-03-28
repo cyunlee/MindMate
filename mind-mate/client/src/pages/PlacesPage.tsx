@@ -1,9 +1,14 @@
+import Kakao from "../components/PlacesPage/Kakao";
 import TopBar from "../components/TopBar";
+import '../styles/PlacesPage.scss';
 
 function PlacesPage() {
+
+
     return ( 
         <>
             <TopBar/>
+            <Kakao/>
         </>
      );
 }
