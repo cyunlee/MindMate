@@ -17,6 +17,10 @@ export const GeneralAnswerModel = (sequelize: any, DataTypes: any) => {
             content: {
                 type: DataTypes.STRING(1000),
                 allowNull: false
+            },
+            nickname: {
+                type: DataTypes.STRING(100),
+                allowNull: false
             }
         }
     );
