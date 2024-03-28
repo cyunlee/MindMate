@@ -30,6 +30,11 @@
             color: $major-color;
             border-bottom: 3px solid $major-color;
         }
+
+        .selected{
+            color: $major-color;
+            border-bottom: 3px solid $major-color;
+        }
     }
 
     .test-container{

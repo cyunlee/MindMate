@@ -110,9 +110,9 @@ function RoutinePage() {
             <TopBar/>
             <div className='routine-container'>
                 <div className='routine-topbar'>
-                    <button onClick={handleIsTest}>자가진단</button>
-                    <button onClick={handleIsTodo}>오늘할일</button>
-                    <button onClick={handleIsAllActivity}>전체활동</button>
+                    <button onClick={handleIsTest} className={(isTest===true?'selected':'')}>자가진단</button>
+                    <button onClick={handleIsTodo} className={(isTodo===true?'selected':'')}>오늘할일</button>
+                    <button onClick={handleIsAllActivity} className={(isAllActivity===true?'selected':'')}>전체활동</button>
                 </div>
                 {(isTest===true)?
                 <div className='test-container'>
