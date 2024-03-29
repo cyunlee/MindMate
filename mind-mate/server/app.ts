@@ -14,6 +14,7 @@ import { chatRouter } from './routes/chat.routes';
 import { commentRouter } from './routes/comment.routes';
 import { openapiRouter } from './routes/openapi.routes';
 import { mailRouter } from './routes/mail.routes';
+import { routineRouter } from './routes/routine.routes';
 import { db } from './model';
 import {
   ClientToServerEvents,
@@ -39,6 +40,7 @@ app.use('/api', chatRouter);
 app.use('/api', commentRouter);
 app.use('/api', openapiRouter);
 app.use('/api', mailRouter);
+app.use('/api', routineRouter);
 app.use(cors());
 
 

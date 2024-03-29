@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import TopBar from "../components/TopBar";
 import '../styles/RoutinePage.scss'
+import axios from 'axios';
 
 function RoutinePage() {
 
@@ -115,7 +116,6 @@ function RoutinePage() {
         if(isDepressInfoOpen===false){
             depressedInfoRef.current?.classList.remove('vanish');
             setIsDepressInfoOpen(true)
-            console.log(depressedInfoRef)
         }else if(isDepressInfoOpen===true){
             depressedInfoRef.current?.classList.add('vanish');
             setIsDepressInfoOpen(false)
@@ -126,12 +126,39 @@ function RoutinePage() {
         if(isAnxietyInfoOpen===false){
             anxietyInfoRef.current?.classList.remove('vanish');
             setIsAnxietyInfoOpen(true)
-            console.log(anxietyInfoRef)
         }else if(isAnxietyInfoOpen===true){
             anxietyInfoRef.current?.classList.add('vanish');
             setIsAnxietyInfoOpen(false)
         }
      }
+
+     //루틴 생성 및 보여주기
+
+     const createRoutine = async() => {
+        try{
+            const res = await axios({
+                method: 'post',
+                url: '/api/createroutine',
+                data: {
+                    dInfo: depressedInfoRef.current?.innerHTML,
+                    aInfo: anxietyInfoRef.current?.innerHTML,
+                    dSum: dSum,
+                    aSum: aSum
+                }
+            })
+            if(res.data.isError===false){
+                setIsTest(false);
+                setIsTodo(true);
+                setIsAllActivity(false);
+                setTodoList(res.data.aiRoutine);
+            }
+        }catch(error){
+            console.log('error : ', error);
+        }
+     }
+
+     const [todoList, setTodoList] = useState();
+
     return ( 
         <>
             <TopBar/>
@@ -168,42 +195,42 @@ function RoutinePage() {
                             <tr>
                                 <td>1</td>
                                 <td>일 또는 여가 활동을 하는데 흥미나 즐거움을 느끼지 못함</td>
-                                <td><input type="radio" name="d1" value={0} onChange={d1Handler}/>0</td>
-                                <td><input type="radio" name="d1" value={1} onChange={d1Handler}/>1</td>
-                                <td><input type="radio" name="d1" value={2} onChange={d1Handler}/>2</td>
-                                <td><input type="radio" name="d1" value={3} onChange={d1Handler}/>3</td>
+                                <td><input type="radio" name="d1" value={0} onChange={d1Handler} />0</td>
+                                <td><input type="radio" name="d1" value={1} onChange={d1Handler} />1</td>
+                                <td><input type="radio" name="d1" value={2} onChange={d1Handler} />2</td>
+                                <td><input type="radio" name="d1" value={3} onChange={d1Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>입맛이 없거나 과식을 함</td>
-                                <td><input type="radio" name="d2" value={0} onChange={d2Handler}/>0</td>
-                                <td><input type="radio" name="d2" value={1} onChange={d2Handler}/>1</td>
-                                <td><input type="radio" name="d2" value={2} onChange={d2Handler}/>2</td>
-                                <td><input type="radio" name="d2" value={3} onChange={d2Handler}/>3</td>
+                                <td><input type="radio" name="d2" value={0} onChange={d2Handler} />0</td>
+                                <td><input type="radio" name="d2" value={1} onChange={d2Handler} />1</td>
+                                <td><input type="radio" name="d2" value={2} onChange={d2Handler} />2</td>
+                                <td><input type="radio" name="d2" value={3} onChange={d2Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>신문을 읽거나 텔레비전 보는 것과 같은 일에 집중하는 것이 어려움</td>
-                                <td><input type="radio" name="d3" value={0} onChange={d3Handler}/>0</td>
-                                <td><input type="radio" name="d3" value={1} onChange={d3Handler}/>1</td>
-                                <td><input type="radio" name="d3" value={2} onChange={d3Handler}/>2</td>
-                                <td><input type="radio" name="d3" value={3} onChange={d3Handler}/>3</td>
+                                <td><input type="radio" name="d3" value={0} onChange={d3Handler} />0</td>
+                                <td><input type="radio" name="d3" value={1} onChange={d3Handler} />1</td>
+                                <td><input type="radio" name="d3" value={2} onChange={d3Handler} />2</td>
+                                <td><input type="radio" name="d3" value={3} onChange={d3Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>4</td>
                                 <td>기분이 가라앉거나 우울하거나 희망이 없음</td>
-                                <td><input type="radio" name="d4" value={0} onChange={d4Handler}/>0</td>
-                                <td><input type="radio" name="d4" value={1} onChange={d4Handler}/>1</td>
-                                <td><input type="radio" name="d4" value={2} onChange={d4Handler}/>2</td>
-                                <td><input type="radio" name="d4" value={3} onChange={d4Handler}/>3</td>
+                                <td><input type="radio" name="d4" value={0} onChange={d4Handler} />0</td>
+                                <td><input type="radio" name="d4" value={1} onChange={d4Handler} />1</td>
+                                <td><input type="radio" name="d4" value={2} onChange={d4Handler} />2</td>
+                                <td><input type="radio" name="d4" value={3} onChange={d4Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>5</td>
                                 <td>피곤하다고 느끼거나 기운이 거의 없음</td>
-                                <td><input type="radio" name="d5" value={0} onChange={d5Handler}/>0</td>
-                                <td><input type="radio" name="d5" value={1} onChange={d5Handler}/>1</td>
-                                <td><input type="radio" name="d5" value={2} onChange={d5Handler}/>2</td>
-                                <td><input type="radio" name="d5" value={3} onChange={d5Handler}/>3</td>
+                                <td><input type="radio" name="d5" value={0} onChange={d5Handler} />0</td>
+                                <td><input type="radio" name="d5" value={1} onChange={d5Handler} />1</td>
+                                <td><input type="radio" name="d5" value={2} onChange={d5Handler} />2</td>
+                                <td><input type="radio" name="d5" value={3} onChange={d5Handler} />3</td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -238,42 +265,42 @@ function RoutinePage() {
                             <tr>
                                 <td>1</td>
                                 <td>초조하거나 불안하거나 조마조마하게 느낀다</td>
-                                <td><input type="radio" name="a1" value={0} onChange={a1Handler}/>0</td>
-                                <td><input type="radio" name="a1" value={1} onChange={a1Handler}/>1</td>
-                                <td><input type="radio" name="a1" value={2} onChange={a1Handler}/>2</td>
-                                <td><input type="radio" name="a1" value={3} onChange={a1Handler}/>3</td>
+                                <td><input type="radio" name="a1" value={0} onChange={a1Handler} />0</td>
+                                <td><input type="radio" name="a1" value={1} onChange={a1Handler} />1</td>
+                                <td><input type="radio" name="a1" value={2} onChange={a1Handler} />2</td>
+                                <td><input type="radio" name="a1" value={3} onChange={a1Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>편하게 있기가 어렵다</td>
-                                <td><input type="radio" name="a2" value={0} onChange={a2Handler}/>0</td>
-                                <td><input type="radio" name="a2" value={1} onChange={a2Handler}/>1</td>
-                                <td><input type="radio" name="a2" value={2} onChange={a2Handler}/>2</td>
-                                <td><input type="radio" name="a2" value={3} onChange={a2Handler}/>3</td>
+                                <td><input type="radio" name="a2" value={0} onChange={a2Handler} />0</td>
+                                <td><input type="radio" name="a2" value={1} onChange={a2Handler} />1</td>
+                                <td><input type="radio" name="a2" value={2} onChange={a2Handler} />2</td>
+                                <td><input type="radio" name="a2" value={3} onChange={a2Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>여러 가지 것들에 대해 걱정을 너무 많이 한다</td>
-                                <td><input type="radio" name="a3" value={0} onChange={a3Handler}/>0</td>
-                                <td><input type="radio" name="a3" value={1} onChange={a3Handler}/>1</td>
-                                <td><input type="radio" name="a3" value={2} onChange={a3Handler}/>2</td>
-                                <td><input type="radio" name="a3" value={3} onChange={a3Handler}/>3</td>
+                                <td><input type="radio" name="a3" value={0} onChange={a3Handler} />0</td>
+                                <td><input type="radio" name="a3" value={1} onChange={a3Handler} />1</td>
+                                <td><input type="radio" name="a3" value={2} onChange={a3Handler} />2</td>
+                                <td><input type="radio" name="a3" value={3} onChange={a3Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>4</td>
                                 <td>쉽게 짜증이 나거나 쉽게 성을 내게 된다</td>
-                                <td><input type="radio" name="a4" value={0} onChange={a4Handler}/>0</td>
-                                <td><input type="radio" name="a4" value={1} onChange={a4Handler}/>1</td>
-                                <td><input type="radio" name="a4" value={2} onChange={a4Handler}/>2</td>
-                                <td><input type="radio" name="a4" value={3} onChange={a4Handler}/>3</td>
+                                <td><input type="radio" name="a4" value={0} onChange={a4Handler} />0</td>
+                                <td><input type="radio" name="a4" value={1} onChange={a4Handler} />1</td>
+                                <td><input type="radio" name="a4" value={2} onChange={a4Handler} />2</td>
+                                <td><input type="radio" name="a4" value={3} onChange={a4Handler} />3</td>
                             </tr>
                             <tr>
                                 <td>5</td>
                                 <td>너무 안절부절못해서 가만히 있기가 힘들다</td>
-                                <td><input type="radio" name="a5" value={0} onChange={a5Handler}/>0</td>
-                                <td><input type="radio" name="a5" value={1} onChange={a5Handler}/>1</td>
-                                <td><input type="radio" name="a5" value={2} onChange={a5Handler}/>2</td>
-                                <td><input type="radio" name="a5" value={3} onChange={a5Handler}/>3</td>
+                                <td><input type="radio" name="a5" value={0} onChange={a5Handler} />0</td>
+                                <td><input type="radio" name="a5" value={1} onChange={a5Handler} />1</td>
+                                <td><input type="radio" name="a5" value={2} onChange={a5Handler} />2</td>
+                                <td><input type="radio" name="a5" value={3} onChange={a5Handler} />3</td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -281,10 +308,10 @@ function RoutinePage() {
                             <td colSpan={4}>{aSum}점</td>
                         </tfoot>
                     </table>
-                    <button>루틴 START</button>
+                    <button onClick={()=>{createRoutine()}}>루틴 START</button>
                 </div>:''}
                 {(isTodo===true)?<div className='todo-container'>
-
+                {todoList}
                 </div>:''}
                 {(isAllActivity===true)?<div className='allactivity-container'>
 
