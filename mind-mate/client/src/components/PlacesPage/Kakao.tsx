@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import '../../styles/KakaoComponent.scss';
 
 declare global {
   interface Window {
@@ -9,7 +10,9 @@ declare global {
 export default function Kakao(props: any) {
   const [map, setMap] = useState<any>();
   const [marker, setMarker] = useState<any>();
-    
+  const [ps, setPs] = useState<any>();
+  const [publicNum, setPublicNum] = useState<any>(0);
+
   // 1) 카카오맵 불러오기
   useEffect(() => {
     window.kakao.maps.load(() => {
@@ -21,6 +24,8 @@ export default function Kakao(props: any) {
 
       setMap(new window.kakao.maps.Map(container, options));
       setMarker(new window.kakao.maps.Marker());
+      setPs(new window.kakao.maps.services.Places(map));
+
     });
   }, []);
   
@@ -52,12 +57,50 @@ export default function Kakao(props: any) {
     marker.setPosition(currentPos);
     marker.setMap(map);
   };
+
+  function displayMarker(place: any){
+    setMarker(new window.kakao.maps.Marker({
+      map: map,
+      position: new window.kakao.maps.LatLng(place.y, place.x)
+    }));
+
+  }
+
+  function placesSearchCB(data: any, status: any, pagination: any ) {
+    if(status === window.kakao.maps.services.Status.OK){
+      for(let i=0; i<data.length; i++){
+        displayMarker(data[i]);
+        console.log(data[i]);
+      }
+      setPublicNum(data.length);
+    }else{
+      alert("검색 결과가 없습니다");
+      setPublicNum(0);
+    }
+  }
+
+  //현재 위치 얻어오기
+
+
+  const searchPublic = () => {
+    ps.categorySearch('PO3', placesSearchCB, {useMapBounds:true}); 
+  }
   
+  const locationBtn = require('../../image/location.png');
 
   return (
-    <>
-      <div id="map" style={{ width: "100%", height: "90vh" }}></div>
-      <button id="current" onClick={()=>getCurrentPosBtn()}>현재위치</button>
-    </>
+    <div className="map-container">
+      <div className="map-search">
+        <div className="map-search-title">검색결과</div>
+        <div className="btncategory-set">
+          <button>심리상담 · 10</button>
+          <button onClick={()=>{searchPublic()}}>공공기관 · {publicNum}</button>
+          <button>병원/의원 · 8</button>
+        </div>
+        <div className='resultlist'></div>
+      </div>
+      <img src={locationBtn} alt="현재위치" onClick={()=>{getCurrentPosBtn()}} />
+      <div id="map"></div>
+    </div> 
   );
 }
