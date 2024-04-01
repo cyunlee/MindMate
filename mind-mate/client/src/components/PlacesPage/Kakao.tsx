@@ -12,6 +12,8 @@ export default function Kakao(props: any) {
   const [marker, setMarker] = useState<any>();
   const [ps, setPs] = useState<any>();
   const [publicNum, setPublicNum] = useState<any>(0);
+  const [therapyNum, setTherapyNum] = useState<any>(0);
+  const [hospitalNum, setHospitalNum] = useState<any>(0);
 
   // 1) 카카오맵 불러오기
   useEffect(() => {
@@ -66,16 +68,42 @@ export default function Kakao(props: any) {
 
   }
 
-  function placesSearchCB(data: any, status: any, pagination: any ) {
+  function publicSearchCB(data: any, status: any, pagination: any ) {
     if(status === window.kakao.maps.services.Status.OK){
       for(let i=0; i<data.length; i++){
         displayMarker(data[i]);
-        console.log(data[i]);
       }
       setPublicNum(data.length);
+      console.log('공공기관 >>>>', data);
     }else{
       alert("검색 결과가 없습니다");
       setPublicNum(0);
+    }
+  }
+
+  function therapySearchCB(data: any, status: any, pagination: any ) {
+    if(status === window.kakao.maps.services.Status.OK){
+      for(let i=0; i<data.length; i++){
+        displayMarker(data[i]);
+      }
+      setTherapyNum(data.length);
+      console.log('심리상담소 >>>>', data);
+    }else{
+      alert("검색 결과가 없습니다");
+      setTherapyNum(0);
+    }
+  }
+
+  function hospitalSearchCB(data: any, status: any, pagination: any ) {
+    if(status === window.kakao.maps.services.Status.OK){
+      for(let i=0; i<data.length; i++){
+        displayMarker(data[i]);
+      }
+      setHospitalNum(data.length);
+      console.log('정신건강의학과 >>>>', data);
+    }else{
+      alert("검색 결과가 없습니다");
+      setHospitalNum(0);
     }
   }
 
@@ -83,8 +111,18 @@ export default function Kakao(props: any) {
 
 
   const searchPublic = () => {
-    ps.categorySearch('PO3', placesSearchCB, {useMapBounds:true}); 
+    ps.categorySearch('PO3', publicSearchCB, {useMapBounds:true}); 
   }
+
+  const searchHospital = () => {
+    ps.keywordSearch('정신건강의학과', hospitalSearchCB);
+  }
+
+  const searchTherapy = () => {
+    ps.keywordSearch('심리상담소', therapySearchCB);
+  }
+
+
   
   const locationBtn = require('../../image/location.png');
 
@@ -93,9 +131,9 @@ export default function Kakao(props: any) {
       <div className="map-search">
         <div className="map-search-title">검색결과</div>
         <div className="btncategory-set">
-          <button>심리상담 · 10</button>
+          <button onClick={()=>{searchTherapy()}}>심리상담 · {therapyNum}</button>
           <button onClick={()=>{searchPublic()}}>공공기관 · {publicNum}</button>
-          <button>병원/의원 · 8</button>
+          <button onClick={()=>{searchHospital()}}>병원/의원 · {hospitalNum}</button>
         </div>
         <div className='resultlist'></div>
       </div>
