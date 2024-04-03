@@ -6,8 +6,6 @@ import '../styles/PlacesPage.scss';
 
 function PlacesPage() {
 
-    const [keywordVal, setKeywordVal] = useState<string>();
-
 
     return ( 
         <>

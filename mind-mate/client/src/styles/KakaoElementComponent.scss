@@ -1,0 +1,28 @@
+@import '../styles/Common.scss';
+
+.placelist-container{
+    @include flex;
+    padding: 8px;
+    border-bottom: 1px solid $border-color;
+
+    .listlogo{
+        width: 44px;
+        height: 44px;
+        margin-right: 16px;
+    }
+
+    .placename-text{
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .category-text{
+        font-size: 13px;
+        color: #6E6E6E;
+    }
+
+    .placelist-info{
+        font-size: 13px;
+    }
+
+}
