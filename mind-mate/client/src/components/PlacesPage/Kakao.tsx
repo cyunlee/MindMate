@@ -31,34 +31,57 @@ export default function Kakao(props: any) {
     });
   }, []);
   
-  // 2) 현재 위치 함수
-  const getCurrentPosBtn = () => {
-    navigator.geolocation.getCurrentPosition(
-      getPosSuccess,
-      () => alert("위치 정보를 가져오는데 실패했습니다."),
-      {
-        enableHighAccuracy: true,
-        maximumAge: 30000,
-        timeout: 27000,
-      }
-    );
-  }
+  // // 2) 현재 위치 함수
+  // const getCurrentPosBtn = () => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     getPosSuccess,
+  //     () => alert("위치 정보를 가져오는데 실패했습니다."),
+  //     {
+  //       enableHighAccuracy: true,
+  //       maximumAge: 30000,
+  //       timeout: 27000,
+  //     }
+  //   );
+  // }
   
-  // 3) 정상적으로 현재위치 가져올 경우 실행
-  const getPosSuccess = (pos: GeolocationPosition) => {
-    // 현재 위치(위도, 경도) 가져온다.
-    var currentPos = new window.kakao.maps.LatLng(
-      pos.coords.latitude, // 위도
-      pos.coords.longitude // 경도
-    );
-    // 지도를 이동 시킨다.
-    map.panTo(currentPos);
+  // // 3) 정상적으로 현재위치 가져올 경우 실행
+  // const getPosSuccess = (pos: GeolocationPosition) => {
+  //   // 현재 위치(위도, 경도) 가져온다.
+  //   var currentPos = new window.kakao.maps.LatLng(
+  //     pos.coords.latitude, // 위도
+  //     pos.coords.longitude // 경도
+  //   );
+  //   // 지도를 이동 시킨다.
+  //   map.panTo(currentPos);
 
-    // 기존 마커를 제거하고 새로운 마커를 넣는다.
-    marker.setMap(null);
-    marker.setPosition(currentPos);
-    marker.setMap(map);
-  };
+  //   // 기존 마커를 제거하고 새로운 마커를 넣는다.
+  //   marker.setMap(null);
+  //   marker.setPosition(currentPos);
+  //   marker.setMap(map);
+  // };
+
+  const getCurrentLocation = async () => {
+    console.log("getCurrentLocation 함수 실행");
+    return new Promise((res, rej)=>{
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function (position: GeolocationPosition) {
+          console.log(position);
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const coordinate = new window.kakao.maps.LatLng(lat, lon);
+          res(coordinate);
+          map.panTo(coordinate);
+
+          marker.setMap(null);
+          marker.setPosition(coordinate);
+          marker.setMap(map);
+        });
+      }else {
+        rej(new Error('현재 위치를 불러올 수 없습니다'));
+      }
+    })
+  }
 
   function displayMarker(place: any){
     setMarker(new window.kakao.maps.Marker({
@@ -110,16 +133,34 @@ export default function Kakao(props: any) {
   //현재 위치 얻어오기
 
 
-  const searchPublic = () => {
-    ps.categorySearch('PO3', publicSearchCB, {useMapBounds:true}); 
+  const searchPublic = async () => {
+    const currentLocation = await getCurrentLocation();
+    let options = {
+      location: currentLocation,
+      radius: 1000,
+      sort: window.kakao.maps.services.SortBy.DISTANCE,
+    }
+    ps.categorySearch('PO3', publicSearchCB, options); 
   }
 
-  const searchHospital = () => {
-    ps.keywordSearch('정신건강의학과', hospitalSearchCB);
+  const searchHospital = async () => {
+    const currentLocation = await getCurrentLocation();
+    let options = {
+      location: currentLocation,
+      radius: 1000,
+      sort: window.kakao.maps.services.SortBy.DISTANCE,
+    }
+    ps.keywordSearch('정신건강의학과', hospitalSearchCB, options);
   }
 
-  const searchTherapy = () => {
-    ps.keywordSearch('심리상담소', therapySearchCB);
+  const searchTherapy = async () => {
+    const currentLocation = await getCurrentLocation();
+    let options = {
+      location: currentLocation,
+      radius: 1000,
+      sort: window.kakao.maps.services.SortBy.DISTANCE,
+    }
+    ps.keywordSearch('심리상담소', therapySearchCB, options);
   }
 
 
@@ -137,7 +178,7 @@ export default function Kakao(props: any) {
         </div>
         <div className='resultlist'></div>
       </div>
-      <img src={locationBtn} alt="현재위치" onClick={()=>{getCurrentPosBtn()}} />
+      <img src={locationBtn} alt="현재위치" onClick={()=>getCurrentLocation()}/>
       <div id="map"></div>
     </div> 
   );
