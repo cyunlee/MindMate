@@ -75,7 +75,7 @@ export default function Kakao(props: any) {
       }
     })
   }
-
+   
   function displayMarker(place: any){
     setMarker(new window.kakao.maps.Marker({
       map: map,
